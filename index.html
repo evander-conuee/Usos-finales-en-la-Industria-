@@ -575,6 +575,8 @@
     .month-grid{
       display:grid;
       grid-template-columns:repeat(4,minmax(120px,1fr));
+      grid-template-rows:repeat(3,auto);
+      grid-auto-flow:column;
       gap:12px 14px;
       margin-top:15px;
     }
@@ -630,11 +632,82 @@
     }
 
     @media (max-width:850px){
-      .month-grid{grid-template-columns:repeat(3,minmax(110px,1fr))}
+      .month-grid{
+        grid-template-columns:repeat(3,minmax(110px,1fr));
+        grid-template-rows:repeat(4,auto);
+      }
     }
     @media (max-width:600px){
-      .month-grid{grid-template-columns:repeat(2,minmax(110px,1fr))}
+      .month-grid{
+        grid-template-columns:repeat(2,minmax(110px,1fr));
+        grid-template-rows:repeat(6,auto);
+      }
       .energy-block-head{align-items:center}
+    }
+
+
+    .annual-total{
+      margin-top:15px;
+      padding-top:12px;
+      border-top:1px solid #e0e5e2;
+      color:#3f6c2a;
+      font-size:13.5px;
+      line-height:1.45;
+    }
+    .annual-total strong{
+      color:#2f6420;
+      font-size:14px;
+    }
+    .allocation-summary{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      align-items:center;
+      margin-top:14px;
+      padding:11px 14px;
+      border:1px solid #d8dfd4;
+      border-radius:7px;
+      background:#f5f8f3;
+      font-size:13.5px;
+    }
+    .allocation-summary.good{
+      border-color:#a8c79a;
+      background:#eff7eb;
+      color:#315f21;
+    }
+    .allocation-summary.bad{
+      border-color:#dfaaa6;
+      background:#fff5f5;
+      color:#8b2821;
+    }
+    .equipment-card-section{
+      margin-top:17px;
+      padding-top:15px;
+      border-top:1px dashed #d7ddda;
+    }
+    .equipment-card-section h5{
+      margin:0 0 12px;
+      color:#46554b;
+      font-size:13.5px;
+    }
+    .compact-help{
+      margin:8px 0 0;
+      color:#536067;
+      font-size:13px;
+      line-height:1.5;
+    }
+    .route-panel{
+      margin-top:14px;
+      padding:14px;
+      border:1px solid #d7dddf;
+      border-radius:7px;
+      background:#f9fbfa;
+    }
+    .calculated-check{
+      margin-top:10px;
+      color:#3f6c2a;
+      font-size:13px;
+      font-weight:600;
     }
 
     /* =========================================================
@@ -1099,15 +1172,20 @@
                   <input id="electric_meter_count" name="electric_meter_count" class="field-xs" type="number" min="0" step="1" required>
                   <span class="unit">medidores</span>
                 </div>
-                <span class="help-text">Si el establecimiento no cuenta con medidores propios, capture 0.</span>
+                <span class="help-text">Si el establecimiento no cuenta con medidores propios, capture 0. Si cuenta con uno o más, los grupos tarifarios que aparecen enseguida deberán distribuir exactamente ese total.</span>
                 <div class="field-error">Capture un número entero igual o mayor que 0.</div>
+                <div id="meterAllocationSummary" class="allocation-summary" hidden>
+                  <span>Medidores registrados en 2.2.1: <strong id="meterTotalShown">0</strong></span>
+                  <span>Asignados a grupos tarifarios: <strong id="meterAssignedShown">0</strong></span>
+                  <span>Por asignar: <strong id="meterRemainingShown">0</strong></span>
+                </div>
               </div>
 
               <div id="tariffBlock" style="margin-top:26px">
                 <p class="question-prompt">
-                  <strong>2.2.2</strong> Complete la información de cada grupo de medidores, indicando la
-                  <strong>tarifa eléctrica, la potencia contratada y el consumo mensual</strong>.
-                  Cuando existan dos o más medidores bajo una misma tarifa eléctrica, registre la <strong>suma de la potencia contratada y de los consumos mensuales</strong> correspondientes.
+                  <strong>2.2.2</strong> Distribuya los medidores indicados en 2.2.1 según su tarifa eléctrica y complete la información de cada grupo.
+                  Para cada tarifa indique <strong>cuántos medidores pertenecen al grupo, la potencia contratada total de esos medidores y su consumo mensual conjunto</strong>.
+                  Cuando existan dos o más medidores bajo una misma tarifa, consolídelos en un solo grupo.
                 </p>
 
                 <div class="visible-method-note">
@@ -1126,7 +1204,14 @@
               <h3 class="subsection-title"><span class="number">2.3</span> Autogeneración y cogeneración</h3>
 
               <div>
-                <span class="question-label">2.3.1 ¿Autogeneran electricidad en el establecimiento/planta? <span class="required-mark">*</span></span>
+                <span class="question-label">
+                  2.3.1 ¿Autogeneran electricidad en el establecimiento/planta? <span class="required-mark">*</span>
+                  <button type="button" class="info-button" data-info="autogenerationInfo" aria-label="Definición de autogeneración">i</button>
+                </span>
+                <div id="autogenerationInfo" class="info-panel">
+                  Para este formulario, <strong>autogeneración</strong> significa producir electricidad dentro del establecimiento para cubrir total o parcialmente su <strong>propio consumo</strong>.
+                  No incluya plantas de emergencia que se utilizan únicamente ante fallas o interrupciones del suministro eléctrico; esas plantas se reportarán posteriormente en la sección correspondiente.
+                </div>
                 <div class="radio-row">
                   <label class="radio-card"><input type="radio" name="autogenerates_electricity" value="yes" required> Sí</label>
                   <label class="radio-card"><input type="radio" name="autogenerates_electricity" value="no"> No</label>
@@ -1268,13 +1353,173 @@
       </div>
     </section>
 
+
     <section class="section-view" data-section="3" data-anchor>
       <div class="section-shell">
-        <div class="section-heading"><h2>3. Procesos térmicos</h2></div>
-        <div class="placeholder"><strong>Estructura preparada</strong>Producción de vapor, calor directo y calentamiento de agua.</div>
+        <div class="section-heading">
+          <h2>3. Procesos térmicos y calor de proceso</h2>
+          <p>Producción de vapor, generación de calor directo y calentamiento de agua.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box">
+            En esta sección registre los equipos utilizados para producir <strong>vapor, calor directo o agua caliente</strong>.
+            Cuando existan varios equipos iguales, regístrelos juntos únicamente si tienen la <strong>misma potencia, fuente de energía y tiempo de funcionamiento</strong>.
+            Si alguna de estas características cambia, regístrelos como otro grupo.
+          </div>
+
+          <form id="section3Form" novalidate>
+
+            <!-- =================================================
+                 3.1 PRODUCCIÓN DE VAPOR
+            ================================================== -->
+            <div class="subsection" id="s3-steam" data-anchor>
+              <h3 class="subsection-title"><span class="number">3.1</span> Producción de vapor</h3>
+
+              <div>
+                <span class="question-label">3.1.1 ¿En el establecimiento/planta utilizan calderas para la producción de vapor? <span class="required-mark">*</span></span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_steam_boilers" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_steam_boilers" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_steam_boilers">Seleccione una opción.</div>
+              </div>
+
+              <div id="steamDetails" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>3.1.2</strong> De las calderas de vapor con las que cuenta, ¿con qué energéticos funcionan?
+                  Seleccione <strong>todas las opciones que correspondan</strong>.
+                </p>
+
+                <div class="choice-grid" id="steamEnergyRoutes">
+                  <label class="check-card"><input type="checkbox" value="fuels"> Combustibles</label>
+                  <label class="check-card"><input type="checkbox" value="electricity"> Electricidad</label>
+                  <label class="check-card"><input type="checkbox" value="biomass"> Biomasa</label>
+                  <label class="check-card"><input type="checkbox" value="other"> Otros</label>
+                </div>
+                <div class="field-error" id="steamRoutesError">Seleccione al menos un tipo de energético.</div>
+
+                <!-- Calderas no eléctricas -->
+                <div id="steamFuelBlock" hidden style="margin-top:26px">
+                  <h4>3.1.3 Calderas que utilizan combustible, biomasa u otra fuente no eléctrica</h4>
+                  <p class="question-prompt">
+                    Indique las características de las calderas con las cuales se produce vapor: <strong>cantidad, fuente de energía, potencia, consumo mensual y tiempo de uso</strong>.
+                    Agrupe únicamente las calderas que tengan las mismas características.
+                  </p>
+                  <div class="visible-method-note">
+                    La <strong>potencia eléctrica asociada</strong> corresponde únicamente a los equipos auxiliares de la caldera, por ejemplo bombas, ventiladores, compresores, sistemas de control u otros accesorios eléctricos.
+                    No reporte en ese campo la potencia térmica de la caldera.
+                  </div>
+                  <div id="steamFuelGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" id="addSteamFuelGroup">＋ Agregar grupo de calderas</button>
+                </div>
+
+                <!-- Calderas eléctricas -->
+                <div id="steamElectricBlock" hidden style="margin-top:26px">
+                  <h4>3.1.4 Calderas que funcionan con electricidad</h4>
+                  <p class="question-prompt">
+                    Para las calderas eléctricas indique la <strong>cantidad, características eléctricas y tiempo de uso</strong>.
+                    Si dispone de la potencia nominal, utilice esa ruta. Si no dispone de ella, puede reportar <strong>corriente, tensión, número de fases y factor de potencia</strong>.
+                  </p>
+                  <div class="visible-method-note">
+                    La ruta por parámetros eléctricos admite equipos de <strong>1 o 3 fases</strong>. Si el equipo es bifásico, utilice la ruta de <strong>potencia directa</strong>.
+                    El factor de potencia no se asumirá automáticamente.
+                  </div>
+                  <div id="steamElectricGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" id="addSteamElectricGroup">＋ Agregar grupo de calderas eléctricas</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 3.2 CALOR DIRECTO
+            ================================================== -->
+            <div class="subsection" id="s3-direct-heat" data-anchor>
+              <h3 class="subsection-title"><span class="number">3.2</span> Calor directo</h3>
+
+              <div>
+                <span class="question-label">
+                  3.2.1 ¿En el establecimiento/planta utilizan equipos para generar calor directo a partir de combustibles —no electricidad—, como hornos, secadores, planchas, quemadores, estufas industriales o cámaras de combustión?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_direct_heat_fuel_equipment" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_direct_heat_fuel_equipment" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_direct_heat_fuel_equipment">Seleccione una opción.</div>
+              </div>
+
+              <div id="directHeatFuelBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>3.2.2</strong> Para cada grupo de equipos que genere calor directo a partir de combustibles, indique el
+                  <strong>tipo de equipo, energético utilizado, número de equipos, potencia nominal de un equipo, consumo energético mensual conjunto y tiempo de operación</strong>.
+                  Si equipos del mismo tipo tienen distinta potencia o tiempo de uso, regístrelos en grupos separados.
+                </p>
+                <div id="directHeatFuelGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addDirectHeatFuelGroup">＋ Agregar equipo o grupo</button>
+              </div>
+
+              <div style="margin-top:28px">
+                <span class="question-label">
+                  3.2.3 ¿En el establecimiento/planta utilizan equipos eléctricos para generar calor directo, como hornos eléctricos, calentadores, secadores, pistolas de calor, cautines, soldadoras u otros?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_direct_heat_electric_equipment" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_direct_heat_electric_equipment" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_direct_heat_electric_equipment">Seleccione una opción.</div>
+              </div>
+
+              <div id="directHeatElectricBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>3.2.4</strong> Para los equipos que funcionan con electricidad, indique la <strong>cantidad, características eléctricas y tiempo de uso</strong>.
+                  Si dispone de la potencia nominal utilice esa ruta; de lo contrario, reporte corriente, tensión, fases y factor de potencia.
+                </p>
+                <div class="visible-method-note">
+                  La ruta por parámetros eléctricos admite <strong>1 o 3 fases</strong>. Si el equipo es bifásico, utilice la potencia directa.
+                </div>
+                <div id="directHeatElectricGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addDirectHeatElectricGroup">＋ Agregar equipo o grupo eléctrico</button>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 3.3 CALENTAMIENTO DE AGUA
+            ================================================== -->
+            <div class="subsection" id="s3-water-heating" data-anchor>
+              <h3 class="subsection-title"><span class="number">3.3</span> Calentamiento de agua</h3>
+
+              <div>
+                <span class="question-label">3.3.1 ¿En el establecimiento/planta usan equipos para calentamiento de agua? <span class="required-mark">*</span></span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_water_heating_equipment" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_water_heating_equipment" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_water_heating_equipment">Seleccione una opción.</div>
+              </div>
+
+              <div id="waterHeatingBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>3.3.2</strong> Para cada grupo de equipos de calentamiento de agua, indique el
+                  <strong>tipo de equipo, energético utilizado, cantidad, potencia, consumo de energía mensual y tiempo de operación</strong>.
+                  También indique, cuando corresponda, la <strong>potencia eléctrica de bombas u otros equipos auxiliares</strong> utilizados para mover el fluido.
+                </p>
+                <div id="waterHeatingGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addWaterHeatingGroup">＋ Agregar equipo o grupo</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="2">← Anterior</button><button class="nav-button next" data-next="4">Continuar →</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="2">← Anterior</button>
+        <button class="nav-button next" data-next="4">Continuar →</button>
+      </div>
     </section>
+
 
     <section class="section-view" data-section="4" data-anchor>
       <div class="section-shell">
@@ -1327,7 +1572,7 @@
           <div class="review-list">
             <div class="review-item"><span>1. Información general</span><span class="status-badge" id="reviewS1">Por revisar</span></div>
             <div class="review-item"><span>2. Consumo energético, autogeneración y cogeneración</span><span class="status-badge" id="reviewS2">Por revisar</span></div>
-            <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge" id="reviewS3">Por revisar</span></div>
             <div class="review-item"><span>4. Refrigeración</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>6. Iluminación</span><span class="status-badge">Pendiente de implementación</span></div>
@@ -1469,6 +1714,9 @@
 
         <div class="energy-specific-help"></div>
         <div class="month-grid"></div>
+        <div class="annual-total">
+          Consumo anual calculado: <strong data-energy-annual-total>—</strong>
+        </div>
       </div>
     </div>
   </template>
@@ -1481,6 +1729,15 @@
       </div>
 
       <div class="form-grid">
+        <div class="form-group span-4">
+          <label>Número de medidores con esta tarifa <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="meter_count" class="field-xs" type="number" min="1" step="1" required>
+            <span class="unit">medidores</span>
+          </div>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
         <div class="form-group span-4">
           <label>Tarifa eléctrica <span class="required-mark">*</span>
             <button type="button" class="info-button" data-info-local aria-label="Información sobre tarifa">i</button>
@@ -1495,7 +1752,7 @@
         </div>
 
         <div class="form-group span-4">
-          <label>Potencia contratada total <span class="required-mark">*</span></label>
+          <label>Potencia contratada total de los medidores de este grupo <span class="required-mark">*</span></label>
           <div class="input-with-unit">
             <input data-field="contracted_power" class="field-s" type="number" min="0" step="any" required>
             <span class="unit">kW</span>
@@ -1575,6 +1832,371 @@
     </div>
   </template>
 
+
+  <!-- =========================================================
+       TEMPLATES SECCIÓN 3
+  ========================================================== -->
+  <template id="steamFuelGroupTemplate">
+    <div class="dynamic-card steam-fuel-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo de calderas</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Fuente de energía utilizada <span class="required-mark">*</span></label>
+          <select data-field="source" class="field-m" required></select>
+          <div class="field-error">Seleccione la fuente de energía.</div>
+        </div>
+        <div class="form-group source-other-wrap" hidden>
+          <label>Otro combustible o biomasa <span class="required-mark">*</span></label>
+          <input data-field="source_other" type="text" class="field-m">
+          <div class="field-error">Especifique la fuente de energía.</div>
+        </div>
+        <div class="form-group span-4">
+          <label>Número de calderas <span class="required-mark">*</span></label>
+          <input data-field="count" class="field-xs" type="number" min="1" step="1" required>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+        <div class="form-group">
+          <label>Potencia térmica por caldera <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="thermal_power" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="thermal_power_unit" required>
+              <option value="">Unidad</option>
+              <option value="kw">kW</option><option value="mw">MW</option><option value="bhp">BHP</option>
+              <option value="kcal_h">kcal/h</option><option value="btu_h">BTU/h</option>
+            </select>
+          </div>
+          <div class="field-error">Capture una potencia mayor que 0 y seleccione la unidad.</div>
+        </div>
+        <div class="form-group">
+          <label>Consumo mensual de todas las calderas del grupo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="monthly_consumption" class="field-s" type="number" min="0" step="any" required>
+            <select data-field="consumption_unit" required></select>
+          </div>
+          <div class="field-error">Capture el consumo mensual y seleccione su unidad.</div>
+        </div>
+        <div class="form-group consumption-unit-other-wrap" hidden>
+          <label>Otra unidad de consumo mensual <span class="required-mark">*</span></label>
+          <input data-field="consumption_unit_other" class="field-m" type="text">
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de operación del grupo</h5>
+        <div class="form-grid">
+          <div class="form-group span-3">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required><span class="unit">h/día</span></div>
+          </div>
+          <div class="form-group span-3">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div>
+          </div>
+          <div class="form-group span-3">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div>
+          </div>
+          <div class="form-group span-3">
+            <label>Tiempo fuera de uso <span class="required-mark">*</span>
+              <button type="button" class="info-button" data-info-local aria-label="Información sobre tiempo fuera de uso">i</button>
+            </label>
+            <div class="input-with-unit"><input data-field="downtime_days" class="field-xs" type="number" min="0" max="365" step="1" required><span class="unit">días/año</span></div>
+            <div class="info-panel local-info">Capture 0 si no hubo días fuera de uso. Este dato caracteriza mantenimiento, paros u otras interrupciones; no se descontará nuevamente de las semanas de operación para evitar doble conteo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Potencia eléctrica asociada a equipos auxiliares</h5>
+        <p class="compact-help">Reporte la potencia eléctrica de bombas, ventiladores, compresores, controles u otros accesorios de una caldera del grupo. No confunda este dato con la potencia térmica.</p>
+        <div class="input-with-unit" style="margin-top:10px">
+          <input data-field="aux_power" class="field-s" type="number" min="0" step="any" required>
+          <select data-field="aux_power_unit" required>
+            <option value="">Unidad</option><option value="w">W</option><option value="kw">kW</option><option value="mw">MW</option><option value="hp">HP</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="electricThermalGroupTemplate">
+    <div class="dynamic-card electric-thermal-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo eléctrico</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group electric-equipment-type-wrap" hidden>
+          <label>Tipo de equipo <span class="required-mark">*</span></label>
+          <select data-field="equipment_type" class="field-m"></select>
+          <div class="field-error">Seleccione el tipo de equipo.</div>
+        </div>
+        <div class="form-group electric-detail-wrap" hidden>
+          <label>Tipo o detalle del equipo <span class="required-mark">*</span></label>
+          <input data-field="equipment_detail" type="text" class="field-l">
+          <div class="field-error">Indique el tipo o detalle del equipo.</div>
+        </div>
+        <div class="form-group span-4">
+          <label data-count-label>Cantidad de equipos <span class="required-mark">*</span></label>
+          <input data-field="count" class="field-xs" type="number" min="1" step="1" required>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+        <div class="form-group">
+          <label>¿Cómo desea reportar las características eléctricas? <span class="required-mark">*</span></label>
+          <select data-field="input_method" class="field-l" required>
+            <option value="">Seleccione una opción</option>
+            <option value="power">Dispongo de la potencia nominal</option>
+            <option value="parameters">No dispongo de potencia; reportaré corriente, tensión, fases y factor de potencia</option>
+          </select>
+          <div class="field-error">Seleccione una ruta de captura.</div>
+        </div>
+      </div>
+
+      <div class="route-panel power-route" hidden>
+        <div class="form-grid">
+          <div class="form-group">
+            <label data-power-label>Potencia eléctrica de un equipo <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="power" class="field-s" type="number" min="0.000001" step="any">
+              <select data-field="power_unit">
+                <option value="">Unidad</option><option value="w">W</option><option value="kw">kW</option><option value="mw">MW</option><option value="other">Otra</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group power-unit-other-wrap" hidden>
+            <label>Otra unidad de potencia <span class="required-mark">*</span></label>
+            <input data-field="power_unit_other" class="field-m" type="text">
+          </div>
+        </div>
+        <div class="calculated-check" data-direct-power-check></div>
+      </div>
+
+      <div class="route-panel params-route" hidden>
+        <div class="form-grid">
+          <div class="form-group span-3">
+            <label>Corriente <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="current" class="field-s" type="number" min="0.000001" step="any">
+              <select data-field="current_unit">
+                <option value="">Unidad</option><option value="a">A</option><option value="ka">kA</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group span-3">
+            <label>Tensión <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="voltage" class="field-s" type="number" min="0.000001" step="any">
+              <select data-field="voltage_unit">
+                <option value="">Unidad</option><option value="v">V</option><option value="kv">kV</option><option value="mv">MV</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group span-3">
+            <label>Número de fases <span class="required-mark">*</span></label>
+            <select data-field="phases" class="field-s">
+              <option value="">Seleccione</option><option value="1">1 fase</option><option value="3">3 fases</option>
+            </select>
+          </div>
+          <div class="form-group span-3">
+            <label>Factor de potencia <span class="required-mark">*</span>
+              <button type="button" class="info-button" data-info-local aria-label="Información sobre factor de potencia">i</button>
+            </label>
+            <input data-field="power_factor" class="field-s" type="number" min="0.000001" max="1" step="0.001">
+            <div class="info-panel local-info">Utilice el factor de potencia indicado en la placa o ficha técnica del equipo. Debe ser mayor que 0 y menor o igual que 1. Si no dispone de este dato, utilice la ruta de potencia nominal.</div>
+          </div>
+        </div>
+        <div class="calculated-check" data-active-power-check>Potencia activa calculada: —</div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de operación del grupo</h5>
+        <div class="form-grid">
+          <div class="form-group span-3">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required><span class="unit">h/día</span></div>
+          </div>
+          <div class="form-group span-3">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div>
+          </div>
+          <div class="form-group span-3">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div>
+          </div>
+          <div class="form-group span-3">
+            <label>Tiempo fuera de uso <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="downtime_days" class="field-xs" type="number" min="0" max="365" step="1" required><span class="unit">días/año</span></div>
+            <span class="help-text">Capture 0 si no hubo días fuera de uso.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="directHeatFuelGroupTemplate">
+    <div class="dynamic-card direct-heat-fuel-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Equipo o grupo</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tipo de equipo <span class="required-mark">*</span></label>
+          <select data-field="equipment_type" class="field-m" required>
+            <option value="">Seleccione</option>
+            <option value="oven">Horno</option><option value="dryer">Secador</option><option value="griddle">Plancha</option>
+            <option value="burner">Quemador</option><option value="industrial_stove">Estufa industrial</option>
+            <option value="combustion_chamber">Cámara de combustión</option><option value="other">Otro</option>
+          </select>
+          <div class="field-error">Seleccione el tipo de equipo.</div>
+        </div>
+        <div class="form-group">
+          <label>Tipo o detalle del equipo <span class="required-mark">*</span></label>
+          <input data-field="equipment_detail" class="field-l" type="text" required>
+          <span class="help-text">Ejemplo: horno rotatorio, secador de túnel, quemador de proceso, etc.</span>
+          <div class="field-error">Indique el tipo o detalle del equipo.</div>
+        </div>
+        <div class="form-group">
+          <label>Tipo de energético utilizado <span class="required-mark">*</span></label>
+          <select data-field="fuel" class="field-m" required>
+            <option value="">Seleccione</option>
+            <option value="coal">Carbón</option><option value="coal_coke">Coque de carbón</option>
+            <option value="lpg">GLP</option><option value="dry_gas">Gas seco</option>
+            <option value="gasoline_naphtha">Gasolinas y naftas</option><option value="diesel">Diésel</option>
+            <option value="bagasse">Bagazo de caña</option><option value="other">Otro combustible</option>
+          </select>
+          <div class="field-error">Seleccione el energético.</div>
+        </div>
+        <div class="form-group fuel-other-wrap" hidden>
+          <label>Otro combustible <span class="required-mark">*</span></label>
+          <input data-field="fuel_other" class="field-m" type="text">
+        </div>
+        <div class="form-group span-3">
+          <label>Número de equipos <span class="required-mark">*</span></label>
+          <input data-field="count" class="field-xs" type="number" min="1" step="1" required>
+        </div>
+        <div class="form-group">
+          <label>Potencia nominal de un equipo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="thermal_power" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="thermal_power_unit" required>
+              <option value="">Unidad</option><option value="kw">kW</option><option value="mw">MW</option><option value="bhp">BHP</option><option value="kcal_h">kcal/h</option><option value="btu_h">BTU/h</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Consumo energético mensual de todos los equipos del grupo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="monthly_consumption" class="field-s" type="number" min="0" step="any" required>
+            <select data-field="consumption_unit" required></select>
+          </div>
+        </div>
+        <div class="form-group consumption-unit-other-wrap" hidden>
+          <label>Otra unidad de consumo mensual <span class="required-mark">*</span></label>
+          <input data-field="consumption_unit_other" class="field-m" type="text">
+        </div>
+      </div>
+      <div class="equipment-card-section">
+        <h5>Tiempo de operación</h5>
+        <div class="form-grid">
+          <div class="form-group span-3"><label>Horas al día <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required><span class="unit">h/día</span></div></div>
+          <div class="form-group span-3"><label>Días a la semana <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div></div>
+          <div class="form-group span-3"><label>Semanas al año <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div></div>
+          <div class="form-group span-3"><label>Tiempo fuera de uso <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="downtime_days" class="field-xs" type="number" min="0" max="365" step="1" required><span class="unit">días/año</span></div><span class="help-text">Capture 0 si no hubo días fuera de uso.</span></div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="waterHeatingGroupTemplate">
+    <div class="dynamic-card water-heating-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Equipo o grupo</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tipo de equipo <span class="required-mark">*</span></label>
+          <select data-field="equipment_type" class="field-l" required>
+            <option value="">Seleccione</option>
+            <option value="instant">Calentador de paso</option>
+            <option value="storage">Calentador de acumulación (tanque)</option>
+            <option value="direct_combustion">Calentador de combustión directa</option>
+            <option value="water_water">Intercambiador de calor agua-agua</option>
+            <option value="water_steam">Intercambiador de calor agua-vapor</option>
+            <option value="oil_water">Intercambiador de calor aceite-agua</option>
+            <option value="other">Otro</option>
+          </select>
+        </div>
+        <div class="form-group equipment-other-wrap" hidden>
+          <label>Otro tipo de equipo <span class="required-mark">*</span></label>
+          <input data-field="equipment_other" class="field-l" type="text">
+        </div>
+        <div class="form-group">
+          <label>Tipo de energético utilizado <span class="required-mark">*</span></label>
+          <select data-field="energy_type" class="field-m" required>
+            <option value="">Seleccione</option>
+            <option value="coal">Carbón</option><option value="coal_coke">Coque de carbón</option>
+            <option value="lpg">GLP</option><option value="dry_gas">Gas seco</option>
+            <option value="gasoline_naphtha">Gasolinas y naftas</option><option value="diesel">Diésel</option>
+            <option value="bagasse">Bagazo de caña</option><option value="electricity">Electricidad</option>
+            <option value="other">Otro combustible</option>
+          </select>
+        </div>
+        <div class="form-group energy-other-wrap" hidden>
+          <label>Otro combustible <span class="required-mark">*</span></label>
+          <input data-field="energy_other" class="field-m" type="text">
+        </div>
+        <div class="form-group span-3">
+          <label>Cantidad de equipos <span class="required-mark">*</span></label>
+          <input data-field="count" class="field-xs" type="number" min="1" step="1" required>
+        </div>
+        <div class="form-group">
+          <label>Potencia de un equipo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="thermal_power" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="thermal_power_unit" required>
+              <option value="">Unidad</option><option value="kw">kW</option><option value="mw">MW</option><option value="bhp">BHP</option><option value="kcal_h">kcal/h</option><option value="btu_h">BTU/h</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Consumo de energético por mes <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="monthly_consumption" class="field-s" type="number" min="0" step="any" required>
+            <select data-field="consumption_unit" required></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de operación</h5>
+        <div class="form-grid">
+          <div class="form-group span-3"><label>Horas al día <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required><span class="unit">h/día</span></div></div>
+          <div class="form-group span-3"><label>Días a la semana <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div></div>
+          <div class="form-group span-3"><label>Semanas al año <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div></div>
+          <div class="form-group span-3"><label>Tiempo fuera de uso <span class="required-mark">*</span></label><div class="input-with-unit"><input data-field="downtime_days" class="field-xs" type="number" min="0" max="365" step="1" required><span class="unit">días/año</span></div><span class="help-text">Capture 0 si no hubo días fuera de uso.</span></div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Equipo eléctrico auxiliar asociado</h5>
+        <p class="compact-help">Reporte la potencia eléctrica de bombas u otros auxiliares utilizados para mover agua u otro fluido. Si el grupo no cuenta con equipos auxiliares eléctricos, puede capturar 0.</p>
+        <div class="input-with-unit" style="margin-top:10px">
+          <input data-field="aux_power" class="field-s" type="number" min="0" step="any" required>
+          <select data-field="aux_power_unit" required>
+            <option value="">Unidad</option><option value="w">W</option><option value="kw">kW</option><option value="mw">MW</option><option value="hp">HP</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </template>
+
 <script>
 (() => {
   "use strict";
@@ -1630,6 +2252,7 @@
     if (next){
       if (currentView === "1" && !validateSection1()) return;
       if (currentView === "2" && !validateSection2()) return;
+      if (currentView === "3" && !validateSection3()) return;
       showView(next.dataset.next);
     }
     if (prev) showView(prev.dataset.prev);
@@ -1899,12 +2522,34 @@
     return refreshUnits;
   }
 
+  function formatEnergyNumber(value){
+    return new Intl.NumberFormat("es-MX", {maximumFractionDigits:3}).format(value);
+  }
+
   function updateEnergyCompletion(block){
     const inputs = qsa(".month-grid input[data-month]", block);
     const completed = inputs.filter(i => i.value !== "").length;
     const chip = qs(".completion-chip", block);
     chip.textContent = `${completed} / 12 meses`;
     chip.classList.toggle("complete", completed === 12);
+
+    const annual = qs("[data-energy-annual-total]", block);
+    if (annual){
+      if (completed === 12){
+        const sum = inputs.reduce((total,input) => total + Number(input.value || 0), 0);
+        const unitSelect = qs("[data-energy-unit]", block);
+        const otherUnit = qs("[data-energy-other-unit]", block);
+        let unit = "";
+        if (unitSelect && unitSelect.value === "other"){
+          unit = otherUnit ? otherUnit.value.trim() : "";
+        } else if (unitSelect && unitSelect.value){
+          unit = unitSelect.options[unitSelect.selectedIndex]?.textContent || "";
+        }
+        annual.textContent = `${formatEnergyNumber(sum)}${unit ? " " + unit + "/año" : ""}`;
+      } else {
+        annual.textContent = "—";
+      }
+    }
   }
 
   function buildEnergyBlock(type){
@@ -1954,8 +2599,12 @@
         clearInvalid(otherUnit);
       }
       refreshMonthUnits();
+      updateEnergyCompletion(block);
     });
-    otherUnit.addEventListener("input", refreshMonthUnits);
+    otherUnit.addEventListener("input", () => {
+      refreshMonthUnits();
+      updateEnergyCompletion(block);
+    });
 
     const help = qs(".energy-specific-help", block);
     if (type === "electricity"){
@@ -2008,6 +2657,27 @@
   -------------------------- */
   const tariffGroups = qs("#tariffGroups");
   const tariffTemplate = qs("#tariffGroupTemplate");
+  const meterAllocationSummary = qs("#meterAllocationSummary");
+  const meterTotalShown = qs("#meterTotalShown");
+  const meterAssignedShown = qs("#meterAssignedShown");
+  const meterRemainingShown = qs("#meterRemainingShown");
+
+  function updateMeterAllocation(){
+    const total = meterCount.value === "" ? 0 : Number(meterCount.value);
+    const assigned = qsa('[data-field="meter_count"]', tariffGroups)
+      .reduce((sum,input) => sum + Number(input.value || 0), 0);
+    const remaining = total - assigned;
+
+    meterAllocationSummary.hidden = !(total > 0);
+    meterTotalShown.textContent = total;
+    meterAssignedShown.textContent = assigned;
+    meterRemainingShown.textContent = remaining;
+
+    meterAllocationSummary.classList.toggle("good", total > 0 && remaining === 0);
+    meterAllocationSummary.classList.toggle("bad", total > 0 && remaining < 0);
+    return {total,assigned,remaining};
+  }
+
 
   function updateTariffCompletion(card){
     const monthInputs = qsa("[data-month]", card);
@@ -2024,17 +2694,26 @@
       qs(".local-info", card).classList.toggle("visible");
     });
 
+    qs('[data-field="meter_count"]', card).addEventListener("input", updateMeterAllocation);
+
     qs(".remove-button", card).addEventListener("click", () => {
       card.remove();
       renumberCards(tariffGroups, "Grupo tarifario");
+      updateMeterAllocation();
     });
 
     tariffGroups.appendChild(card);
     renumberCards(tariffGroups, "Grupo tarifario");
     updateTariffCompletion(card);
+    updateMeterAllocation();
   }
 
-  qs("#addTariffGroup").addEventListener("click", addTariffGroup);
+  qs("#addTariffGroup").addEventListener("click", () => {
+    const total = Number(meterCount.value || 0);
+    if (total <= 0) return;
+    if (tariffGroups.children.length >= total) return;
+    addTariffGroup();
+  });
 
   const meterCount = qs("#electric_meter_count");
   const tariffBlock = qs("#tariffBlock");
@@ -2042,10 +2721,17 @@
   function syncMeterCount(){
     const raw = meterCount.value;
     const count = raw === "" ? null : Number(raw);
-    const zero = count === 0;
-    tariffBlock.hidden = zero;
-    qsa("input,select,button", tariffBlock).forEach(el => el.disabled = zero);
-    if (zero) tariffGroups.innerHTML = "";
+    const noMeters = count === 0 || count === null || !Number.isFinite(count);
+
+    tariffBlock.hidden = noMeters;
+    qsa("input,select,button", tariffBlock).forEach(el => el.disabled = noMeters);
+
+    if (noMeters){
+      tariffGroups.innerHTML = "";
+    } else if (count > 0 && !tariffGroups.children.length){
+      addTariffGroup();
+    }
+    updateMeterAllocation();
   }
   meterCount.addEventListener("input", syncMeterCount);
   syncMeterCount();
@@ -2236,6 +2922,11 @@
         qs("#addTariffGroup").scrollIntoView({behavior:"smooth",block:"center"});
       }
       if (!validateUniqueTariffs()) ok = false;
+      const allocation = updateMeterAllocation();
+      if (allocation.assigned !== allocation.total){
+        ok = false;
+        meterAllocationSummary.classList.add("bad");
+      }
     }
 
     const cogenYes = qs('input[name="does_cogeneration"][value="yes"]').checked;
@@ -2269,6 +2960,520 @@
     el.addEventListener("input", () => {
       if (el.classList.contains("invalid")) validateElement(el);
     });
+  });
+
+
+
+  /* =========================================================
+     SECCIÓN 3 · PROCESOS TÉRMICOS
+  ========================================================= */
+  const section3Form = qs("#section3Form");
+
+  const THERMAL_UNITS = [
+    ["kw","kW"],["mw","MW"],["bhp","BHP"],["kcal_h","kcal/h"],["btu_h","BTU/h"]
+  ];
+  const FUEL_CONSUMPTION_UNITS = {
+    coal:[["kg","kg/mes"],["t","ton/mes"]],
+    coal_coke:[["kg","kg/mes"],["t","ton/mes"]],
+    lpg:[["m3","m³/mes"],["l","L/mes"]],
+    dry_gas:[["m3","m³/mes"],["l","L/mes"]],
+    gasoline_naphtha:[["m3","m³/mes"],["l","L/mes"]],
+    diesel:[["m3","m³/mes"],["l","L/mes"]],
+    bagasse:[["kg","kg/mes"],["m3","m³/mes"],["l","L/mes"]],
+    coffee_husk:[["kg","kg/mes"],["t","ton/mes"],["other","Otra unidad"]],
+    organic_residues:[["kg","kg/mes"],["t","ton/mes"],["other","Otra unidad"]],
+    electricity:[["kwh","kWh/mes"],["mwh","MWh/mes"]],
+    other:[["other","Otra unidad"]]
+  };
+
+  function fillSelect(select, options, placeholder="Seleccione"){
+    const current = select.value;
+    select.innerHTML = `<option value="">${placeholder}</option>` +
+      options.map(([value,label]) => `<option value="${value}">${label}</option>`).join("");
+    if ([...select.options].some(o => o.value === current)) select.value = current;
+  }
+
+  function wireLocalInfo(card){
+    qsa("[data-info-local]", card).forEach(btn => {
+      btn.addEventListener("click", () => {
+        const panel = btn.closest(".form-group")?.querySelector(".local-info") ||
+                      btn.closest(".dynamic-card")?.querySelector(".local-info");
+        if (panel) panel.classList.toggle("visible");
+      });
+    });
+  }
+
+  function wireConsumptionUnitOther(card){
+    const select = qs('[data-field="consumption_unit"]',card);
+    const wrap = qs(".consumption-unit-other-wrap",card);
+    const input = qs('[data-field="consumption_unit_other"]',card);
+    if(!select || !wrap || !input) return;
+
+    const sync = () => {
+      const other = select.value === "other";
+      wrap.hidden = !other;
+      input.required = other;
+      input.disabled = !other;
+      if(!other){input.value="";clearInvalid(input);}
+    };
+    select.addEventListener("change",sync);
+    sync();
+  }
+
+  function wireVisibleValidation(card){
+    qsa("input,select,textarea", card).forEach(el => {
+      if (["radio","checkbox"].includes(el.type)) return;
+      el.addEventListener("blur", () => validateElement(el));
+      el.addEventListener("input", () => {
+        if (el.classList.contains("invalid")) validateElement(el);
+      });
+    });
+  }
+
+  function resetAndDisableBlock(block){
+    block.hidden = true;
+    qsa("input,select,textarea", block).forEach(el => {
+      el.disabled = true;
+      if (["radio","checkbox"].includes(el.type)) el.checked = false;
+      else el.value = "";
+      clearInvalid(el);
+    });
+  }
+
+  function showAndEnableBlock(block){
+    block.hidden = false;
+    qsa("input,select,textarea", block).forEach(el => el.disabled = false);
+  }
+
+  /* -------------------------
+     Helpers electrical route
+  -------------------------- */
+  function normalizePowerKw(value, unit){
+    const v = Number(value);
+    if (!Number.isFinite(v)) return null;
+    if (unit === "w") return v/1000;
+    if (unit === "kw") return v;
+    if (unit === "mw") return v*1000;
+    return null;
+  }
+
+  function normalizeCurrentA(value, unit){
+    const v = Number(value);
+    if (!Number.isFinite(v)) return null;
+    if (unit === "a") return v;
+    if (unit === "ka") return v*1000;
+    return null;
+  }
+
+  function normalizeVoltageV(value, unit){
+    const v = Number(value);
+    if (!Number.isFinite(v)) return null;
+    if (unit === "v") return v;
+    if (unit === "kv") return v*1000;
+    if (unit === "mv") return v*1000000;
+    return null;
+  }
+
+  function updateElectricalPowerCheck(card){
+    const method = qs('[data-field="input_method"]', card)?.value;
+    if (method === "power"){
+      const p = normalizePowerKw(
+        qs('[data-field="power"]', card)?.value,
+        qs('[data-field="power_unit"]', card)?.value
+      );
+      const target = qs("[data-direct-power-check]", card);
+      if (target) target.textContent = p === null ? "" : `Potencia normalizada para verificación: ${formatEnergyNumber(p)} kW`;
+      return;
+    }
+
+    if (method === "parameters"){
+      const current = normalizeCurrentA(
+        qs('[data-field="current"]', card)?.value,
+        qs('[data-field="current_unit"]', card)?.value
+      );
+      const voltage = normalizeVoltageV(
+        qs('[data-field="voltage"]', card)?.value,
+        qs('[data-field="voltage_unit"]', card)?.value
+      );
+      const phases = qs('[data-field="phases"]', card)?.value;
+      const fp = Number(qs('[data-field="power_factor"]', card)?.value);
+      let kw = null;
+      if (current !== null && voltage !== null && fp > 0 && fp <= 1){
+        if (phases === "1") kw = voltage * current * fp / 1000;
+        if (phases === "3") kw = Math.sqrt(3) * voltage * current * fp / 1000;
+      }
+      const target = qs("[data-active-power-check]", card);
+      if (target) target.textContent = kw === null ? "Potencia activa calculada: —" : `Potencia activa calculada: ${formatEnergyNumber(kw)} kW`;
+    }
+  }
+
+  function wireElectricThermalCard(card, config){
+    const typeWrap = qs(".electric-equipment-type-wrap", card);
+    const detailWrap = qs(".electric-detail-wrap", card);
+    const typeSelect = qs('[data-field="equipment_type"]', card);
+    const detailInput = qs('[data-field="equipment_detail"]', card);
+
+    if (config.types){
+      typeWrap.hidden = false;
+      detailWrap.hidden = false;
+      fillSelect(typeSelect, config.types);
+      typeSelect.required = true;
+      detailInput.required = true;
+    }
+
+    qs("[data-count-label]", card).innerHTML = `${config.countLabel} <span class="required-mark">*</span>`;
+    qs("[data-power-label]", card).innerHTML = `${config.powerLabel} <span class="required-mark">*</span>`;
+
+    const method = qs('[data-field="input_method"]', card);
+    const powerRoute = qs(".power-route", card);
+    const paramsRoute = qs(".params-route", card);
+
+    function syncMethod(){
+      const usePower = method.value === "power";
+      const useParams = method.value === "parameters";
+
+      powerRoute.hidden = !usePower;
+      paramsRoute.hidden = !useParams;
+
+      qsa("input,select", powerRoute).forEach(el => el.disabled = !usePower);
+      qsa("input,select", paramsRoute).forEach(el => el.disabled = !useParams);
+
+      qsa('[data-field="power"],[data-field="power_unit"]', powerRoute).forEach(el => el.required = usePower);
+      qsa('[data-field="current"],[data-field="current_unit"],[data-field="voltage"],[data-field="voltage_unit"],[data-field="phases"],[data-field="power_factor"]', paramsRoute)
+        .forEach(el => el.required = useParams);
+
+      if (!usePower){
+        qsa("input,select", powerRoute).forEach(el => { el.value=""; clearInvalid(el); });
+      }
+      if (!useParams){
+        qsa("input,select", paramsRoute).forEach(el => { el.value=""; clearInvalid(el); });
+      }
+      updateElectricalPowerCheck(card);
+    }
+    method.addEventListener("change", syncMethod);
+
+    const powerUnit = qs('[data-field="power_unit"]', card);
+    const otherWrap = qs(".power-unit-other-wrap", card);
+    const otherInput = qs('[data-field="power_unit_other"]', card);
+    powerUnit.addEventListener("change", () => {
+      const other = powerUnit.value === "other";
+      otherWrap.hidden = !other;
+      otherInput.required = other;
+      otherInput.disabled = !other;
+      if (!other){otherInput.value=""; clearInvalid(otherInput);}
+      updateElectricalPowerCheck(card);
+    });
+
+    qsa('[data-field="power"],[data-field="current"],[data-field="current_unit"],[data-field="voltage"],[data-field="voltage_unit"],[data-field="phases"],[data-field="power_factor"]', card)
+      .forEach(el => {
+        el.addEventListener("input", () => updateElectricalPowerCheck(card));
+        el.addEventListener("change", () => updateElectricalPowerCheck(card));
+      });
+
+    wireLocalInfo(card);
+    wireVisibleValidation(card);
+    syncMethod();
+  }
+
+  /* -------------------------
+     3.1 Vapor
+  -------------------------- */
+  const steamDetails = qs("#steamDetails");
+  const steamFuelBlock = qs("#steamFuelBlock");
+  const steamElectricBlock = qs("#steamElectricBlock");
+  const steamFuelGroups = qs("#steamFuelGroups");
+  const steamElectricGroups = qs("#steamElectricGroups");
+  const steamFuelTemplate = qs("#steamFuelGroupTemplate");
+  const electricThermalTemplate = qs("#electricThermalGroupTemplate");
+
+  qsa('input[name="uses_steam_boilers"]').forEach(r => {
+    r.addEventListener("change", () => {
+      const yes = qs('input[name="uses_steam_boilers"][value="yes"]').checked;
+      if (yes){
+        showAndEnableBlock(steamDetails);
+      }else{
+        resetAndDisableBlock(steamDetails);
+        steamFuelGroups.innerHTML="";
+        steamElectricGroups.innerHTML="";
+        steamFuelBlock.hidden=true;
+        steamElectricBlock.hidden=true;
+      }
+    });
+  });
+
+  function selectedSteamRoutes(){
+    return qsa("#steamEnergyRoutes input:checked").map(i=>i.value);
+  }
+
+  function steamSourceOptions(){
+    const routes = selectedSteamRoutes();
+    const opts = [];
+    if (routes.includes("fuels")){
+      opts.push(["coal","Carbón"],["coal_coke","Coque de carbón"],["lpg","GLP"],["dry_gas","Gas seco"],["diesel","Diésel"],["gasoline_naphtha","Gasolinas y naftas"]);
+    }
+    if (routes.includes("biomass")){
+      opts.push(["bagasse","Bagazo de caña"],["coffee_husk","Cascarilla de café"],["organic_residues","Otros residuos orgánicos"]);
+    }
+    if (routes.includes("other")) opts.push(["other","Otro combustible o fuente"]);
+    return opts;
+  }
+
+  function syncSteamRoutes(){
+    const routes = selectedSteamRoutes();
+    const hasNonElectric = routes.some(r=>["fuels","biomass","other"].includes(r));
+    const hasElectric = routes.includes("electricity");
+
+    steamFuelBlock.hidden = !hasNonElectric;
+    steamElectricBlock.hidden = !hasElectric;
+    qs("#steamRoutesError").classList.remove("visible");
+
+    if (hasNonElectric && !steamFuelGroups.children.length) addSteamFuelGroup();
+    if (!hasNonElectric) steamFuelGroups.innerHTML="";
+
+    if (hasElectric && !steamElectricGroups.children.length) addSteamElectricGroup();
+    if (!hasElectric) steamElectricGroups.innerHTML="";
+
+    qsa('[data-field="source"]', steamFuelGroups).forEach(sel => {
+      fillSelect(sel, steamSourceOptions());
+      sel.dispatchEvent(new Event("change"));
+    });
+  }
+  qsa("#steamEnergyRoutes input").forEach(cb=>cb.addEventListener("change",syncSteamRoutes));
+
+  function addSteamFuelGroup(){
+    const card = steamFuelTemplate.content.firstElementChild.cloneNode(true);
+    const source = qs('[data-field="source"]',card);
+    const sourceOtherWrap = qs(".source-other-wrap",card);
+    const sourceOther = qs('[data-field="source_other"]',card);
+    const consumptionUnit = qs('[data-field="consumption_unit"]',card);
+
+    fillSelect(source,steamSourceOptions());
+
+    source.addEventListener("change",()=>{
+      const val=source.value;
+      const other=val==="other";
+      sourceOtherWrap.hidden=!other;
+      sourceOther.required=other;
+      sourceOther.disabled=!other;
+      if(!other){sourceOther.value="";clearInvalid(sourceOther);}
+      fillSelect(consumptionUnit,FUEL_CONSUMPTION_UNITS[val]||[["other","Otra unidad"]],"Unidad/mes");
+    });
+
+    qs(".remove-button",card).addEventListener("click",()=>{
+      card.remove();
+      renumberCards(steamFuelGroups,"Grupo de calderas");
+    });
+    wireConsumptionUnitOther(card);
+    wireLocalInfo(card);
+    wireVisibleValidation(card);
+    steamFuelGroups.appendChild(card);
+    renumberCards(steamFuelGroups,"Grupo de calderas");
+  }
+
+  function addSteamElectricGroup(){
+    const card=electricThermalTemplate.content.firstElementChild.cloneNode(true);
+    wireElectricThermalCard(card,{
+      countLabel:"Número de calderas",
+      powerLabel:"Potencia eléctrica nominal por caldera"
+    });
+    qs(".remove-button",card).addEventListener("click",()=>{
+      card.remove();renumberCards(steamElectricGroups,"Grupo de calderas eléctricas");
+    });
+    steamElectricGroups.appendChild(card);
+    renumberCards(steamElectricGroups,"Grupo de calderas eléctricas");
+  }
+
+  qs("#addSteamFuelGroup").addEventListener("click",addSteamFuelGroup);
+  qs("#addSteamElectricGroup").addEventListener("click",addSteamElectricGroup);
+
+  /* -------------------------
+     3.2 Calor directo combustible
+  -------------------------- */
+  const directHeatFuelBlock=qs("#directHeatFuelBlock");
+  const directHeatFuelGroups=qs("#directHeatFuelGroups");
+  const directHeatFuelTemplate=qs("#directHeatFuelGroupTemplate");
+
+  qsa('input[name="uses_direct_heat_fuel_equipment"]').forEach(r=>{
+    r.addEventListener("change",()=>{
+      const yes=qs('input[name="uses_direct_heat_fuel_equipment"][value="yes"]').checked;
+      directHeatFuelBlock.hidden=!yes;
+      if(yes && !directHeatFuelGroups.children.length) addDirectHeatFuelGroup();
+      if(!yes) directHeatFuelGroups.innerHTML="";
+    });
+  });
+
+  function addDirectHeatFuelGroup(){
+    const card=directHeatFuelTemplate.content.firstElementChild.cloneNode(true);
+    const fuel=qs('[data-field="fuel"]',card);
+    const otherWrap=qs(".fuel-other-wrap",card);
+    const otherInput=qs('[data-field="fuel_other"]',card);
+    const consumptionUnit=qs('[data-field="consumption_unit"]',card);
+
+    fuel.addEventListener("change",()=>{
+      const other=fuel.value==="other";
+      otherWrap.hidden=!other;
+      otherInput.required=other;
+      otherInput.disabled=!other;
+      if(!other){otherInput.value="";clearInvalid(otherInput);}
+      fillSelect(consumptionUnit,FUEL_CONSUMPTION_UNITS[fuel.value]||[["other","Otra unidad"]],"Unidad/mes");
+    });
+
+    qs(".remove-button",card).addEventListener("click",()=>{
+      card.remove();renumberCards(directHeatFuelGroups,"Equipo o grupo");
+    });
+    wireConsumptionUnitOther(card);
+    wireVisibleValidation(card);
+    directHeatFuelGroups.appendChild(card);
+    renumberCards(directHeatFuelGroups,"Equipo o grupo");
+  }
+  qs("#addDirectHeatFuelGroup").addEventListener("click",addDirectHeatFuelGroup);
+
+  /* -------------------------
+     3.2 Calor directo eléctrico
+  -------------------------- */
+  const directHeatElectricBlock=qs("#directHeatElectricBlock");
+  const directHeatElectricGroups=qs("#directHeatElectricGroups");
+  const DIRECT_ELECTRIC_TYPES=[
+    ["electric_oven","Horno eléctrico"],["heater","Calentador"],["dryer","Secador"],["heat_gun","Pistola de calor"],
+    ["printing","Imprenta"],["packer","Empacador"],["soldering_iron","Cautín"],["welder","Soldadora"],["other","Otro"]
+  ];
+
+  qsa('input[name="uses_direct_heat_electric_equipment"]').forEach(r=>{
+    r.addEventListener("change",()=>{
+      const yes=qs('input[name="uses_direct_heat_electric_equipment"][value="yes"]').checked;
+      directHeatElectricBlock.hidden=!yes;
+      if(yes && !directHeatElectricGroups.children.length) addDirectHeatElectricGroup();
+      if(!yes) directHeatElectricGroups.innerHTML="";
+    });
+  });
+
+  function addDirectHeatElectricGroup(){
+    const card=electricThermalTemplate.content.firstElementChild.cloneNode(true);
+    wireElectricThermalCard(card,{
+      types:DIRECT_ELECTRIC_TYPES,
+      countLabel:"Cantidad de equipos",
+      powerLabel:"Potencia eléctrica nominal de un equipo"
+    });
+    qs(".remove-button",card).addEventListener("click",()=>{
+      card.remove();renumberCards(directHeatElectricGroups,"Equipo o grupo eléctrico");
+    });
+    directHeatElectricGroups.appendChild(card);
+    renumberCards(directHeatElectricGroups,"Equipo o grupo eléctrico");
+  }
+  qs("#addDirectHeatElectricGroup").addEventListener("click",addDirectHeatElectricGroup);
+
+  /* -------------------------
+     3.3 Calentamiento de agua
+  -------------------------- */
+  const waterHeatingBlock=qs("#waterHeatingBlock");
+  const waterHeatingGroups=qs("#waterHeatingGroups");
+  const waterHeatingTemplate=qs("#waterHeatingGroupTemplate");
+
+  qsa('input[name="uses_water_heating_equipment"]').forEach(r=>{
+    r.addEventListener("change",()=>{
+      const yes=qs('input[name="uses_water_heating_equipment"][value="yes"]').checked;
+      waterHeatingBlock.hidden=!yes;
+      if(yes && !waterHeatingGroups.children.length) addWaterHeatingGroup();
+      if(!yes) waterHeatingGroups.innerHTML="";
+    });
+  });
+
+  function addWaterHeatingGroup(){
+    const card=waterHeatingTemplate.content.firstElementChild.cloneNode(true);
+    const equipmentType=qs('[data-field="equipment_type"]',card);
+    const equipmentOtherWrap=qs(".equipment-other-wrap",card);
+    const equipmentOther=qs('[data-field="equipment_other"]',card);
+    const energyType=qs('[data-field="energy_type"]',card);
+    const energyOtherWrap=qs(".energy-other-wrap",card);
+    const energyOther=qs('[data-field="energy_other"]',card);
+    const consumptionUnit=qs('[data-field="consumption_unit"]',card);
+
+    equipmentType.addEventListener("change",()=>{
+      const other=equipmentType.value==="other";
+      equipmentOtherWrap.hidden=!other;
+      equipmentOther.required=other;
+      equipmentOther.disabled=!other;
+      if(!other){equipmentOther.value="";clearInvalid(equipmentOther);}
+    });
+
+    energyType.addEventListener("change",()=>{
+      const other=energyType.value==="other";
+      energyOtherWrap.hidden=!other;
+      energyOther.required=other;
+      energyOther.disabled=!other;
+      if(!other){energyOther.value="";clearInvalid(energyOther);}
+      fillSelect(consumptionUnit,FUEL_CONSUMPTION_UNITS[energyType.value]||[["other","Otra unidad"]],"Unidad/mes");
+    });
+
+    qs(".remove-button",card).addEventListener("click",()=>{
+      card.remove();renumberCards(waterHeatingGroups,"Equipo o grupo");
+    });
+    wireConsumptionUnitOther(card);
+    wireVisibleValidation(card);
+    waterHeatingGroups.appendChild(card);
+    renumberCards(waterHeatingGroups,"Equipo o grupo");
+  }
+  qs("#addWaterHeatingGroup").addEventListener("click",addWaterHeatingGroup);
+
+  /* -------------------------
+     Validación Sección 3
+  -------------------------- */
+  function validateSteamRoutes(){
+    const steamYes=qs('input[name="uses_steam_boilers"][value="yes"]').checked;
+    if(!steamYes) return true;
+    const selected=selectedSteamRoutes();
+    const valid=selected.length>0;
+    qs("#steamRoutesError").classList.toggle("visible",!valid);
+    if(!valid) return false;
+
+    let ok=true;
+    if(selected.includes("electricity") && !steamElectricGroups.children.length) ok=false;
+
+    const sourceRoute={
+      coal:"fuels",coal_coke:"fuels",lpg:"fuels",dry_gas:"fuels",diesel:"fuels",gasoline_naphtha:"fuels",
+      bagasse:"biomass",coffee_husk:"biomass",organic_residues:"biomass",other:"other"
+    };
+    for(const route of selected.filter(r=>r!=="electricity")){
+      const found=qsa('[data-field="source"]',steamFuelGroups).some(sel=>sourceRoute[sel.value]===route);
+      if(!found) ok=false;
+    }
+    return ok;
+  }
+
+  function validateSection3(){
+    let ok=true;
+    qsa("#section3Form input,#section3Form select,#section3Form textarea").forEach(el=>{
+      if(["radio","checkbox"].includes(el.type)) return;
+      if(!validateElement(el)) ok=false;
+    });
+
+    if(!validateRadioGroup("uses_steam_boilers")) ok=false;
+    if(!validateRadioGroup("uses_direct_heat_fuel_equipment")) ok=false;
+    if(!validateRadioGroup("uses_direct_heat_electric_equipment")) ok=false;
+    if(!validateRadioGroup("uses_water_heating_equipment")) ok=false;
+    if(!validateSteamRoutes()) ok=false;
+
+    const fuelYes=qs('input[name="uses_direct_heat_fuel_equipment"][value="yes"]').checked;
+    const elecYes=qs('input[name="uses_direct_heat_electric_equipment"][value="yes"]').checked;
+    const waterYes=qs('input[name="uses_water_heating_equipment"][value="yes"]').checked;
+    if(fuelYes && !directHeatFuelGroups.children.length) ok=false;
+    if(elecYes && !directHeatElectricGroups.children.length) ok=false;
+    if(waterYes && !waterHeatingGroups.children.length) ok=false;
+
+    if(!ok){
+      const first=qs("#section3Form .invalid,#section3Form .field-error.visible");
+      if(first) first.scrollIntoView({behavior:"smooth",block:"center"});
+      const review=qs("#reviewS3");if(review) review.textContent="Con pendientes";
+      return false;
+    }
+    const review=qs("#reviewS3");if(review) review.textContent="Completa";
+    return true;
+  }
+
+  qsa("#section3Form input,#section3Form select,#section3Form textarea").forEach(el=>{
+    if(["radio","checkbox"].includes(el.type)) return;
+    el.addEventListener("blur",()=>validateElement(el));
+    el.addEventListener("input",()=>{if(el.classList.contains("invalid"))validateElement(el);});
   });
 
 
