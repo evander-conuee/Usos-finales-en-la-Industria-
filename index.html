@@ -506,6 +506,137 @@
       background:#eef4e9;color:var(--green-dark)
     }
 
+
+    /* =========================================================
+       SECCIÓN 2 · ENERGÍA
+    ========================================================= */
+    .choice-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(205px,1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+    .check-card{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:46px;
+      padding:11px 13px;
+      border:1px solid var(--border);
+      border-radius:7px;
+      background:#fbfcfc;
+      cursor:pointer;
+      transition:border-color .15s ease,background .15s ease;
+    }
+    .check-card:hover{
+      border-color:#9caf8d;
+      background:#f4f7f1;
+    }
+    .check-card:has(input:checked){
+      border-color:var(--green);
+      background:var(--green-soft);
+    }
+    .check-card input{margin:0}
+
+    .energy-block{
+      border:1px solid #d4dadd;
+      border-radius:9px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .energy-block-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      padding:14px 16px;
+      background:#f3f6f1;
+      border-bottom:1px solid #dce2df;
+    }
+    .energy-block-head h4{
+      margin:0;
+      color:var(--green-dark);
+      font-size:15.5px;
+    }
+    .energy-block-body{padding:16px}
+    .completion-chip{
+      flex:0 0 auto;
+      padding:4px 9px;
+      border-radius:16px;
+      background:#e5e9eb;
+      color:#48535a;
+      font-size:12px;
+      font-weight:700;
+    }
+    .completion-chip.complete{
+      background:#e5f2df;
+      color:#385d24;
+    }
+    .month-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(120px,1fr));
+      gap:12px 14px;
+      margin-top:15px;
+    }
+    .month-field label{
+      margin-bottom:5px;
+      color:#475258;
+      font-size:12.5px;
+      font-weight:700;
+    }
+    .month-field input{
+      min-width:0;
+      width:100%;
+    }
+    .visible-method-note{
+      margin:12px 0 0;
+      padding:11px 13px;
+      background:#fff8dc;
+      border-left:4px solid #c3a632;
+      color:#514800;
+      font-size:13.5px;
+      line-height:1.55;
+    }
+    .image-help{
+      display:block;
+      width:min(100%,760px);
+      margin:12px auto 0;
+      border:1px solid #d7dcdf;
+      border-radius:7px;
+      background:#fff;
+    }
+    .metric-summary{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:12px 14px;
+      margin-top:14px;
+      border-radius:7px;
+      background:#f5f7f4;
+      border:1px solid #dbe2d7;
+      font-size:13.5px;
+    }
+    .metric-summary strong{
+      color:var(--green-dark);
+    }
+    .percentage-total.good{
+      color:#2f6b22;
+      font-weight:700;
+    }
+    .percentage-total.bad{
+      color:var(--danger);
+      font-weight:700;
+    }
+
+    @media (max-width:850px){
+      .month-grid{grid-template-columns:repeat(3,minmax(110px,1fr))}
+    }
+    @media (max-width:600px){
+      .month-grid{grid-template-columns:repeat(2,minmax(110px,1fr))}
+      .energy-block-head{align-items:center}
+    }
+
     /* =========================================================
        RESPONSIVE
     ========================================================= */
@@ -765,12 +896,16 @@
 
               <div class="form-grid">
                 <div class="form-group span-4">
-                  <label for="weeks_operation_month">Semanas de operación al mes <span class="required-mark">*</span></label>
+                  <label for="weeks_operation_month">
+                    Semanas de operación al mes <span class="required-mark">*</span>
+                    <button type="button" class="info-button" data-info="weeksMonthInfo" aria-label="Información sobre semanas por mes">i</button>
+                  </label>
                   <div class="input-with-unit">
-                    <input id="weeks_operation_month" name="weeks_operation_month" class="field-xs" type="number" min="0.01" max="5" step="0.01" required>
+                    <input id="weeks_operation_month" name="weeks_operation_month" class="field-xs" type="number" min="0.01" max="4.3" step="0.01" required>
                     <span class="unit">semanas/mes</span>
                   </div>
-                  <div class="field-error">Capture un valor mayor que 0 y máximo 5.</div>
+                  <div id="weeksMonthInfo" class="info-panel">Un mes tiene aproximadamente <strong>4.3 semanas</strong>. Si el establecimiento opera durante todo el mes, puede considerar 4.3 como valor de referencia.</div>
+                  <div class="field-error">Capture un valor mayor que 0 y menor o igual que 4.3.</div>
                 </div>
 
                 <div class="form-group span-4">
@@ -892,12 +1027,245 @@
     <!-- =====================================================
          SECCIONES 2–8 · ESQUELETO DE NAVEGACIÓN
     ====================================================== -->
+
+    <!-- =====================================================
+         SECCIÓN 2
+    ====================================================== -->
     <section class="section-view" data-section="2" data-anchor>
       <div class="section-shell">
-        <div class="section-heading"><h2>2. Consumo energético, autogeneración y cogeneración</h2></div>
-        <div class="placeholder"><strong>Estructura preparada</strong>Este bloque se implementará después de validar visualmente la Sección 1.</div>
+        <div class="section-heading">
+          <h2>2. Consumo energético, autogeneración y cogeneración de energía</h2>
+          <p>Consumos por tipo de energético, información eléctrica y generación de energía dentro del establecimiento.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box">
+            En esta sección se solicita información de los <strong>energéticos utilizados por el establecimiento</strong>.
+            Cuando se soliciten consumos mensuales, capture <strong>12 periodos consecutivos</strong>. No es necesario que correspondan a enero–diciembre.
+          </div>
+
+          <form id="section2Form" novalidate>
+
+            <!-- =================================================
+                 2.1 CONSUMO POR TIPO DE ENERGÍA
+            ================================================== -->
+            <div class="subsection" id="s2-energy" data-anchor>
+              <h3 class="subsection-title"><span class="number">2.1</span> Consumo de energía por tipo</h3>
+
+              <p class="question-prompt">
+                En el establecimiento, indique el <strong>consumo de energía por tipo</strong>.
+                Seleccione los energéticos utilizados y, para cada uno, indique la unidad en la que reportará la información y capture los consumos de <strong>12 periodos mensuales consecutivos</strong>.
+                Si la unidad que utiliza no aparece en la lista, seleccione <strong>“Otra”</strong> y especifíquela.
+              </p>
+
+              <span class="question-label">¿Qué tipos de energía utiliza el establecimiento? <span class="required-mark">*</span></span>
+              <div class="choice-grid" id="energyTypeChoices">
+                <label class="check-card"><input type="checkbox" value="electricity"> Electricidad</label>
+                <label class="check-card"><input type="checkbox" value="coal"> Carbón</label>
+                <label class="check-card"><input type="checkbox" value="coal_coke"> Coque de carbón</label>
+                <label class="check-card"><input type="checkbox" value="lpg"> GLP</label>
+                <label class="check-card"><input type="checkbox" value="dry_gas"> Gas seco</label>
+                <label class="check-card"><input type="checkbox" value="gasoline_naphtha"> Gasolinas y naftas</label>
+                <label class="check-card"><input type="checkbox" value="diesel"> Diésel</label>
+                <label class="check-card"><input type="checkbox" value="bagasse"> Bagazo de caña</label>
+                <label class="check-card"><input type="checkbox" value="other"> Otro energético</label>
+              </div>
+              <div class="field-error" id="energyTypesError">Seleccione al menos un tipo de energía.</div>
+
+              <div id="transportFuelNote" class="visible-method-note" hidden>
+                <strong>Importante:</strong> el consumo de gasolinas y naftas, y diésel <strong>no debe considerar el consumo por transporte interno ni externo</strong>.
+                Registre únicamente el consumo destinado a uso productivo.
+              </div>
+
+              <div id="energyBlocks" class="dynamic-list" style="margin-top:18px"></div>
+            </div>
+
+            <!-- =================================================
+                 2.2 ELECTRICIDAD
+            ================================================== -->
+            <div class="subsection" id="s2-electricity" data-anchor>
+              <h3 class="subsection-title"><span class="number">2.2</span> Electricidad</h3>
+
+              <div class="note-box" style="margin-bottom:18px">
+                Para responder este bloque le recomendamos tener a la mano el <strong>recibo o factura eléctrica más reciente</strong> del establecimiento.
+              </div>
+
+              <div class="form-group full">
+                <label for="electric_meter_count">
+                  2.2.1 ¿Podría indicarme el número de medidores de electricidad con los que cuenta el establecimiento/planta?
+                  <span class="required-mark">*</span>
+                </label>
+                <div class="input-with-unit">
+                  <input id="electric_meter_count" name="electric_meter_count" class="field-xs" type="number" min="0" step="1" required>
+                  <span class="unit">medidores</span>
+                </div>
+                <span class="help-text">Si el establecimiento no cuenta con medidores propios, capture 0.</span>
+                <div class="field-error">Capture un número entero igual o mayor que 0.</div>
+              </div>
+
+              <div id="tariffBlock" style="margin-top:26px">
+                <p class="question-prompt">
+                  <strong>2.2.2</strong> Complete la información de cada grupo de medidores, indicando la
+                  <strong>tarifa eléctrica, la potencia contratada y el consumo mensual</strong>.
+                  Cuando existan dos o más medidores bajo una misma tarifa eléctrica, registre la <strong>suma de la potencia contratada y de los consumos mensuales</strong> correspondientes.
+                </p>
+
+                <div class="visible-method-note">
+                  Registre cada tarifa <strong>una sola vez</strong>. Si existen varios medidores con la misma tarifa, consolide sus datos en un mismo grupo.
+                </div>
+
+                <div id="tariffGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addTariffGroup">＋ Agregar grupo tarifario</button>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 2.3 AUTOGENERACIÓN Y COGENERACIÓN
+            ================================================== -->
+            <div class="subsection" id="s2-generation" data-anchor>
+              <h3 class="subsection-title"><span class="number">2.3</span> Autogeneración y cogeneración</h3>
+
+              <div>
+                <span class="question-label">2.3.1 ¿Autogeneran electricidad en el establecimiento/planta? <span class="required-mark">*</span></span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="autogenerates_electricity" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="autogenerates_electricity" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="autogenerates_electricity">Seleccione una opción.</div>
+              </div>
+
+              <div id="autogenDetails" hidden style="margin-top:24px">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="autogen_use_frequency">2.3.2 ¿Podría indicar la frecuencia de uso de la planta de autogeneración? <span class="required-mark">*</span></label>
+                    <select id="autogen_use_frequency" name="autogen_use_frequency" class="field-m">
+                      <option value="">Seleccione una opción</option>
+                      <option value="scheduled">Programada</option>
+                      <option value="continuous">Continua</option>
+                    </select>
+                    <div class="field-error">Seleccione la frecuencia de uso.</div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="autogen_avg_hours_week">Horas promedio de uso a la semana <span class="required-mark">*</span></label>
+                    <div class="input-with-unit">
+                      <input id="autogen_avg_hours_week" name="autogen_avg_hours_week" class="field-s" type="number" min="0" max="168" step="0.1">
+                      <span class="unit">h/semana</span>
+                    </div>
+                    <div class="field-error">Capture un valor entre 0 y 168.</div>
+                  </div>
+                </div>
+
+                <div style="margin-top:24px">
+                  <span class="question-label">2.3.3 ¿La planta usa como fuente principal energía renovable? <span class="required-mark">*</span></span>
+                  <div class="radio-row">
+                    <label class="radio-card"><input type="radio" name="autogen_main_source_is_renewable" value="yes"> Sí</label>
+                    <label class="radio-card"><input type="radio" name="autogen_main_source_is_renewable" value="no"> No</label>
+                  </div>
+                  <div class="field-error" data-error-for="autogen_main_source_is_renewable">Seleccione una opción.</div>
+                </div>
+
+                <!-- RENOVABLE -->
+                <div id="renewableAutogenBlock" hidden style="margin-top:24px">
+                  <h4>2.3.3.1 Fuente renovable</h4>
+                  <p class="context-text">
+                    Seleccione la <strong>fuente renovable principal</strong> utilizada para la autogeneración e indique la potencia instalada y la energía eléctrica generada mensualmente en promedio.
+                  </p>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="renewable_autogen_source_type">Fuente renovable principal <span class="required-mark">*</span></label>
+                      <select id="renewable_autogen_source_type" name="renewable_autogen_source_type" class="field-m">
+                        <option value="">Seleccione una opción</option>
+                        <option value="solar">Solar</option>
+                        <option value="wind">Eólica</option>
+                        <option value="hydro">Hidroeléctrica</option>
+                        <option value="biomass">Biomasa</option>
+                        <option value="other">Otra</option>
+                      </select>
+                      <div class="field-error">Seleccione una fuente renovable.</div>
+                    </div>
+
+                    <div class="form-group" id="renewableOtherWrap" hidden>
+                      <label for="renewable_autogen_source_other">Otra fuente renovable <span class="required-mark">*</span></label>
+                      <input id="renewable_autogen_source_other" name="renewable_autogen_source_other" class="field-m" type="text">
+                      <div class="field-error">Especifique la fuente renovable.</div>
+                    </div>
+
+                    <div class="form-group span-4">
+                      <label for="renewable_autogen_installed_power_kw">Potencia instalada <span class="required-mark">*</span></label>
+                      <div class="input-with-unit">
+                        <input id="renewable_autogen_installed_power_kw" name="renewable_autogen_installed_power_kw" class="field-s" type="number" min="0" step="any">
+                        <span class="unit">kW</span>
+                      </div>
+                      <div class="field-error">Capture un valor igual o mayor que 0.</div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="renewable_autogen_avg_monthly_generation_kwh">Energía eléctrica generada mensualmente en promedio <span class="required-mark">*</span></label>
+                      <div class="input-with-unit">
+                        <input id="renewable_autogen_avg_monthly_generation_kwh" name="renewable_autogen_avg_monthly_generation_kwh" class="field-s" type="number" min="0" step="any">
+                        <span class="unit">kWh/mes</span>
+                      </div>
+                      <div class="field-error">Capture un valor igual o mayor que 0.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- NO RENOVABLE -->
+                <div id="nonRenewableAutogenBlock" hidden style="margin-top:24px">
+                  <h4>2.3.3.2 Plantas de autogeneración con fuente no renovable</h4>
+                  <p class="context-text">
+                    Registre cada planta por separado. Para cada una indique el <strong>combustible principal, la potencia instalada y la energía eléctrica generada mensualmente en promedio</strong>.
+                  </p>
+                  <div id="autogenPlants" class="dynamic-list"></div>
+                  <button type="button" class="add-button" id="addAutogenPlant">＋ Agregar planta de autogeneración</button>
+                  <span class="help-text">Puede registrar hasta 5 plantas.</span>
+                </div>
+              </div>
+
+              <!-- Cogeneración siempre se pregunta -->
+              <div style="margin-top:30px">
+                <span class="question-label">
+                  2.3.4 ¿En el establecimiento/planta realizan cogeneración?
+                  <span class="required-mark">*</span>
+                  <button type="button" class="info-button" data-info="cogenerationInfo" aria-label="Definición de cogeneración">i</button>
+                </span>
+                <div id="cogenerationInfo" class="info-panel">
+                  La cogeneración es la producción simultánea de <strong>electricidad y calor útil</strong> a partir de una misma fuente de energía o combustible.
+                </div>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="does_cogeneration" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="does_cogeneration" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="does_cogeneration">Seleccione una opción.</div>
+              </div>
+
+              <div id="cogenerationBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>2.3.4.1</strong> Indique el o los <strong>procesos productivos donde se utiliza el calor obtenido de la cogeneración</strong> y el porcentaje del calor útil destinado a cada proceso.
+                  La suma de los porcentajes debe ser exactamente <strong>100%</strong>.
+                </p>
+
+                <div id="cogenerationProcesses" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addCogenerationProcess">＋ Agregar proceso</button>
+                <span class="help-text">Puede registrar hasta 5 procesos.</span>
+
+                <div class="metric-summary">
+                  <span>Total asignado: <strong id="cogenTotal">0%</strong></span>
+                  <span>Porcentaje restante: <strong id="cogenRemaining">100%</strong></span>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="1">← Anterior</button><button class="nav-button next" data-next="3">Continuar →</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="1">← Anterior</button>
+        <button class="nav-button next" data-next="3">Continuar →</button>
+      </div>
     </section>
 
     <section class="section-view" data-section="3" data-anchor>
@@ -958,7 +1326,7 @@
         <div class="section-content">
           <div class="review-list">
             <div class="review-item"><span>1. Información general</span><span class="status-badge" id="reviewS1">Por revisar</span></div>
-            <div class="review-item"><span>2. Consumo energético, autogeneración y cogeneración</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>2. Consumo energético, autogeneración y cogeneración</span><span class="status-badge" id="reviewS2">Por revisar</span></div>
             <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>4. Refrigeración</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge">Pendiente de implementación</span></div>
@@ -1070,6 +1438,143 @@
     </div>
   </template>
 
+
+  <template id="energyBlockTemplate">
+    <div class="energy-block" data-energy-block>
+      <div class="energy-block-head">
+        <div>
+          <h4 class="energy-title">Energético</h4>
+          <span class="help-text energy-subtitle" style="margin-top:3px"></span>
+        </div>
+        <span class="completion-chip">0 / 12 meses</span>
+      </div>
+      <div class="energy-block-body">
+        <div class="form-grid">
+          <div class="form-group span-4">
+            <label>Unidad utilizada <span class="required-mark">*</span></label>
+            <select data-energy-unit class="field-m" required></select>
+            <div class="field-error">Seleccione una unidad.</div>
+          </div>
+          <div class="form-group span-4 energy-other-name-wrap" hidden>
+            <label>Indique el energético <span class="required-mark">*</span></label>
+            <input data-energy-other-name type="text" class="field-m">
+            <div class="field-error">Especifique el energético.</div>
+          </div>
+          <div class="form-group span-4 energy-other-unit-wrap" hidden>
+            <label>Otra unidad <span class="required-mark">*</span></label>
+            <input data-energy-other-unit type="text" class="field-m">
+            <div class="field-error">Especifique la unidad utilizada.</div>
+          </div>
+        </div>
+
+        <div class="energy-specific-help"></div>
+        <div class="month-grid"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tariffGroupTemplate">
+    <div class="dynamic-card tariff-group-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo tarifario</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group span-4">
+          <label>Tarifa eléctrica <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre tarifa">i</button>
+          </label>
+          <select data-field="tariff" class="field-m" required>
+            <option value="">Seleccione una tarifa</option>
+            <option>PDBT</option><option>GDBT</option><option>RABT</option><option>APBT</option><option>APMT</option>
+            <option>GDMTH</option><option>GDMTO</option><option>RAMT</option><option>DIST</option><option>DIT</option>
+          </select>
+          <div class="info-panel local-info">Consulte la tarifa que aparece en el recibo o factura eléctrica correspondiente. Si varios medidores tienen la misma tarifa, consolídelos en este mismo grupo.</div>
+          <div class="field-error">Seleccione la tarifa.</div>
+        </div>
+
+        <div class="form-group span-4">
+          <label>Potencia contratada total <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="contracted_power" class="field-s" type="number" min="0" step="any" required>
+            <span class="unit">kW</span>
+          </div>
+          <div class="field-error">Capture un valor igual o mayor que 0.</div>
+        </div>
+      </div>
+
+      <div class="month-grid tariff-month-grid"></div>
+      <div class="metric-summary">
+        <span>Captura mensual: <strong class="tariff-completion">0 / 12 meses</strong></span>
+      </div>
+    </div>
+  </template>
+
+  <template id="autogenPlantTemplate">
+    <div class="dynamic-card autogen-plant-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Planta de autogeneración</h4>
+        <button type="button" class="remove-button">Eliminar planta</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Combustible principal <span class="required-mark">*</span></label>
+          <select data-field="fuel" class="field-m" required>
+            <option value="">Seleccione</option>
+            <option value="coal">Carbón</option>
+            <option value="coal_coke">Coque de carbón</option>
+            <option value="lpg">GLP</option>
+            <option value="dry_gas">Gas seco</option>
+            <option value="gasoline_naphtha">Gasolinas y naftas</option>
+            <option value="diesel">Diésel</option>
+          </select>
+          <div class="field-error">Seleccione el combustible.</div>
+        </div>
+        <div class="form-group span-4">
+          <label>Potencia instalada <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="installed_power" class="field-s" type="number" min="0" step="any" required>
+            <span class="unit">kW</span>
+          </div>
+          <div class="field-error">Capture un valor igual o mayor que 0.</div>
+        </div>
+        <div class="form-group">
+          <label>Energía eléctrica generada mensualmente en promedio <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="monthly_generation" class="field-s" type="number" min="0" step="any" required>
+            <span class="unit">kWh/mes</span>
+          </div>
+          <div class="field-error">Capture un valor igual o mayor que 0.</div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="cogenerationProcessTemplate">
+    <div class="dynamic-card cogeneration-process-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Proceso</h4>
+        <button type="button" class="remove-button">Eliminar proceso</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Proceso productivo <span class="required-mark">*</span></label>
+          <input data-field="process_name" type="text" class="field-l" required>
+          <div class="field-error">Capture el nombre o descripción breve del proceso.</div>
+        </div>
+        <div class="form-group span-4">
+          <label>Porcentaje del calor útil destinado al proceso <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="heat_share" class="field-xs" type="number" min="0.01" max="100" step="0.01" required>
+            <span class="unit">%</span>
+          </div>
+          <div class="field-error">Capture un valor mayor que 0 y máximo 100.</div>
+        </div>
+      </div>
+    </div>
+  </template>
+
 <script>
 (() => {
   "use strict";
@@ -1124,6 +1629,7 @@
     const prev = e.target.closest("[data-prev]");
     if (next){
       if (currentView === "1" && !validateSection1()) return;
+      if (currentView === "2" && !validateSection2()) return;
       showView(next.dataset.next);
     }
     if (prev) showView(prev.dataset.prev);
@@ -1311,6 +1817,460 @@
     }
     wordCount.textContent = words(process.value).length;
   });
+
+
+  /* =========================================================
+     SECCIÓN 2 · CONSUMO ENERGÉTICO
+  ========================================================= */
+  const section2Form = qs("#section2Form");
+  const energyBlocks = qs("#energyBlocks");
+  const energyBlockTemplate = qs("#energyBlockTemplate");
+
+  const ENERGY_META = {
+    electricity:{
+      label:"Electricidad",
+      units:[["kwh","kWh"],["mwh","MWh"]],
+      subtitle:"Capture 12 periodos mensuales consecutivos."
+    },
+    coal:{
+      label:"Carbón",
+      units:[["kg","kg"],["t","ton"],["other","Otra"]],
+      subtitle:"Reporte la cantidad consumida en cada periodo mensual."
+    },
+    coal_coke:{
+      label:"Coque de carbón",
+      units:[["kg","kg"],["t","ton"],["other","Otra"]],
+      subtitle:"Reporte la cantidad consumida en cada periodo mensual."
+    },
+    lpg:{
+      label:"GLP",
+      units:[["m3","m³"],["l","L"],["other","Otra"]],
+      subtitle:"Seleccione la unidad que corresponda a sus registros."
+    },
+    dry_gas:{
+      label:"Gas seco",
+      units:[["m3","m³"],["other","Otra"]],
+      subtitle:"Reporte el volumen consumido en cada periodo mensual."
+    },
+    gasoline_naphtha:{
+      label:"Gasolinas y naftas",
+      units:[["m3","m³"],["other","Otra"]],
+      subtitle:"Solo consumo productivo; excluya transporte."
+    },
+    diesel:{
+      label:"Diésel",
+      units:[["m3","m³"],["other","Otra"]],
+      subtitle:"Solo consumo productivo; excluya transporte."
+    },
+    bagasse:{
+      label:"Bagazo de caña",
+      units:[["kg","kg"],["l","L"],["other","Otra"]],
+      subtitle:"Conserve la unidad en la que realmente dispone del dato."
+    },
+    other:{
+      label:"Otro energético",
+      units:[["other","Indique la unidad"]],
+      subtitle:"Especifique el energético y la unidad utilizada."
+    }
+  };
+
+  function makeMonthFields(container, prefix, unitLabelGetter, onChange){
+    container.innerHTML = "";
+    for (let i=1;i<=12;i++){
+      const wrap = document.createElement("div");
+      wrap.className = "month-field";
+      wrap.innerHTML = `
+        <label>${"Mes " + i}</label>
+        <div class="input-with-unit" style="gap:6px;flex-wrap:nowrap">
+          <input type="number" min="0" step="any" inputmode="decimal" data-month="${i}" required>
+          <span class="unit" data-month-unit></span>
+        </div>
+        <div class="field-error">Capture el consumo del periodo.</div>
+      `;
+      const input = qs("input", wrap);
+      input.addEventListener("input", () => onChange && onChange());
+      input.addEventListener("blur", () => validateElement(input));
+      container.appendChild(wrap);
+    }
+    const refreshUnits = () => {
+      qsa("[data-month-unit]", container).forEach(el => el.textContent = unitLabelGetter() || "");
+    };
+    refreshUnits();
+    return refreshUnits;
+  }
+
+  function updateEnergyCompletion(block){
+    const inputs = qsa(".month-grid input[data-month]", block);
+    const completed = inputs.filter(i => i.value !== "").length;
+    const chip = qs(".completion-chip", block);
+    chip.textContent = `${completed} / 12 meses`;
+    chip.classList.toggle("complete", completed === 12);
+  }
+
+  function buildEnergyBlock(type){
+    const meta = ENERGY_META[type];
+    const block = energyBlockTemplate.content.firstElementChild.cloneNode(true);
+    block.dataset.energyType = type;
+    qs(".energy-title", block).textContent = meta.label;
+    qs(".energy-subtitle", block).textContent = meta.subtitle;
+
+    const unitSelect = qs("[data-energy-unit]", block);
+    unitSelect.innerHTML = `<option value="">Seleccione una unidad</option>` +
+      meta.units.map(([value,label]) => `<option value="${value}">${label}</option>`).join("");
+
+    const otherNameWrap = qs(".energy-other-name-wrap", block);
+    const otherName = qs("[data-energy-other-name]", block);
+    if (type === "other"){
+      otherNameWrap.hidden = false;
+      otherName.required = true;
+    }
+
+    const otherUnitWrap = qs(".energy-other-unit-wrap", block);
+    const otherUnit = qs("[data-energy-other-unit]", block);
+    const monthGrid = qs(".month-grid", block);
+
+    const currentUnitLabel = () => {
+      if (!unitSelect.value) return "";
+      if (unitSelect.value === "other"){
+        return otherUnit.value.trim() || "";
+      }
+      const opt = unitSelect.options[unitSelect.selectedIndex];
+      return opt ? opt.textContent : "";
+    };
+
+    const refreshMonthUnits = makeMonthFields(
+      monthGrid,
+      type,
+      currentUnitLabel,
+      () => updateEnergyCompletion(block)
+    );
+
+    unitSelect.addEventListener("change", () => {
+      const other = unitSelect.value === "other";
+      otherUnitWrap.hidden = !other;
+      otherUnit.required = other;
+      if (!other){
+        otherUnit.value = "";
+        clearInvalid(otherUnit);
+      }
+      refreshMonthUnits();
+    });
+    otherUnit.addEventListener("input", refreshMonthUnits);
+
+    const help = qs(".energy-specific-help", block);
+    if (type === "electricity"){
+      help.innerHTML = `
+        <button type="button" class="add-button" style="margin-top:0" data-electric-help-toggle>
+          ⓘ ¿Dónde encuentro los consumos en mi recibo?
+        </button>
+        <div class="info-panel" data-electric-help-panel style="max-width:none">
+          Para registrar el consumo anual de <strong>electricidad</strong>, revise el reverso de su recibo impreso
+          o la segunda página si es digital. Ubique la tabla de <strong>Consumo Histórico</strong> y capture
+          12 periodos mensuales consecutivos. No es necesario que correspondan a enero–diciembre.
+          <img src="recibo_cfe.jpg" class="image-help" alt="Ejemplo de ubicación del consumo histórico en un recibo de electricidad">
+        </div>
+      `;
+      qs("[data-electric-help-toggle]", help).addEventListener("click", () => {
+        qs("[data-electric-help-panel]", help).classList.toggle("visible");
+      });
+    } else if (["gasoline_naphtha","diesel"].includes(type)){
+      help.innerHTML = `
+        <div class="visible-method-note">
+          Registre únicamente el consumo destinado a <strong>uso productivo</strong>. No incluya transporte interno ni externo.
+        </div>`;
+    }
+
+    energyBlocks.appendChild(block);
+    updateEnergyCompletion(block);
+  }
+
+  function syncEnergyBlocks(){
+    const selected = qsa("#energyTypeChoices input:checked").map(i => i.value);
+
+    selected.forEach(type => {
+      if (!qs(`[data-energy-block][data-energy-type="${type}"]`, energyBlocks)){
+        buildEnergyBlock(type);
+      }
+    });
+    qsa("[data-energy-block]", energyBlocks).forEach(block => {
+      if (!selected.includes(block.dataset.energyType)) block.remove();
+    });
+
+    const transportSelected = selected.some(x => ["gasoline_naphtha","diesel"].includes(x));
+    qs("#transportFuelNote").hidden = !transportSelected;
+    qs("#energyTypesError").classList.remove("visible");
+  }
+
+  qsa("#energyTypeChoices input").forEach(cb => cb.addEventListener("change", syncEnergyBlocks));
+
+  /* -------------------------
+     Tarifa eléctrica
+  -------------------------- */
+  const tariffGroups = qs("#tariffGroups");
+  const tariffTemplate = qs("#tariffGroupTemplate");
+
+  function updateTariffCompletion(card){
+    const monthInputs = qsa("[data-month]", card);
+    const n = monthInputs.filter(i => i.value !== "").length;
+    qs(".tariff-completion", card).textContent = `${n} / 12 meses`;
+  }
+
+  function addTariffGroup(){
+    const card = tariffTemplate.content.firstElementChild.cloneNode(true);
+    const monthGrid = qs(".tariff-month-grid", card);
+    makeMonthFields(monthGrid, "tariff", () => "kWh", () => updateTariffCompletion(card));
+
+    qs("[data-info-local]", card).addEventListener("click", () => {
+      qs(".local-info", card).classList.toggle("visible");
+    });
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      card.remove();
+      renumberCards(tariffGroups, "Grupo tarifario");
+    });
+
+    tariffGroups.appendChild(card);
+    renumberCards(tariffGroups, "Grupo tarifario");
+    updateTariffCompletion(card);
+  }
+
+  qs("#addTariffGroup").addEventListener("click", addTariffGroup);
+
+  const meterCount = qs("#electric_meter_count");
+  const tariffBlock = qs("#tariffBlock");
+
+  function syncMeterCount(){
+    const raw = meterCount.value;
+    const count = raw === "" ? null : Number(raw);
+    const zero = count === 0;
+    tariffBlock.hidden = zero;
+    qsa("input,select,button", tariffBlock).forEach(el => el.disabled = zero);
+    if (zero) tariffGroups.innerHTML = "";
+  }
+  meterCount.addEventListener("input", syncMeterCount);
+  syncMeterCount();
+
+  /* -------------------------
+     Autogeneración
+  -------------------------- */
+  const autogenDetails = qs("#autogenDetails");
+  const renewableBlock = qs("#renewableAutogenBlock");
+  const nonRenewableBlock = qs("#nonRenewableAutogenBlock");
+  const renewableSource = qs("#renewable_autogen_source_type");
+  const renewableOtherWrap = qs("#renewableOtherWrap");
+  const renewableOther = qs("#renewable_autogen_source_other");
+  const autogenPlants = qs("#autogenPlants");
+  const autogenPlantTemplate = qs("#autogenPlantTemplate");
+
+  function setBlockEnabled(block, enabled){
+    block.hidden = !enabled;
+    qsa("input,select,textarea,button", block).forEach(el => {
+      if (el.type === "button") return;
+      el.disabled = !enabled;
+      if (!enabled){
+        if (el.type === "radio" || el.type === "checkbox") el.checked = false;
+        else el.value = "";
+        clearInvalid(el);
+      }
+    });
+  }
+
+  qsa('input[name="autogenerates_electricity"]').forEach(r => {
+    r.addEventListener("change", () => {
+      const yes = qs('input[name="autogenerates_electricity"][value="yes"]').checked;
+      setBlockEnabled(autogenDetails, yes);
+      if (yes){
+        qs("#autogen_use_frequency").required = true;
+        qs("#autogen_avg_hours_week").required = true;
+      } else {
+        renewableBlock.hidden = true;
+        nonRenewableBlock.hidden = true;
+        autogenPlants.innerHTML = "";
+      }
+    });
+  });
+
+  qsa('input[name="autogen_main_source_is_renewable"]').forEach(r => {
+    r.addEventListener("change", () => {
+      const yes = qs('input[name="autogen_main_source_is_renewable"][value="yes"]').checked;
+      const no = qs('input[name="autogen_main_source_is_renewable"][value="no"]').checked;
+
+      setBlockEnabled(renewableBlock, yes);
+      setBlockEnabled(nonRenewableBlock, no);
+
+      ["renewable_autogen_source_type","renewable_autogen_installed_power_kw","renewable_autogen_avg_monthly_generation_kwh"]
+        .forEach(id => qs("#"+id).required = yes);
+
+      if (no && !autogenPlants.children.length) addAutogenPlant();
+      if (!no) autogenPlants.innerHTML = "";
+    });
+  });
+
+  renewableSource.addEventListener("change", () => {
+    const other = renewableSource.value === "other";
+    renewableOtherWrap.hidden = !other;
+    renewableOther.required = other;
+    if (!other){
+      renewableOther.value = "";
+      clearInvalid(renewableOther);
+    }
+  });
+
+  function addAutogenPlant(){
+    if (autogenPlants.children.length >= 5) return;
+    const card = autogenPlantTemplate.content.firstElementChild.cloneNode(true);
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (autogenPlants.children.length <= 1) return;
+      card.remove();
+      renumberCards(autogenPlants, "Planta de autogeneración");
+    });
+    autogenPlants.appendChild(card);
+    renumberCards(autogenPlants, "Planta de autogeneración");
+  }
+  qs("#addAutogenPlant").addEventListener("click", addAutogenPlant);
+
+  /* -------------------------
+     Cogeneración
+  -------------------------- */
+  const cogenerationBlock = qs("#cogenerationBlock");
+  const cogenerationProcesses = qs("#cogenerationProcesses");
+  const cogenerationProcessTemplate = qs("#cogenerationProcessTemplate");
+
+  function updateCogenerationTotal(){
+    const values = qsa('[data-field="heat_share"]', cogenerationProcesses)
+      .map(i => Number(i.value || 0));
+    const total = values.reduce((a,b)=>a+b,0);
+    const remaining = 100 - total;
+
+    const totalEl = qs("#cogenTotal");
+    const remainingEl = qs("#cogenRemaining");
+
+    totalEl.textContent = `${Number.isInteger(total) ? total : total.toFixed(2)}%`;
+    remainingEl.textContent = `${Number.isInteger(remaining) ? remaining : remaining.toFixed(2)}%`;
+
+    totalEl.classList.toggle("good", Math.abs(total-100) < 0.000001);
+    totalEl.classList.toggle("bad", total > 100);
+    remainingEl.classList.toggle("good", Math.abs(remaining) < 0.000001);
+    remainingEl.classList.toggle("bad", remaining < 0);
+  }
+
+  function addCogenerationProcess(){
+    if (cogenerationProcesses.children.length >= 5) return;
+    const card = cogenerationProcessTemplate.content.firstElementChild.cloneNode(true);
+    const pct = qs('[data-field="heat_share"]', card);
+    pct.addEventListener("input", updateCogenerationTotal);
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (cogenerationProcesses.children.length <= 1) return;
+      card.remove();
+      renumberCards(cogenerationProcesses, "Proceso");
+      updateCogenerationTotal();
+    });
+
+    cogenerationProcesses.appendChild(card);
+    renumberCards(cogenerationProcesses, "Proceso");
+    updateCogenerationTotal();
+  }
+
+  qsa('input[name="does_cogeneration"]').forEach(r => {
+    r.addEventListener("change", () => {
+      const yes = qs('input[name="does_cogeneration"][value="yes"]').checked;
+      setBlockEnabled(cogenerationBlock, yes);
+      if (yes && !cogenerationProcesses.children.length) addCogenerationProcess();
+      if (!yes){
+        cogenerationProcesses.innerHTML = "";
+        updateCogenerationTotal();
+      }
+    });
+  });
+  qs("#addCogenerationProcess").addEventListener("click", addCogenerationProcess);
+
+  /* -------------------------
+     Validación Sección 2
+  -------------------------- */
+  function validateEnergyTypes(){
+    const valid = qsa("#energyTypeChoices input:checked").length > 0;
+    qs("#energyTypesError").classList.toggle("visible", !valid);
+    return valid;
+  }
+
+  function validateUniqueTariffs(){
+    if (tariffBlock.hidden) return true;
+    const selects = qsa('[data-field="tariff"]', tariffGroups).filter(s => !s.disabled && s.value);
+    const vals = selects.map(s => s.value);
+    const duplicates = vals.filter((v,i) => vals.indexOf(v) !== i);
+    let ok = duplicates.length === 0;
+    selects.forEach(s => {
+      if (duplicates.includes(s.value)){
+        s.classList.add("invalid");
+        const group = s.closest(".form-group");
+        const err = qs(".field-error", group);
+        if (err){
+          err.textContent = "Esta tarifa ya fue registrada. Consolide los medidores con la misma tarifa en un solo grupo.";
+          err.classList.add("visible");
+        }
+      }
+    });
+    return ok;
+  }
+
+  function validateSection2(){
+    let ok = true;
+
+    if (!validateEnergyTypes()) ok = false;
+
+    qsa("#section2Form input, #section2Form select, #section2Form textarea").forEach(el => {
+      if (["radio","checkbox"].includes(el.type)) return;
+      if (!validateElement(el)) ok = false;
+    });
+
+    if (!validateRadioGroup("autogenerates_electricity")) ok = false;
+    if (!validateRadioGroup("does_cogeneration")) ok = false;
+
+    const autogenYes = qs('input[name="autogenerates_electricity"][value="yes"]').checked;
+    if (autogenYes && !validateRadioGroup("autogen_main_source_is_renewable")) ok = false;
+
+    if (!tariffBlock.hidden && Number(meterCount.value) > 0){
+      if (!tariffGroups.children.length){
+        ok = false;
+        qs("#addTariffGroup").scrollIntoView({behavior:"smooth",block:"center"});
+      }
+      if (!validateUniqueTariffs()) ok = false;
+    }
+
+    const cogenYes = qs('input[name="does_cogeneration"][value="yes"]').checked;
+    if (cogenYes){
+      if (!cogenerationProcesses.children.length) ok = false;
+      const total = qsa('[data-field="heat_share"]', cogenerationProcesses)
+        .reduce((sum,i)=>sum+Number(i.value || 0),0);
+      if (Math.abs(total-100) > 0.000001){
+        ok = false;
+        qs("#cogenTotal").classList.add("bad");
+      }
+    }
+
+    if (!ok){
+      const first = qs("#section2Form .invalid, #section2Form .field-error.visible");
+      if (first) first.scrollIntoView({behavior:"smooth",block:"center"});
+      const review = qs("#reviewS2");
+      if (review) review.textContent = "Con pendientes";
+      return false;
+    }
+
+    const review = qs("#reviewS2");
+    if (review) review.textContent = "Completa";
+    return true;
+  }
+
+  /* Mostrar errores de inputs de sección 2 al salir del campo */
+  qsa("#section2Form input, #section2Form select, #section2Form textarea").forEach(el => {
+    if (["radio","checkbox"].includes(el.type)) return;
+    el.addEventListener("blur", () => validateElement(el));
+    el.addEventListener("input", () => {
+      if (el.classList.contains("invalid")) validateElement(el);
+    });
+  });
+
 
   /* =========================================================
      VALIDACIÓN SECCIÓN 1
