@@ -771,6 +771,45 @@
       .tariff-fields > .form-group > label{min-height:auto}
     }
 
+
+    /* =========================================================
+       SECCIÓN 4 · REFRIGERACIÓN
+    ========================================================= */
+    .refrigeration-component-section{
+      margin-top:22px;
+      padding:18px;
+      border:1px solid #d5dcda;
+      border-radius:8px;
+      background:#fbfcfc;
+    }
+    .refrigeration-component-heading{
+      margin-bottom:14px;
+    }
+    .refrigeration-component-heading h4{
+      margin:0 0 5px;
+      color:var(--green-dark);
+      font-size:16px;
+    }
+    .refrigeration-component-heading p{
+      margin:0;
+      color:#4e5b60;
+      font-size:13.5px;
+      line-height:1.55;
+    }
+    .label-route-panel{
+      margin-top:14px;
+      padding:14px;
+      border:1px solid #d7dddf;
+      border-radius:7px;
+      background:#f9fbfa;
+    }
+    .label-route-panel[hidden]{display:none}
+    .component-status-complete{
+      background:#eef7ea;
+      border-color:#a8c79a;
+      color:#315f21;
+    }
+
     /* =========================================================
        RESPONSIVE
     ========================================================= */
@@ -1579,10 +1618,135 @@
 
     <section class="section-view" data-section="4" data-anchor>
       <div class="section-shell">
-        <div class="section-heading"><h2>4. Refrigeración</h2></div>
-        <div class="placeholder"><strong>Estructura preparada</strong>Sistemas de refrigeración, refrigeradores y congeladores.</div>
+        <div class="section-heading">
+          <h2>4. Refrigeración</h2>
+          <p>Sistemas de refrigeración por componentes, refrigeradores y congeladores.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box">
+            En esta sección se solicita información de los equipos utilizados para <strong>refrigeración y congelación</strong>.
+            Cuando existan varios equipos con las mismas características, pueden registrarse juntos como un grupo.
+            Si cambia la <strong>potencia eléctrica o el tiempo de funcionamiento</strong>, regístrelos como otro grupo.
+          </div>
+
+          <form id="section4Form" novalidate>
+
+            <!-- =================================================
+                 4.1 SISTEMAS DE REFRIGERACIÓN POR COMPONENTES
+            ================================================== -->
+            <div class="subsection" id="s4-component-systems" data-anchor>
+              <h3 class="subsection-title"><span class="number">4.1</span> Sistemas de refrigeración</h3>
+
+              <div>
+                <span class="question-label">
+                  4.1 ¿En el establecimiento/planta utilizan <strong>cuartos fríos, túneles de congelado u otros recintos refrigerados con unidades no integradas</strong>?
+                  <span class="required-mark">*</span>
+                  <button type="button" class="info-button" data-info="refrigerationSystemInfo" aria-label="Información sobre sistemas de refrigeración">i</button>
+                </span>
+                <div id="refrigerationSystemInfo" class="info-panel">
+                  Este bloque corresponde a sistemas en los que el <strong>compresor, evaporador y condensador</strong> pueden identificarse como componentes del sistema.
+                  Si solamente utiliza refrigeradores o congeladores integrados, responda “No” y continúe con 4.2.
+                </div>
+
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_refrigeration_component_systems" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_refrigeration_component_systems" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_refrigeration_component_systems">Seleccione una opción.</div>
+              </div>
+
+              <div id="refrigerationComponentsBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>4.1.1</strong> Caracterice los componentes de los sistemas de refrigeración.
+                  Para cada grupo indique la <strong>cantidad de equipos, potencia eléctrica por equipo y tiempo de funcionamiento</strong>.
+                  Debe existir información para <strong>Compresor, Evaporador y Condensador</strong>.
+                </p>
+
+                <div class="metric-summary" id="refrigerationComponentsStatus">
+                  Componentes completos: <strong id="refrigerationComponentsComplete">0 / 3</strong>
+                </div>
+
+                <!-- COMPRESORES -->
+                <div class="refrigeration-component-section">
+                  <div class="refrigeration-component-heading">
+                    <div>
+                      <h4>Compresores</h4>
+                      <p>Reporte la <strong>potencia eléctrica nominal</strong> de cada compresor; no la capacidad térmica del sistema.</p>
+                    </div>
+                  </div>
+                  <div id="compressorGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" data-add-refrigeration-component="compressor">＋ Agregar grupo de compresores</button>
+                </div>
+
+                <!-- EVAPORADORES -->
+                <div class="refrigeration-component-section">
+                  <div class="refrigeration-component-heading">
+                    <div>
+                      <h4>Evaporadores</h4>
+                      <p>Para el evaporador, reporte la <strong>potencia eléctrica de los ventiladores asociados</strong>.</p>
+                    </div>
+                  </div>
+                  <div id="evaporatorGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" data-add-refrigeration-component="evaporator">＋ Agregar grupo de evaporadores</button>
+                </div>
+
+                <!-- CONDENSADORES -->
+                <div class="refrigeration-component-section">
+                  <div class="refrigeration-component-heading">
+                    <div>
+                      <h4>Condensadores</h4>
+                      <p>Para el condensador, reporte la <strong>potencia eléctrica de los ventiladores asociados</strong>.</p>
+                    </div>
+                  </div>
+                  <div id="condenserGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" data-add-refrigeration-component="condenser">＋ Agregar grupo de condensadores</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 4.2 REFRIGERADORES Y CONGELADORES
+            ================================================== -->
+            <div class="subsection" id="s4-appliances" data-anchor>
+              <h3 class="subsection-title"><span class="number">4.2</span> Refrigeradores y congeladores</h3>
+
+              <div>
+                <span class="question-label">
+                  4.2 ¿En el establecimiento/planta utilizan <strong>refrigeradores y/o congeladores en unidades integradas</strong>?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_refrigerators_freezers" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_refrigerators_freezers" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_refrigerators_freezers">Seleccione una opción.</div>
+              </div>
+
+              <div id="refrigerationAppliancesBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>4.2.1</strong> Registre los refrigeradores y congeladores por grupos homogéneos.
+                  Separe <strong>refrigeradores y congeladores</strong> y cree otro grupo cuando cambien la potencia, el consumo indicado en la etiqueta o el tiempo de funcionamiento.
+                </p>
+
+                <div class="visible-method-note">
+                  Si los equipos cuentan con una <strong>etiqueta amarilla que indique el consumo anual de energía</strong>, capture el valor de una sola unidad en kWh/año.
+                  En esa ruta no se solicitará potencia eléctrica.
+                </div>
+
+                <div id="refrigerationApplianceGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addRefrigerationApplianceGroup">＋ Agregar refrigerador o congelador</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="3">← Anterior</button><button class="nav-button next" data-next="5">Continuar →</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="3">← Anterior</button>
+        <button class="nav-button next" data-next="5">Continuar →</button>
+      </div>
     </section>
 
     <section class="section-view" data-section="5" data-anchor>
@@ -1629,7 +1793,7 @@
             <div class="review-item"><span>1. Información general</span><span class="status-badge" id="reviewS1">Por revisar</span></div>
             <div class="review-item"><span>2. Consumo energético, autogeneración y cogeneración</span><span class="status-badge" id="reviewS2">Por revisar</span></div>
             <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge" id="reviewS3">Por revisar</span></div>
-            <div class="review-item"><span>4. Refrigeración</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>4. Refrigeración</span><span class="status-badge" id="reviewS4">Por revisar</span></div>
             <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>6. Iluminación</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>7. HVAC</span><span class="status-badge">Pendiente de implementación</span></div>
@@ -2402,6 +2566,184 @@
     </div>
   </template>
 
+
+  <!-- =========================================================
+       TEMPLATES SECCIÓN 4
+  ========================================================== -->
+  <template id="refrigerationComponentGroupTemplate">
+    <div class="dynamic-card refrigeration-component-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group span-4">
+          <label>Número de equipos <span class="required-mark">*</span></label>
+          <input data-field="count" class="field-xs" type="number" min="1" step="1" required>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
+        <div class="form-group">
+          <label data-component-power-label>Potencia eléctrica por equipo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="power" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="power_unit" required>
+              <option value="">Unidad</option>
+              <option value="kw">kW</option>
+              <option value="hp">HP</option>
+            </select>
+          </div>
+          <div class="field-error">Capture una potencia mayor que 0 y seleccione la unidad.</div>
+          <span class="help-text" data-component-power-help></span>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de funcionamiento</h5>
+        <div class="form-grid">
+          <div class="form-group span-4">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="hours_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required>
+              <span class="unit">h/día</span>
+            </div>
+            <div class="field-error">Capture un valor mayor que 0 y menor o igual que 24.</div>
+          </div>
+
+          <div class="form-group span-4">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required>
+              <span class="unit">días/sem</span>
+            </div>
+            <div class="field-error">Capture un número entero entre 1 y 7.</div>
+          </div>
+
+          <div class="form-group span-4">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required>
+              <span class="unit">sem/año</span>
+            </div>
+            <div class="field-error">Capture un número entero entre 1 y 52.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="refrigerationApplianceGroupTemplate">
+    <div class="dynamic-card refrigeration-appliance-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Equipo o grupo</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group span-4">
+          <label>Tipo de equipo <span class="required-mark">*</span></label>
+          <select data-field="appliance_type" class="field-m" required>
+            <option value="">Seleccione</option>
+            <option value="refrigerator">Refrigerador</option>
+            <option value="freezer">Congelador</option>
+          </select>
+          <div class="field-error">Seleccione el tipo de equipo.</div>
+        </div>
+
+        <div class="form-group span-4">
+          <label>Número total de unidades <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="unit_count" class="field-xs" type="number" min="1" step="1" required>
+            <span class="unit">unidades</span>
+          </div>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
+        <div class="form-group span-4">
+          <label>Cantidad de equipos tipo inverter <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre equipos inverter">i</button>
+          </label>
+          <div class="input-with-unit">
+            <input data-field="inverter_count" class="field-xs" type="number" min="0" step="1" required>
+            <span class="unit">unidades</span>
+          </div>
+          <div class="info-panel local-info">Capture 0 si ningún equipo del grupo es inverter. La cantidad de equipos inverter no puede ser mayor que el número total de unidades del grupo.</div>
+          <div class="field-error">Capture un entero entre 0 y el número total de unidades.</div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <span class="question-label">
+          ¿Los equipos de este grupo cuentan con <strong>etiqueta amarilla que indique el consumo anual de energía</strong>?
+          <span class="required-mark">*</span>
+        </span>
+        <div class="radio-row appliance-label-radios"></div>
+        <div class="field-error appliance-label-error">Seleccione una opción.</div>
+
+        <div class="label-route-panel appliance-label-route" hidden>
+          <div class="form-group">
+            <label>Consumo anual indicado en la etiqueta amarilla, por equipo <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="label_annual_kwh" class="field-s" type="number" min="0" step="any">
+              <span class="unit">kWh/año por equipo</span>
+            </div>
+            <div class="field-error">Capture un valor igual o mayor que 0.</div>
+            <span class="help-text">Capture el valor de <strong>una sola unidad</strong>, tal como aparece en la etiqueta.</span>
+          </div>
+        </div>
+
+        <div class="label-route-panel appliance-power-route" hidden>
+          <div class="form-group">
+            <label>Potencia eléctrica por equipo <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="power" class="field-s" type="number" min="0.000001" step="any">
+              <select data-field="power_unit">
+                <option value="">Unidad</option>
+                <option value="kw">kW</option>
+                <option value="hp">HP</option>
+              </select>
+            </div>
+            <div class="field-error">Capture una potencia mayor que 0 y seleccione la unidad.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de funcionamiento</h5>
+        <p class="compact-help">Capture el patrón de uso aun cuando el equipo cuente con etiqueta amarilla.</p>
+        <div class="form-grid">
+          <div class="form-group span-4">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="hours_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required>
+              <span class="unit">h/día</span>
+            </div>
+            <div class="field-error">Capture un valor mayor que 0 y menor o igual que 24.</div>
+          </div>
+
+          <div class="form-group span-4">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required>
+              <span class="unit">días/sem</span>
+            </div>
+            <div class="field-error">Capture un número entero entre 1 y 7.</div>
+          </div>
+
+          <div class="form-group span-4">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required>
+              <span class="unit">sem/año</span>
+            </div>
+            <div class="field-error">Capture un número entero entre 1 y 52.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
 <script>
 (() => {
   "use strict";
@@ -2469,11 +2811,83 @@
       if (currentView === "1" && !validateSection1()) return;
       if (currentView === "2" && !validateSection2()) return;
       if (currentView === "3" && !validateSection3()) return;
+      if (currentView === "4" && !validateSection4()) return;
       showView(next.dataset.next);
     }
     if (prev) showView(prev.dataset.prev);
   });
 
+
+
+  /* =========================================================
+     ESTÁNDAR GLOBAL · SEMANAS AL AÑO
+     Cualquier campo de semanas/año usa la misma ayuda ⓘ.
+  ========================================================= */
+  const WEEKS_YEAR_HELP =
+    'Considere que un año tiene <strong>52 semanas</strong>. ' +
+    'Capture un valor entero entre 1 y 52 de acuerdo con el tiempo real de operación.';
+
+  function standardizeWeeksYearInfo(root=document){
+    const inputs = qsa(
+      'input[data-field="weeks_year"], input[name$="_weeks_year"], input[id$="_weeks_year"]',
+      root
+    );
+
+    inputs.forEach(input => {
+      const group = input.closest(".form-group");
+      if (!group) return;
+
+      const label = qs("label", group);
+      if (!label) return;
+
+      let button = qs("[data-weeks-year-info]", group);
+      let panel = qs(".weeks-year-standard-info", group);
+
+      if (!button){
+        const existingLocal = qs("[data-info-local]", label);
+        if (existingLocal){
+          button = existingLocal;
+          button.setAttribute("data-weeks-year-info","");
+        } else {
+          button = document.createElement("button");
+          button.type = "button";
+          button.className = "info-button";
+          button.setAttribute("data-info-local","");
+          button.setAttribute("data-weeks-year-info","");
+          button.setAttribute("aria-label","Información sobre semanas al año");
+          button.textContent = "i";
+          label.append(" ", button);
+        }
+      }
+
+      if (!panel){
+        const existingPanel = qs(".local-info", group);
+        if (existingPanel){
+          panel = existingPanel;
+          panel.classList.add("weeks-year-standard-info");
+        } else {
+          panel = document.createElement("div");
+          panel.className = "info-panel local-info weeks-year-standard-info";
+          const unitRow = input.closest(".input-with-unit");
+          if (unitRow) unitRow.insertAdjacentElement("afterend", panel);
+          else input.insertAdjacentElement("afterend", panel);
+        }
+      }
+
+      panel.innerHTML = WEEKS_YEAR_HELP;
+    });
+  }
+
+  standardizeWeeksYearInfo();
+
+  const weeksInfoObserver = new MutationObserver(mutations => {
+    for (const mutation of mutations){
+      for (const node of mutation.addedNodes){
+        if (node.nodeType === 1) standardizeWeeksYearInfo(node);
+      }
+    }
+  });
+  weeksInfoObserver.observe(document.body,{childList:true,subtree:true});
 
   /* Ubicación: instrucción dinámica de Municipio / Alcaldía */
   const stateSelect = qs("#state_code");
@@ -3757,6 +4171,306 @@
     el.addEventListener("blur",()=>validateElement(el));
     el.addEventListener("input",()=>{if(el.classList.contains("invalid"))validateElement(el);});
   });
+
+
+
+  /* =========================================================
+     SECCIÓN 4 · REFRIGERACIÓN
+  ========================================================= */
+  const section4Form = qs("#section4Form");
+  const refrigerationComponentsBlock = qs("#refrigerationComponentsBlock");
+  const refrigerationAppliancesBlock = qs("#refrigerationAppliancesBlock");
+
+  const componentMeta = {
+    compressor:{
+      list:"#compressorGroups",
+      noun:"Grupo de compresores",
+      powerLabel:"Potencia eléctrica por compresor",
+      help:"Reporte la potencia eléctrica nominal del compresor; no la capacidad térmica del sistema."
+    },
+    evaporator:{
+      list:"#evaporatorGroups",
+      noun:"Grupo de evaporadores",
+      powerLabel:"Potencia eléctrica de ventilación por evaporador",
+      help:"Reporte la potencia eléctrica de los ventiladores asociados al evaporador."
+    },
+    condenser:{
+      list:"#condenserGroups",
+      noun:"Grupo de condensadores",
+      powerLabel:"Potencia eléctrica de ventilación por condensador",
+      help:"Reporte la potencia eléctrica de los ventiladores asociados al condensador."
+    }
+  };
+
+  const refrigerationComponentTemplate = qs("#refrigerationComponentGroupTemplate");
+  const refrigerationApplianceTemplate = qs("#refrigerationApplianceGroupTemplate");
+  const refrigerationApplianceGroups = qs("#refrigerationApplianceGroups");
+  let refrigerationApplianceSeq = 0;
+
+  function enableConditionalBlock(block, enabled){
+    block.hidden = !enabled;
+    qsa("input,select,textarea", block).forEach(el => {
+      el.disabled = !enabled;
+      if (!enabled){
+        if (["radio","checkbox"].includes(el.type)) el.checked = false;
+        else el.value = "";
+        clearInvalid(el);
+      }
+    });
+  }
+
+  function requiredFieldsComplete(card){
+    return qsa("input[required],select[required],textarea[required]", card)
+      .filter(el => !el.disabled && !el.closest("[hidden]"))
+      .every(el => el.checkValidity());
+  }
+
+  function updateRefrigerationComponentStatus(){
+    const types = ["compressor","evaporator","condenser"];
+    let complete = 0;
+
+    types.forEach(type => {
+      const list = qs(componentMeta[type].list);
+      const cards = qsa(".refrigeration-component-card", list);
+      if (cards.length > 0 && cards.every(requiredFieldsComplete)) complete++;
+    });
+
+    const status = qs("#refrigerationComponentsStatus");
+    qs("#refrigerationComponentsComplete").textContent = `${complete} / 3`;
+    status.classList.toggle("component-status-complete", complete === 3);
+    return complete;
+  }
+
+  function addRefrigerationComponentGroup(type){
+    const meta = componentMeta[type];
+    const list = qs(meta.list);
+    const card = refrigerationComponentTemplate.content.firstElementChild.cloneNode(true);
+
+    card.dataset.componentType = type;
+    qs("[data-component-power-label]", card).innerHTML =
+      `${meta.powerLabel} <span class="required-mark">*</span>`;
+    qs("[data-component-power-help]", card).textContent = meta.help;
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (list.children.length <= 1) return;
+      card.remove();
+      renumberCards(list, meta.noun);
+      updateRefrigerationComponentStatus();
+    });
+
+    qsa("input,select", card).forEach(el => {
+      el.addEventListener("input", updateRefrigerationComponentStatus);
+      el.addEventListener("change", updateRefrigerationComponentStatus);
+    });
+
+    wireVisibleValidation(card);
+    list.appendChild(card);
+    renumberCards(list, meta.noun);
+    standardizeWeeksYearInfo(card);
+    updateRefrigerationComponentStatus();
+  }
+
+  qsa("[data-add-refrigeration-component]").forEach(button => {
+    button.addEventListener("click", () => {
+      addRefrigerationComponentGroup(button.dataset.addRefrigerationComponent);
+    });
+  });
+
+  qsa('input[name="uses_refrigeration_component_systems"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="uses_refrigeration_component_systems"][value="yes"]').checked;
+      refrigerationComponentsBlock.hidden = !yes;
+
+      if (yes){
+        ["compressor","evaporator","condenser"].forEach(type => {
+          const list = qs(componentMeta[type].list);
+          if (!list.children.length) addRefrigerationComponentGroup(type);
+        });
+      } else {
+        ["compressor","evaporator","condenser"].forEach(type => {
+          qs(componentMeta[type].list).innerHTML = "";
+        });
+        updateRefrigerationComponentStatus();
+      }
+    });
+  });
+
+  /* -------------------------
+     4.2 Refrigeradores/congeladores
+  -------------------------- */
+  function validateInverterCount(card, showError=true){
+    const totalInput = qs('[data-field="unit_count"]', card);
+    const inverterInput = qs('[data-field="inverter_count"]', card);
+    const total = Number(totalInput.value);
+    const inverter = Number(inverterInput.value);
+
+    if (totalInput.value !== "" && Number.isFinite(total) && total >= 1){
+      inverterInput.max = String(total);
+    } else {
+      inverterInput.removeAttribute("max");
+    }
+
+    const valid =
+      inverterInput.value !== "" &&
+      Number.isInteger(inverter) &&
+      inverter >= 0 &&
+      totalInput.value !== "" &&
+      Number.isFinite(total) &&
+      inverter <= total;
+
+    const group = inverterInput.closest(".form-group");
+    const error = qs(".field-error", group);
+
+    if (showError){
+      inverterInput.classList.toggle("invalid", !valid);
+      if (error) error.classList.toggle("visible", !valid);
+    }
+    return valid;
+  }
+
+  function syncApplianceEnergyRoute(card){
+    const selected = qs(".appliance-label-radios input:checked", card)?.value || "";
+    const labelRoute = qs(".appliance-label-route", card);
+    const powerRoute = qs(".appliance-power-route", card);
+
+    const labelInput = qs('[data-field="label_annual_kwh"]', card);
+    const powerInput = qs('[data-field="power"]', card);
+    const powerUnit = qs('[data-field="power_unit"]', card);
+
+    const useLabel = selected === "yes";
+    const usePower = selected === "no";
+
+    labelRoute.hidden = !useLabel;
+    powerRoute.hidden = !usePower;
+
+    labelInput.disabled = !useLabel;
+    labelInput.required = useLabel;
+
+    powerInput.disabled = !usePower;
+    powerUnit.disabled = !usePower;
+    powerInput.required = usePower;
+    powerUnit.required = usePower;
+
+    if (!useLabel){
+      labelInput.value = "";
+      clearInvalid(labelInput);
+    }
+    if (!usePower){
+      powerInput.value = "";
+      powerUnit.value = "";
+      clearInvalid(powerInput);
+      clearInvalid(powerUnit);
+    }
+
+    qs(".appliance-label-error", card).classList.remove("visible");
+  }
+
+  function addRefrigerationApplianceGroup(){
+    const card = refrigerationApplianceTemplate.content.firstElementChild.cloneNode(true);
+    refrigerationApplianceSeq++;
+    const radioName = `refrigeration_energy_label_${refrigerationApplianceSeq}`;
+
+    qs(".appliance-label-radios", card).innerHTML = `
+      <label class="radio-card"><input type="radio" name="${radioName}" value="yes"> Sí</label>
+      <label class="radio-card"><input type="radio" name="${radioName}" value="no"> No</label>
+    `;
+    card.dataset.labelRadioName = radioName;
+
+    qsa(`input[name="${radioName}"]`, card).forEach(radio => {
+      radio.addEventListener("change", () => syncApplianceEnergyRoute(card));
+    });
+
+    const totalInput = qs('[data-field="unit_count"]', card);
+    const inverterInput = qs('[data-field="inverter_count"]', card);
+
+    totalInput.addEventListener("input", () => {
+      if (inverterInput.value !== "") validateInverterCount(card, true);
+    });
+    inverterInput.addEventListener("input", () => validateInverterCount(card, true));
+    inverterInput.addEventListener("blur", () => validateInverterCount(card, true));
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (refrigerationApplianceGroups.children.length <= 1) return;
+      card.remove();
+      renumberCards(refrigerationApplianceGroups, "Equipo o grupo");
+    });
+
+    wireVisibleValidation(card);
+    refrigerationApplianceGroups.appendChild(card);
+    renumberCards(refrigerationApplianceGroups, "Equipo o grupo");
+    standardizeWeeksYearInfo(card);
+    syncApplianceEnergyRoute(card);
+  }
+
+  qs("#addRefrigerationApplianceGroup").addEventListener("click", addRefrigerationApplianceGroup);
+
+  qsa('input[name="uses_refrigerators_freezers"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="uses_refrigerators_freezers"][value="yes"]').checked;
+      refrigerationAppliancesBlock.hidden = !yes;
+
+      if (yes && !refrigerationApplianceGroups.children.length){
+        addRefrigerationApplianceGroup();
+      }
+
+      if (!yes){
+        refrigerationApplianceGroups.innerHTML = "";
+      }
+    });
+  });
+
+  /* -------------------------
+     Validación Sección 4
+  -------------------------- */
+  function validateSection4(){
+    let ok = true;
+
+    if (!validateRadioGroup("uses_refrigeration_component_systems")) ok = false;
+    if (!validateRadioGroup("uses_refrigerators_freezers")) ok = false;
+
+    const usesComponents =
+      qs('input[name="uses_refrigeration_component_systems"][value="yes"]').checked;
+
+    if (usesComponents){
+      const completeTypes = updateRefrigerationComponentStatus();
+      if (completeTypes !== 3) ok = false;
+    }
+
+    const usesAppliances =
+      qs('input[name="uses_refrigerators_freezers"][value="yes"]').checked;
+
+    if (usesAppliances){
+      if (!refrigerationApplianceGroups.children.length){
+        ok = false;
+      }
+
+      qsa(".refrigeration-appliance-card", refrigerationApplianceGroups).forEach(card => {
+        qsa("input,select,textarea", card).forEach(el => {
+          if (["radio","checkbox"].includes(el.type)) return;
+          if (!validateElement(el)) ok = false;
+        });
+
+        const radioName = card.dataset.labelRadioName;
+        const selected = qsa(`input[name="${radioName}"]`, card).some(r => r.checked);
+        qs(".appliance-label-error", card).classList.toggle("visible", !selected);
+        if (!selected) ok = false;
+
+        if (!validateInverterCount(card, true)) ok = false;
+      });
+    }
+
+    if (!ok){
+      const first = qs("#section4Form .invalid, #section4Form .field-error.visible");
+      if (first) first.scrollIntoView({behavior:"smooth",block:"center"});
+      const review = qs("#reviewS4");
+      if (review) review.textContent = "Con pendientes";
+      return false;
+    }
+
+    const review = qs("#reviewS4");
+    if (review) review.textContent = "Completa";
+    return true;
+  }
 
 
   /* =========================================================
