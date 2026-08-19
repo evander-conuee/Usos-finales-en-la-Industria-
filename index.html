@@ -1,1 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usos finales de la energía en el sector Industrial Mexicano</title>
 
+  <!-- Noto Sans para todo el formulario -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --green:#5b7f3a;
+      --green-dark:#3f5d2a;
+      --green-soft:#eef4e9;
+      --green-pale:#f5f7f3;
+      --text:#263238;
+      --muted:#657078;
+      --border:#cfd6d9;
+      --bg:#f3f5f7;
+      --white:#ffffff;
+      --danger:#b3261e;
+      --danger-bg:#fff5f5;
+      --warning:#8a6d00;
+      --warning-bg:#fff8dc;
+      --shadow:0 3px 14px rgba(23,31,38,.10);
+      --radius:10px;
+      --header-h:100px;
+      --content-max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"Noto Sans",Arial,sans-serif;
+      background:
+        linear-gradient(rgba(245,247,248,.90),rgba(245,247,248,.90)),
+        url("Textura.png") center top / cover fixed no-repeat;
+    }
+
+    button,input,select,textarea{font:inherit}
+
+    /* =========================================================
+       HEADER INSTITUCIONAL
+    ========================================================= */
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      width:100%;
+      min-height:var(--header-h);
+      background:#fff;
+      border-bottom:3px solid var(--green);
+      transition:box-shadow .2s ease;
+    }
+    .site-header.is-scrolled{box-shadow:0 4px 14px rgba(0,0,0,.10)}
+    .header-inner{
+      min-height:var(--header-h);
+      max-width:var(--content-max);
+      margin:0 auto;
+      padding:12px 24px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+    .brand-logo{
+      width:172px;
+      flex:0 0 172px;
+      display:flex;
+      align-items:center;
+    }
+    .brand-logo img{
+      display:block;
+      width:100%;
+      max-height:78px;
+      object-fit:contain;
+      object-position:left center;
+    }
+    .instrument-title{
+      min-width:0;
+      flex:1;
+    }
+    .instrument-title h1{
+      margin:0;
+      color:var(--green-dark);
+      font-family:"Patria","Noto Sans",Arial,sans-serif;
+      font-size:25px;
+      line-height:1.22;
+      font-weight:400;
+      letter-spacing:.01em;
+    }
+    .instrument-title p{
+      margin:6px 0 0;
+      color:#6a7175;
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    /* =========================================================
+       CONTENIDO
+    ========================================================= */
+    main{
+      width:min(var(--content-max),calc(100% - 40px));
+      margin:26px auto 48px;
+    }
+    [data-anchor]{scroll-margin-top:calc(var(--header-h) + 22px)}
+
+    .progress-card{
+      background:#fff;
+      border:1px solid rgba(207,214,217,.75);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px 20px;
+      margin-bottom:18px;
+    }
+    .progress-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:9px;
+      font-size:13px;
+      font-weight:700;
+    }
+    .progress-track{
+      height:9px;
+      overflow:hidden;
+      background:#dfe4e6;
+      border-radius:20px;
+    }
+    .progress-fill{
+      height:100%;
+      width:12.5%;
+      background:var(--green);
+      border-radius:inherit;
+      transition:width .25s ease;
+    }
+
+    .section-view{display:none}
+    .section-view.active{display:block}
+
+    .section-shell{
+      overflow:hidden;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .section-heading{
+      background:var(--green);
+      color:#fff;
+      padding:17px 22px;
+    }
+    .section-heading h2{
+      margin:0;
+      font-size:21px;
+      line-height:1.25;
+      font-weight:700;
+    }
+    .section-heading p{
+      margin:5px 0 0;
+      font-size:13px;
+      opacity:.94;
+    }
+    .section-content{padding:24px}
+
+    .subsection{
+      margin:0 0 28px;
+      padding-bottom:26px;
+      border-bottom:1px solid #e1e5e7;
+    }
+    .subsection:last-child{
+      margin-bottom:0;
+      padding-bottom:0;
+      border-bottom:0;
+    }
+    .subsection-title{
+      margin:0 0 16px;
+      color:var(--green-dark);
+      font-size:18px;
+      line-height:1.3;
+    }
+    .subsection-title .number{font-weight:700}
+
+    .instruction-box,
+    .note-box{
+      padding:16px 18px;
+      margin:0 0 22px;
+      line-height:1.55;
+      font-size:14px;
+      background:var(--green-pale);
+      border-left:5px solid var(--green);
+      border-radius:0 6px 6px 0;
+    }
+    .note-box.warning{
+      background:var(--warning-bg);
+      border-left-color:#c3a632;
+      color:#554a00;
+    }
+
+    /* =========================================================
+       CAMPOS
+    ========================================================= */
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(12,minmax(0,1fr));
+      gap:18px 22px;
+      align-items:start;
+    }
+    .form-group{
+      grid-column:span 6;
+      min-width:0;
+    }
+    .form-group.full{grid-column:1/-1}
+    .form-group.span-4{grid-column:span 4}
+    .form-group.span-3{grid-column:span 3}
+
+    label,.question-label{
+      display:block;
+      margin-bottom:7px;
+      font-size:14px;
+      line-height:1.4;
+      font-weight:600;
+    }
+    .required-mark{color:var(--danger)}
+    .help-text{
+      display:block;
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="time"],
+    select,
+    textarea{
+      width:100%;
+      min-height:42px;
+      padding:9px 11px;
+      border:1px solid #b9c1c5;
+      border-radius:6px;
+      color:var(--text);
+      background:#fff;
+      transition:border-color .15s ease,box-shadow .15s ease,background .15s ease;
+    }
+    textarea{
+      min-height:145px;
+      resize:vertical;
+      line-height:1.5;
+    }
+    input:focus,select:focus,textarea:focus{
+      outline:none;
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(91,127,58,.14);
+    }
+    .invalid{
+      border-color:var(--danger)!important;
+      background:var(--danger-bg)!important;
+    }
+    .field-error{
+      display:none;
+      margin-top:6px;
+      color:var(--danger);
+      font-size:12px;
+      line-height:1.4;
+    }
+    .field-error.visible{display:block}
+
+    /* Tamaños intencionales */
+    .field-xs{max-width:100px}
+    .field-s{max-width:145px}
+    .field-m{max-width:300px}
+    .field-l{max-width:500px}
+
+    .input-with-unit{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      flex-wrap:wrap;
+    }
+    .input-with-unit .unit{
+      color:#4f5a60;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .input-with-unit select{width:auto;min-width:105px}
+
+    .radio-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:4px;
+    }
+    .radio-card{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-height:42px;
+      padding:9px 14px;
+      border:1px solid var(--border);
+      border-radius:7px;
+      background:#fbfcfc;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .radio-card:hover{background:#f2f5ef}
+    .radio-card input{margin:0}
+
+    .info-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:21px;
+      height:21px;
+      margin-left:6px;
+      padding:0;
+      border:0;
+      border-radius:50%;
+      color:#fff;
+      background:var(--green);
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      vertical-align:middle;
+    }
+    .info-panel{
+      display:none;
+      max-width:720px;
+      margin-top:9px;
+      padding:12px 14px;
+      border:1px solid #dbc75c;
+      border-radius:6px;
+      background:#fff8c9;
+      color:#514800;
+      font-size:13px;
+      line-height:1.5;
+    }
+    .info-panel.visible{display:block}
+
+    /* =========================================================
+       GRUPOS DINÁMICOS
+    ========================================================= */
+    .dynamic-list{display:grid;gap:14px;margin-top:14px}
+    .dynamic-card{
+      position:relative;
+      padding:18px;
+      border:1px solid #d6dcdf;
+      border-radius:8px;
+      background:#fbfcfc;
+    }
+    .dynamic-card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:15px;
+    }
+    .dynamic-card-head h4{
+      margin:0;
+      color:var(--green-dark);
+      font-size:15px;
+    }
+    .remove-button{
+      border:0;
+      background:transparent;
+      color:#8a3b35;
+      padding:5px 7px;
+      font-size:12px;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .remove-button:hover{text-decoration:underline}
+    .add-button{
+      margin-top:14px;
+      padding:10px 15px;
+      border:1px solid var(--green);
+      border-radius:6px;
+      background:#fff;
+      color:var(--green-dark);
+      font-weight:700;
+      cursor:pointer;
+    }
+    .add-button:hover{background:var(--green-soft)}
+
+    /* Turnos */
+    .stepper{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
+      border-radius:7px;
+      padding:4px;
+      background:#fff;
+    }
+    .stepper button{
+      width:34px;height:34px;border:0;border-radius:5px;
+      background:#eef1ed;color:var(--green-dark);font-size:19px;cursor:pointer
+    }
+    .stepper output{min-width:34px;text-align:center;font-weight:700}
+    .day-schedule{
+      display:grid;
+      grid-template-columns:minmax(160px,1.1fr) 155px 155px;
+      gap:12px;
+      align-items:end;
+      margin-bottom:12px;
+    }
+    .day-toggle{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      min-height:42px;
+    }
+    .day-toggle label{margin:0}
+
+    .word-counter{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:right;
+    }
+
+    /* =========================================================
+       NAVEGACIÓN
+    ========================================================= */
+    .nav-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      margin-top:18px;
+    }
+    .nav-button{
+      min-height:44px;
+      padding:10px 22px;
+      border-radius:6px;
+      border:1px solid transparent;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .nav-button.previous{
+      color:#374248;
+      border-color:#c7ced2;
+      background:#eef1f2;
+    }
+    .nav-button.next{
+      color:#fff;
+      background:var(--green);
+    }
+    .nav-button.next:hover{background:var(--green-dark)}
+    .nav-button:disabled{opacity:.48;cursor:not-allowed}
+
+    .placeholder{
+      padding:42px 24px;
+      text-align:center;
+      color:var(--muted);
+    }
+    .placeholder strong{
+      display:block;
+      margin-bottom:8px;
+      color:var(--green-dark);
+      font-size:19px;
+    }
+
+    /* Review */
+    .review-list{display:grid;gap:10px}
+    .review-item{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:14px 16px;border:1px solid var(--border);border-radius:7px;background:#fff
+    }
+    .status-badge{
+      padding:4px 9px;border-radius:20px;font-size:12px;font-weight:700;
+      background:#eef4e9;color:var(--green-dark)
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width:800px){
+      :root{--header-h:88px}
+      .header-inner{padding:10px 16px;gap:16px}
+      .brand-logo{width:132px;flex-basis:132px}
+      .brand-logo img{max-height:64px}
+      .instrument-title h1{font-size:21px}
+      .instrument-title p{display:none}
+      main{width:min(100% - 24px,var(--content-max));margin-top:16px}
+      .section-content{padding:18px}
+      .form-group,.form-group.span-4,.form-group.span-3{grid-column:1/-1}
+      .field-xs,.field-s,.field-m,.field-l{max-width:100%}
+      .day-schedule{grid-template-columns:1fr 1fr}
+      .day-toggle{grid-column:1/-1}
+    }
+
+    @media (max-width:520px){
+      :root{--header-h:82px}
+      .header-inner{gap:12px}
+      .brand-logo{width:112px;flex-basis:112px}
+      .brand-logo img{max-height:58px}
+      .instrument-title h1{font-size:18px}
+      .section-heading{padding:14px 16px}
+      .section-heading h2{font-size:19px}
+      .progress-card{padding:13px 15px}
+      .dynamic-card{padding:14px}
+      .day-schedule{grid-template-columns:1fr}
+      .day-toggle{grid-column:auto}
+      .nav-row{align-items:stretch}
+      .nav-button{flex:1;padding:10px 12px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="brand-logo">
+        <img src="Conuee.png" alt="Comisión Nacional para el Uso Eficiente de la Energía">
+      </div>
+      <div class="instrument-title">
+        <h1>Usos finales de la energía en el sector Industrial Mexicano</h1>
+        <p>Instrumento de recolección de información energética para establecimientos industriales</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="progress-card" aria-label="Progreso del formulario">
+      <div class="progress-meta">
+        <span id="progressLabel">Sección 1 de 8</span>
+        <span id="progressPercent">12.5%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         SECCIÓN 1
+    ====================================================== -->
+    <section class="section-view active" data-section="1" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading">
+          <h2>1. Información general</h2>
+          <p>Datos del establecimiento, operación, informantes, producción y materias primas.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box">
+            Complete la información con base en las características del <strong>establecimiento o planta</strong>.
+            Los campos marcados con <span class="required-mark">*</span> son obligatorios.
+            Utilice los botones <strong>ⓘ</strong> cuando necesite aclarar un concepto.
+          </div>
+
+          <form id="section1Form" novalidate>
+            <!-- 1.1 -->
+            <div class="subsection" id="s1-general" data-anchor>
+              <h3 class="subsection-title"><span class="number">1.1</span> Datos generales</h3>
+
+              <div class="form-grid">
+                <div class="form-group full">
+                  <label for="company_name">Nombre de la empresa <span class="required-mark">*</span></label>
+                  <input id="company_name" name="company_name" class="field-l" type="text" required autocomplete="organization">
+                  <div class="field-error">Capture el nombre de la empresa.</div>
+                </div>
+
+                <div class="form-group full">
+                  <label for="industry_subsector_code">
+                    Subsector industrial al que pertenece <span class="required-mark">*</span>
+                    <button type="button" class="info-button" data-info="subsectorInfo" aria-label="Información sobre subsector">i</button>
+                  </label>
+                  <select id="industry_subsector_code" name="industry_subsector_code" class="field-l" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="212">212 - Minería de minerales metálicos y no metálicos, excepto petróleo y gas</option>
+                    <option value="236">236 - Edificación</option>
+                    <option value="311">311 - Industria alimentaria</option>
+                    <option value="312">312 - Industria de las bebidas y del tabaco</option>
+                    <option value="313">313 - Fabricación de insumos textiles y acabado de textiles</option>
+                    <option value="322">322 - Industria del papel</option>
+                    <option value="325">325 - Industria química</option>
+                    <option value="326">326 - Industria del plástico y del hule</option>
+                    <option value="327">327 - Fabricación de productos a base de minerales no metálicos</option>
+                    <option value="331">331 - Industrias metálicas básicas</option>
+                    <option value="334">334 - Fabricación de equipo de computación, comunicación, medición y otros equipos electrónicos</option>
+                    <option value="336">336 - Fabricación de equipo de transporte</option>
+                    <option value="339">339 - Otras industrias manufactureras</option>
+                  </select>
+                  <div id="subsectorInfo" class="info-panel">Seleccione el código y nombre que mejor describan la actividad principal del establecimiento.</div>
+                  <div class="field-error">Seleccione el subsector industrial.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="operation_start_year">Año de inicio de actividades u operación <span class="required-mark">*</span></label>
+                  <input id="operation_start_year" name="operation_start_year" class="field-s" type="number" min="1800" max="2026" step="1" inputmode="numeric" required>
+                  <span class="help-text">Valor permitido: 1800 a 2026.</span>
+                  <div class="field-error">Capture un año entre 1800 y 2026.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.2 -->
+            <div class="subsection" id="s1-location" data-anchor>
+              <h3 class="subsection-title"><span class="number">1.2</span> Ubicación</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="plant_branch_name">Planta o sucursal <span class="required-mark">*</span></label>
+                  <input id="plant_branch_name" name="plant_branch_name" class="field-l" type="text" required>
+                  <div class="field-error">Capture la planta o sucursal.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="municipality_state">Municipio y estado <span class="required-mark">*</span></label>
+                  <input id="municipality_state" name="municipality_state" class="field-l" type="text" required>
+                  <div class="field-error">Capture municipio y estado.</div>
+                </div>
+
+                <div class="form-group span-3">
+                  <label for="postal_code">C.P. <span class="required-mark">*</span></label>
+                  <input id="postal_code" name="postal_code" class="field-s" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" required>
+                  <div class="field-error">Capture exactamente 5 dígitos.</div>
+                </div>
+
+                <div class="form-group span-4">
+                  <label for="establishment_phone">Teléfono <span class="required-mark">*</span></label>
+                  <input id="establishment_phone" name="establishment_phone" class="field-m" type="tel" required>
+                  <div class="field-error">Capture un teléfono.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="establishment_email">Correo electrónico <span class="required-mark">*</span></label>
+                  <input id="establishment_email" name="establishment_email" class="field-l" type="email" required>
+                  <div class="field-error">Capture un correo electrónico válido.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.3 -->
+            <div class="subsection" id="s1-informants" data-anchor>
+              <h3 class="subsection-title"><span class="number">1.3</span> Datos de los informantes/encuestados</h3>
+              <p class="help-text">Registre a las personas que proporcionaron información para responder el instrumento.</p>
+
+              <div id="informantsList" class="dynamic-list"></div>
+              <button type="button" class="add-button" id="addInformant">＋ Agregar otra persona</button>
+            </div>
+
+            <!-- 1.4 -->
+            <div class="subsection" id="s1-operation" data-anchor>
+              <h3 class="subsection-title"><span class="number">1.4</span> Datos de operación</h3>
+
+              <div class="form-grid">
+                <div class="form-group span-4">
+                  <label for="weeks_operation_month">Semanas de operación al mes <span class="required-mark">*</span></label>
+                  <div class="input-with-unit">
+                    <input id="weeks_operation_month" name="weeks_operation_month" class="field-xs" type="number" min="0.01" max="5" step="0.01" required>
+                    <span class="unit">semanas/mes</span>
+                  </div>
+                  <div class="field-error">Capture un valor mayor que 0 y máximo 5.</div>
+                </div>
+
+                <div class="form-group span-4">
+                  <label for="days_operation_week">Días de operación a la semana <span class="required-mark">*</span></label>
+                  <div class="input-with-unit">
+                    <input id="days_operation_week" name="days_operation_week" class="field-xs" type="number" min="1" max="7" step="1" required>
+                    <span class="unit">días/semana</span>
+                  </div>
+                  <div class="field-error">Capture un entero entre 1 y 7.</div>
+                </div>
+
+                <div class="form-group span-4">
+                  <label for="hours_operation_day">Horas de operación al día <span class="required-mark">*</span></label>
+                  <div class="input-with-unit">
+                    <input id="hours_operation_day" name="hours_operation_day" class="field-xs" type="number" min="0.01" max="24" step="0.01" required>
+                    <span class="unit">h/día</span>
+                  </div>
+                  <div class="field-error">Capture un valor mayor que 0 y máximo 24.</div>
+                </div>
+              </div>
+
+              <div style="margin-top:24px">
+                <span class="question-label">1.4.1 ¿El establecimiento opera todos los meses del año? <span class="required-mark">*</span></span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="operates_all_months" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="operates_all_months" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="operates_all_months">Seleccione una opción.</div>
+              </div>
+
+              <div class="form-group" id="monthsOperationWrap" hidden style="margin-top:18px">
+                <label for="months_operation_year">1.4.1.1 Meses de operación al año <span class="required-mark">*</span></label>
+                <div class="input-with-unit">
+                  <input id="months_operation_year" name="months_operation_year" class="field-xs" type="number" min="1" max="11" step="1">
+                  <span class="unit">meses/año</span>
+                </div>
+                <div class="field-error">Capture un entero entre 1 y 11.</div>
+              </div>
+
+              <div style="margin-top:28px">
+                <span class="question-label">1.4.2 Total de turnos de trabajo <span class="required-mark">*</span></span>
+                <div class="stepper" aria-label="Número de turnos">
+                  <button type="button" id="shiftMinus" aria-label="Quitar turno">−</button>
+                  <output id="shiftCount">1</output>
+                  <button type="button" id="shiftPlus" aria-label="Agregar turno">＋</button>
+                </div>
+                <span class="help-text">Puede registrar de 1 a 3 turnos. Los horarios pueden cruzar medianoche.</span>
+                <div id="shiftsList" class="dynamic-list"></div>
+              </div>
+
+              <div class="form-grid" style="margin-top:26px">
+                <div class="form-group span-4">
+                  <label for="employee_count">1.4.3 Número total de empleados <span class="required-mark">*</span></label>
+                  <input id="employee_count" name="employee_count" class="field-s" type="number" min="1" step="1" required>
+                  <div class="field-error">Capture un entero mayor que 0.</div>
+                </div>
+
+                <div class="form-group">
+                  <label>1.4.4 Tamaño del establecimiento</label>
+                  <div id="establishmentSize" class="note-box" style="margin:0;padding:11px 14px;max-width:360px">
+                    Se calculará automáticamente con el número de empleados.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.5 -->
+            <div class="subsection" id="s1-production" data-anchor>
+              <h3 class="subsection-title"><span class="number">1.5</span> Producción y materia prima</h3>
+
+              <h4>1.5.1 Materias primas</h4>
+              <p class="help-text">Registre la cantidad <strong>diaria</strong> utilizada.</p>
+              <div id="rawMaterialsList" class="dynamic-list"></div>
+              <button type="button" class="add-button" id="addRawMaterial">＋ Agregar materia prima</button>
+
+              <h4 style="margin-top:28px">1.5.2 Productos</h4>
+              <p class="help-text">Registre la cantidad <strong>diaria</strong> producida.</p>
+              <div id="productsList" class="dynamic-list"></div>
+              <button type="button" class="add-button" id="addProduct">＋ Agregar producto</button>
+
+              <div style="margin-top:30px">
+                <span class="question-label">1.5.3 ¿Se generan subproductos relevantes? <span class="required-mark">*</span></span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="has_relevant_byproducts" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="has_relevant_byproducts" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="has_relevant_byproducts">Seleccione una opción.</div>
+              </div>
+
+              <div id="byproductsWrap" hidden style="margin-top:18px">
+                <p class="help-text">Registre la cantidad <strong>semanal</strong> producida.</p>
+                <div id="byproductsList" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addByproduct">＋ Agregar subproducto</button>
+              </div>
+
+              <div class="form-group full" style="margin-top:30px">
+                <label for="process_description">
+                  1.5.4 Describa brevemente los procesos a los que se somete la materia prima para obtener el producto principal
+                  <span class="required-mark">*</span>
+                  <button type="button" class="info-button" data-info="processInfo" aria-label="Información sobre descripción del proceso">i</button>
+                </label>
+                <div id="processInfo" class="info-panel">Incluya los equipos o tecnologías utilizados y las fuentes de energía empleadas durante el proceso.</div>
+                <textarea id="process_description" name="process_description" maxlength="20000" placeholder="Escriba aquí…" required></textarea>
+                <div class="word-counter"><span id="processWordCount">0</span> / 1,000 palabras</div>
+                <div class="field-error">Capture una descripción del proceso.</div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="nav-button previous" disabled>Anterior</button>
+        <button type="button" class="nav-button next" data-next="2">Continuar →</button>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECCIONES 2–8 · ESQUELETO DE NAVEGACIÓN
+    ====================================================== -->
+    <section class="section-view" data-section="2" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>2. Consumo energético, autogeneración y cogeneración</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Este bloque se implementará después de validar visualmente la Sección 1.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="1">← Anterior</button><button class="nav-button next" data-next="3">Continuar →</button></div>
+    </section>
+
+    <section class="section-view" data-section="3" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>3. Procesos térmicos</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Producción de vapor, calor directo y calentamiento de agua.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="2">← Anterior</button><button class="nav-button next" data-next="4">Continuar →</button></div>
+    </section>
+
+    <section class="section-view" data-section="4" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>4. Refrigeración</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Sistemas de refrigeración, refrigeradores y congeladores.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="3">← Anterior</button><button class="nav-button next" data-next="5">Continuar →</button></div>
+    </section>
+
+    <section class="section-view" data-section="5" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>5. Fuerza motriz</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Motores eléctricos, motores a combustible, montacargas y plantas de emergencia.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="4">← Anterior</button><button class="nav-button next" data-next="6">Continuar →</button></div>
+    </section>
+
+    <section class="section-view" data-section="6" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>6. Iluminación</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Planta industrial, áreas administrativas/comunes y exteriores.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="5">← Anterior</button><button class="nav-button next" data-next="7">Continuar →</button></div>
+    </section>
+
+    <section class="section-view" data-section="7" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>7. Acondicionamiento de espacios (HVAC)</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Aire acondicionado, ventiladores y calefacción.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="6">← Anterior</button><button class="nav-button next" data-next="8">Continuar →</button></div>
+    </section>
+
+    <section class="section-view" data-section="8" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading"><h2>8. Feedback</h2></div>
+        <div class="placeholder"><strong>Estructura preparada</strong>Evaluación breve de claridad, experiencia de llenado y utilidad del formulario.</div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="7">← Anterior</button><button class="nav-button next" data-next="review">Revisión →</button></div>
+    </section>
+
+    <!-- Revisión: no es sección 9 -->
+    <section class="section-view" data-section="review" data-anchor>
+      <div class="section-shell">
+        <div class="section-heading">
+          <h2>Revisión y envío</h2>
+          <p>Esta página no forma parte de la numeración del cuestionario.</p>
+        </div>
+        <div class="section-content">
+          <div class="review-list">
+            <div class="review-item"><span>1. Información general</span><span class="status-badge" id="reviewS1">Por revisar</span></div>
+            <div class="review-item"><span>2. Consumo energético, autogeneración y cogeneración</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>4. Refrigeración</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>6. Iluminación</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>7. HVAC</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>8. Feedback</span><span class="status-badge">Pendiente de implementación</span></div>
+          </div>
+
+          <div class="note-box warning" style="margin-top:22px">
+            <strong>Envío deshabilitado durante esta fase.</strong>
+            Primero validaremos el frontend y después conectaremos la captura con Supabase.
+          </div>
+        </div>
+      </div>
+      <div class="nav-row"><button class="nav-button previous" data-prev="8">← Anterior</button><button class="nav-button next" disabled>Enviar formulario</button></div>
+    </section>
+  </main>
+
+  <template id="informantTemplate">
+    <div class="dynamic-card informant-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Informante</h4>
+        <button type="button" class="remove-button">Eliminar persona</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nombre <span class="required-mark">*</span></label>
+          <input type="text" data-field="name" class="field-l" required>
+          <div class="field-error">Capture el nombre.</div>
+        </div>
+        <div class="form-group">
+          <label>Puesto <span class="required-mark">*</span></label>
+          <input type="text" data-field="position" class="field-l" required>
+          <div class="field-error">Capture el puesto.</div>
+        </div>
+        <div class="form-group span-4">
+          <label>Teléfono <span class="required-mark">*</span></label>
+          <input type="tel" data-field="phone" class="field-m" required>
+          <div class="field-error">Capture un teléfono.</div>
+        </div>
+        <div class="form-group">
+          <label>Correo electrónico <span class="required-mark">*</span></label>
+          <input type="email" data-field="email" class="field-l" required>
+          <div class="field-error">Capture un correo válido.</div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="shiftTemplate">
+    <div class="dynamic-card shift-card">
+      <div class="dynamic-card-head"><h4 class="card-title">Turno</h4></div>
+      <div class="day-schedule" data-day="weekdays">
+        <div class="day-toggle"><input type="checkbox" data-operates checked><label>Lunes a viernes</label></div>
+        <div><label>De <span class="required-mark">*</span></label><input type="time" data-start required></div>
+        <div><label>A <span class="required-mark">*</span></label><input type="time" data-end required></div>
+      </div>
+      <div class="day-schedule" data-day="saturday">
+        <div class="day-toggle"><input type="checkbox" data-operates><label>Sábado</label></div>
+        <div><label>De</label><input type="time" data-start disabled></div>
+        <div><label>A</label><input type="time" data-end disabled></div>
+      </div>
+      <div class="day-schedule" data-day="sunday">
+        <div class="day-toggle"><input type="checkbox" data-operates><label>Domingo</label></div>
+        <div><label>De</label><input type="time" data-start disabled></div>
+        <div><label>A</label><input type="time" data-end disabled></div>
+      </div>
+      <span class="help-text">Si un turno cruza medianoche, registre las horas tal como corresponden; no es necesario que “A” sea mayor que “De”.</span>
+    </div>
+  </template>
+
+  <template id="productionItemTemplate">
+    <div class="dynamic-card production-item-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Registro</h4>
+        <button type="button" class="remove-button">Eliminar</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tipo / nombre <span class="required-mark">*</span></label>
+          <input type="text" data-field="name" class="field-l" required>
+          <div class="field-error">Capture el nombre.</div>
+        </div>
+        <div class="form-group span-4">
+          <label>Unidad <span class="required-mark">*</span></label>
+          <select data-field="unit" class="field-m" required>
+            <option value="">Seleccione</option>
+            <option value="t">ton</option>
+            <option value="kg">kg</option>
+            <option value="l">L</option>
+            <option value="m3">m³</option>
+            <option value="m2">m²</option>
+            <option value="units">unidades</option>
+            <option value="other">Otro</option>
+          </select>
+          <div class="field-error">Seleccione una unidad.</div>
+        </div>
+        <div class="form-group span-4 unit-other-wrap" hidden>
+          <label>Otra unidad <span class="required-mark">*</span></label>
+          <input type="text" data-field="unit_other" class="field-m">
+          <div class="field-error">Especifique la unidad.</div>
+        </div>
+        <div class="form-group span-4">
+          <label class="quantity-label">Cantidad <span class="required-mark">*</span></label>
+          <input type="number" data-field="quantity" class="field-s" min="0" step="any" required>
+          <div class="field-error">Capture un valor igual o mayor que 0.</div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+<script>
+(() => {
+  "use strict";
+
+  const qs = (s, root=document) => root.querySelector(s);
+  const qsa = (s, root=document) => [...root.querySelectorAll(s)];
+
+  /* Header sticky: sombra cuando ya existe desplazamiento */
+  const header = qs("#siteHeader");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 6);
+  window.addEventListener("scroll", onScroll, { passive:true });
+  onScroll();
+
+  /* Ayudas */
+  document.addEventListener("click", e => {
+    const btn = e.target.closest("[data-info]");
+    if (!btn) return;
+    const panel = document.getElementById(btn.dataset.info);
+    if (panel) panel.classList.toggle("visible");
+  });
+
+  /* Navegación */
+  let currentView = "1";
+  const progressLabel = qs("#progressLabel");
+  const progressPercent = qs("#progressPercent");
+  const progressFill = qs("#progressFill");
+
+  function showView(view){
+    qsa(".section-view").forEach(el => el.classList.toggle("active", el.dataset.section === String(view)));
+    currentView = String(view);
+
+    if (view === "review"){
+      progressLabel.textContent = "Revisión y envío";
+      progressPercent.textContent = "100%";
+      progressFill.style.width = "100%";
+    } else {
+      const n = Number(view);
+      const pct = (n / 8) * 100;
+      progressLabel.textContent = `Sección ${n} de 8`;
+      progressPercent.textContent = `${Number.isInteger(pct) ? pct : pct.toFixed(1)}%`;
+      progressFill.style.width = `${pct}%`;
+    }
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  document.addEventListener("click", e => {
+    const next = e.target.closest("[data-next]");
+    const prev = e.target.closest("[data-prev]");
+    if (next){
+      if (currentView === "1" && !validateSection1()) return;
+      showView(next.dataset.next);
+    }
+    if (prev) showView(prev.dataset.prev);
+  });
+
+  /* =========================================================
+     DINÁMICOS: INFORMANTES
+  ========================================================= */
+  const informantsList = qs("#informantsList");
+  const informantTemplate = qs("#informantTemplate");
+
+  function renumberCards(list, noun){
+    [...list.children].forEach((card, i) => {
+      const title = qs(".card-title", card);
+      if (title) title.textContent = `${noun} ${i+1}`;
+    });
+  }
+
+  function addInformant(){
+    const card = informantTemplate.content.firstElementChild.cloneNode(true);
+    const remove = qs(".remove-button", card);
+    remove.addEventListener("click", () => {
+      if (informantsList.children.length <= 1) return;
+      card.remove();
+      renumberCards(informantsList, "Informante");
+    });
+    informantsList.appendChild(card);
+    renumberCards(informantsList, "Informante");
+  }
+  qs("#addInformant").addEventListener("click", addInformant);
+  addInformant();
+
+  /* =========================================================
+     TURNOS
+  ========================================================= */
+  const shiftsList = qs("#shiftsList");
+  const shiftTemplate = qs("#shiftTemplate");
+  let shiftCount = 1;
+
+  function wireShift(card){
+    qsa(".day-schedule", card).forEach(row => {
+      const toggle = qs("[data-operates]", row);
+      const start = qs("[data-start]", row);
+      const end = qs("[data-end]", row);
+
+      const sync = () => {
+        start.disabled = !toggle.checked;
+        end.disabled = !toggle.checked;
+        start.required = toggle.checked;
+        end.required = toggle.checked;
+        if (!toggle.checked){
+          start.value = "";
+          end.value = "";
+          clearInvalid(start);
+          clearInvalid(end);
+        }
+      };
+      toggle.addEventListener("change", sync);
+      sync();
+    });
+  }
+
+  function renderShifts(){
+    while (shiftsList.children.length < shiftCount){
+      const card = shiftTemplate.content.firstElementChild.cloneNode(true);
+      shiftsList.appendChild(card);
+      wireShift(card);
+    }
+    while (shiftsList.children.length > shiftCount){
+      shiftsList.lastElementChild.remove();
+    }
+    renumberCards(shiftsList, "Turno");
+    qs("#shiftCount").textContent = shiftCount;
+  }
+  qs("#shiftMinus").addEventListener("click", () => {
+    shiftCount = Math.max(1, shiftCount-1);
+    renderShifts();
+  });
+  qs("#shiftPlus").addEventListener("click", () => {
+    shiftCount = Math.min(3, shiftCount+1);
+    renderShifts();
+  });
+  renderShifts();
+
+  /* =========================================================
+     OPERACIÓN TODO EL AÑO
+  ========================================================= */
+  const monthsWrap = qs("#monthsOperationWrap");
+  const monthsInput = qs("#months_operation_year");
+  qsa('input[name="operates_all_months"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const no = qs('input[name="operates_all_months"][value="no"]').checked;
+      monthsWrap.hidden = !no;
+      monthsInput.required = no;
+      if (!no){
+        monthsInput.value = "";
+        clearInvalid(monthsInput);
+      }
+    });
+  });
+
+  /* Tamaño de establecimiento */
+  const employeeInput = qs("#employee_count");
+  const sizeBox = qs("#establishmentSize");
+  employeeInput.addEventListener("input", () => {
+    const n = Number(employeeInput.value);
+    if (!Number.isFinite(n) || n <= 0){
+      sizeBox.textContent = "Se calculará automáticamente con el número de empleados.";
+      return;
+    }
+    let size = n <= 10 ? "Micro" : n <= 50 ? "Pequeña" : n <= 250 ? "Mediana" : "Grande";
+    sizeBox.innerHTML = `Tamaño calculado: <strong>${size}</strong>`;
+  });
+
+  /* =========================================================
+     MATERIAS PRIMAS / PRODUCTOS / SUBPRODUCTOS
+  ========================================================= */
+  const productionItemTemplate = qs("#productionItemTemplate");
+
+  function addProductionItem(listId, noun, period){
+    const list = qs(`#${listId}`);
+    const card = productionItemTemplate.content.firstElementChild.cloneNode(true);
+    qs(".quantity-label", card).innerHTML = `Cantidad ${period} <span class="required-mark">*</span>`;
+    const unitSelect = qs('[data-field="unit"]', card);
+    const otherWrap = qs(".unit-other-wrap", card);
+    const otherInput = qs('[data-field="unit_other"]', card);
+
+    unitSelect.addEventListener("change", () => {
+      const other = unitSelect.value === "other";
+      otherWrap.hidden = !other;
+      otherInput.required = other;
+      if (!other){
+        otherInput.value = "";
+        clearInvalid(otherInput);
+      }
+    });
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (list.children.length <= 1) return;
+      card.remove();
+      renumberCards(list, noun);
+    });
+
+    list.appendChild(card);
+    renumberCards(list, noun);
+  }
+
+  qs("#addRawMaterial").addEventListener("click", () => addProductionItem("rawMaterialsList","Materia prima","diaria"));
+  qs("#addProduct").addEventListener("click", () => addProductionItem("productsList","Producto","diaria"));
+  qs("#addByproduct").addEventListener("click", () => addProductionItem("byproductsList","Subproducto","semanal"));
+
+  addProductionItem("rawMaterialsList","Materia prima","diaria");
+  addProductionItem("productsList","Producto","diaria");
+
+  /* Subproductos */
+  const byproductsWrap = qs("#byproductsWrap");
+  qsa('input[name="has_relevant_byproducts"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="has_relevant_byproducts"][value="yes"]').checked;
+      byproductsWrap.hidden = !yes;
+
+      if (yes && !qs("#byproductsList").children.length){
+        addProductionItem("byproductsList","Subproducto","semanal");
+      }
+      qsa("input,select", byproductsWrap).forEach(el => el.disabled = !yes);
+      if (!yes){
+        qs("#byproductsList").innerHTML = "";
+      }
+    });
+  });
+
+  /* =========================================================
+     CONTADOR 1000 PALABRAS
+  ========================================================= */
+  const process = qs("#process_description");
+  const wordCount = qs("#processWordCount");
+
+  function words(text){
+    return text.trim() ? text.trim().split(/\s+/) : [];
+  }
+  process.addEventListener("input", () => {
+    const current = words(process.value);
+    if (current.length > 1000){
+      process.value = current.slice(0,1000).join(" ");
+    }
+    wordCount.textContent = words(process.value).length;
+  });
+
+  /* =========================================================
+     VALIDACIÓN SECCIÓN 1
+  ========================================================= */
+  function clearInvalid(el){
+    el.classList.remove("invalid");
+    const group = el.closest(".form-group, .dynamic-card, .day-schedule");
+    const error = group ? qs(".field-error", group) : null;
+    if (error) error.classList.remove("visible");
+  }
+
+  function markInvalid(el){
+    el.classList.add("invalid");
+    const group = el.closest(".form-group, .dynamic-card, .day-schedule");
+    const error = group ? qs(".field-error", group) : null;
+    if (error) error.classList.add("visible");
+  }
+
+  function validateElement(el){
+    if (el.disabled || el.closest("[hidden]")) return true;
+    const valid = el.checkValidity();
+    valid ? clearInvalid(el) : markInvalid(el);
+    return valid;
+  }
+
+  qsa("#section1Form input, #section1Form select, #section1Form textarea").forEach(el => {
+    el.addEventListener("blur", () => {
+      if (el.type !== "radio" && el.type !== "checkbox") validateElement(el);
+    });
+    el.addEventListener("input", () => {
+      if (el.classList.contains("invalid")) validateElement(el);
+    });
+  });
+
+  function validateRadioGroup(name){
+    const radios = qsa(`input[name="${name}"]`);
+    const valid = radios.some(r => r.checked);
+    const error = qs(`[data-error-for="${name}"]`);
+    if (error) error.classList.toggle("visible", !valid);
+    return valid;
+  }
+
+  function validateSection1(){
+    let ok = true;
+    const form = qs("#section1Form");
+
+    qsa("input,select,textarea", form).forEach(el => {
+      if (["radio","checkbox"].includes(el.type)) return;
+      if (!validateElement(el)) ok = false;
+    });
+
+    if (!validateRadioGroup("operates_all_months")) ok = false;
+    if (!validateRadioGroup("has_relevant_byproducts")) ok = false;
+
+    /* Al menos un informante / materia prima / producto */
+    if (!informantsList.children.length) ok = false;
+    if (!qs("#rawMaterialsList").children.length) ok = false;
+    if (!qs("#productsList").children.length) ok = false;
+
+    if (!ok){
+      const first = qs(".invalid, .field-error.visible", form);
+      if (first) first.scrollIntoView({behavior:"smooth",block:"center"});
+      qs("#reviewS1").textContent = "Con pendientes";
+      return false;
+    }
+
+    qs("#reviewS1").textContent = "Completa";
+    return true;
+  }
+
+})();
+</script>
+</body>
+</html>
