@@ -804,6 +804,40 @@
       background:#f9fbfa;
     }
     .label-route-panel[hidden]{display:none}
+    .appliance-energy-details{
+      align-items:start;
+    }
+    .capacity-slot{
+      grid-column:span 6;
+      min-width:0;
+    }
+    .capacity-slot .appliance-capacity-field{
+      width:100%;
+      max-width:100%;
+    }
+    .capacity-slot .appliance-capacity-field label{
+      min-height:auto;
+    }
+    .capacity-slot .appliance-capacity-field .input-with-unit{
+      flex-wrap:nowrap;
+    }
+    .capacity-slot .appliance-capacity-field input{
+      width:130px;
+      max-width:130px;
+    }
+    .capacity-slot .appliance-capacity-field select{
+      width:115px;
+      min-width:115px;
+      max-width:115px;
+    }
+    @media (max-width:800px){
+      .capacity-slot{
+        grid-column:1/-1;
+      }
+      .capacity-slot .appliance-capacity-field .input-with-unit{
+        flex-wrap:wrap;
+      }
+    }
     .component-status-complete{
       background:#eef7ea;
       border-color:#a8c79a;
@@ -1192,7 +1226,7 @@
       </div>
 
       <div class="nav-row">
-        <button type="button" class="nav-button previous" disabled>Anterior</button>
+        <button type="button" class="nav-button previous" data-prev="welcome">← Anterior</button>
         <button type="button" class="nav-button next" data-next="2">Continuar →</button>
       </div>
     </section>
@@ -2715,10 +2749,10 @@
         </div>
 
         <div class="form-group appliance-capacity-field" data-capacity-field hidden>
-          <label data-capacity-label>Indique la capacidad o tamaño del equipo <span class="required-mark">*</span></label>
+          <label data-capacity-label>Capacidad o tamaño del equipo <span class="required-mark">*</span></label>
           <div class="input-with-unit">
             <input data-field="capacity_size" class="field-s" type="number" min="0.000001" step="any">
-            <select data-field="capacity_unit">
+            <select data-field="capacity_unit" data-standard-unit="m3">
               <option value="">Unidad</option>
               <option value="m3">m³</option>
               <option value="ft3">pies³</option>
@@ -2726,7 +2760,7 @@
             </select>
           </div>
           <div class="field-error">Capture una capacidad mayor que 0 y seleccione la unidad.</div>
-          <span class="help-text">Reporte la capacidad o tamaño correspondiente a <strong>un solo equipo</strong> del grupo.</span>
+          <span class="help-text">Capture la capacidad o tamaño del <strong>equipo o equipos del grupo</strong>.</span>
         </div>
       </div>
 
@@ -4359,7 +4393,7 @@
       type === "freezer" ? "congelador" :
       "equipo";
 
-    label.innerHTML = `Indique la capacidad o tamaño del ${noun} <span class="required-mark">*</span>`;
+    label.innerHTML = `Capacidad o tamaño del ${noun} <span class="required-mark">*</span>`;
   }
 
   function syncApplianceEnergyRoute(card){
