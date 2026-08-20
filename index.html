@@ -1188,6 +1188,10 @@
       grid-template-columns:1fr;
       gap:14px;
       align-items:start;
+      width:88%;
+      max-width:840px;
+      margin-left:auto;
+      margin-right:auto;
     }
 
     .feedback-card{
@@ -1271,6 +1275,10 @@
     }
 
     @media (max-width:600px){
+      .feedback-grid{
+        width:100%;
+        max-width:none;
+      }
       .feedback-sections-grid{
         grid-template-columns:1fr;
       }
@@ -8433,7 +8441,10 @@
       if (finalTitle) finalTitle.textContent = "Todo está listo";
       if (finalText) finalText.textContent =
         "Has completado toda la información requerida. Presiona “Finalizar y enviar” para cerrar el formulario.";
-      if (finalHint) finalHint.textContent = "Las 8 secciones están completas.";
+      if (finalHint){
+        finalHint.textContent = "";
+        finalHint.style.display = "none";
+      }
     } else {
       if (heroTitle) heroTitle.textContent = "¡Ya casi terminamos!";
       if (heroText) heroText.textContent =
@@ -8441,8 +8452,11 @@
       if (finalTitle) finalTitle.textContent = "Confirma que todo esté listo";
       if (finalText) finalText.textContent =
         "Cuando las ocho secciones estén completas, podrás finalizar el formulario.";
-      if (finalHint) finalHint.textContent =
-        "El botón se habilitará cuando las ocho secciones estén completas.";
+      if (finalHint){
+        finalHint.style.display = "";
+        finalHint.textContent =
+          "El botón se habilitará cuando las ocho secciones estén completas.";
+      }
     }
 
     return allComplete;
