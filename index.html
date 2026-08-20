@@ -496,14 +496,228 @@
     }
 
     /* Review */
-    .review-list{display:grid;gap:10px}
-    .review-item{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;
-      padding:14px 16px;border:1px solid var(--border);border-radius:7px;background:#fff
+    .review-completion-hero{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:18px;
+      align-items:center;
+      padding:22px 24px;
+      margin-bottom:22px;
+      border:1px solid #cddcc7;
+      border-radius:10px;
+      background:#f3f8f0;
     }
+
+    .review-checkmark{
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--green);
+      color:#fff;
+      font-size:30px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .review-completion-hero h3{
+      margin:0 0 5px;
+      color:var(--green-dark);
+      font-size:21px;
+    }
+
+    .review-completion-hero p{
+      margin:0;
+      color:#4f5c61;
+      line-height:1.55;
+    }
+
+    .review-counter{
+      text-align:center;
+      min-width:92px;
+    }
+
+    .review-counter strong{
+      display:block;
+      color:var(--green-dark);
+      font-size:24px;
+      line-height:1.1;
+    }
+
+    .review-counter span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .review-progress-track{
+      height:7px;
+      margin:0 0 22px;
+      border-radius:20px;
+      overflow:hidden;
+      background:#e3e8e5;
+    }
+
+    .review-progress-fill{
+      width:0%;
+      height:100%;
+      border-radius:20px;
+      background:var(--green);
+      transition:width .25s ease;
+    }
+
+    .review-list{display:grid;gap:10px}
+
+    .review-item{
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:#fff;
+    }
+
+    .review-item-title{
+      font-weight:650;
+      color:#344147;
+    }
+
     .status-badge{
-      padding:4px 9px;border-radius:20px;font-size:12px;font-weight:700;
-      background:#eef4e9;color:var(--green-dark)
+      padding:5px 10px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:700;
+      background:#f1f3f4;
+      color:#667177;
+      white-space:nowrap;
+    }
+
+    .status-badge.complete{
+      background:#eaf4e5;
+      color:#315f21;
+    }
+
+    .status-badge.pending{
+      background:#fff2df;
+      color:#8a5a00;
+    }
+
+    .review-section-button{
+      min-height:34px;
+      padding:6px 11px;
+      border:1px solid #bec9c5;
+      border-radius:6px;
+      background:#fff;
+      color:var(--green-dark);
+      font:inherit;
+      font-size:12.5px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .review-section-button:hover{
+      background:#f3f7f5;
+      border-color:#95aaa2;
+    }
+
+    .review-final-card{
+      margin-top:24px;
+      padding:22px;
+      border-radius:10px;
+      border:1px solid #d6dedb;
+      background:#fbfcfc;
+      text-align:center;
+    }
+
+    .review-final-card h3{
+      margin:0 0 7px;
+      color:var(--green-dark);
+      font-size:20px;
+    }
+
+    .review-final-card p{
+      max-width:760px;
+      margin:0 auto 16px;
+      color:#536066;
+      line-height:1.55;
+    }
+
+    .review-final-button{
+      min-height:48px;
+      padding:11px 28px;
+      border:0;
+      border-radius:7px;
+      background:var(--green);
+      color:#fff;
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .review-final-button:hover:not(:disabled){
+      background:var(--green-dark);
+    }
+
+    .review-final-button:disabled{
+      opacity:.48;
+      cursor:not-allowed;
+    }
+
+    .review-final-hint{
+      display:block;
+      margin-top:10px;
+      color:#6a7479;
+      font-size:12.5px;
+    }
+
+    .review-finished-message{
+      display:none;
+      margin-top:18px;
+      padding:17px 18px;
+      border:1px solid #cddcc7;
+      border-radius:8px;
+      background:#f1f7ed;
+      color:#365b2d;
+      line-height:1.55;
+    }
+
+    .review-finished-message.visible{
+      display:block;
+    }
+
+    @media (max-width:720px){
+      .review-completion-hero{
+        grid-template-columns:auto 1fr;
+      }
+
+      .review-counter{
+        grid-column:1/-1;
+        text-align:left;
+        display:flex;
+        align-items:baseline;
+        gap:7px;
+      }
+
+      .review-counter strong,
+      .review-counter span{
+        display:inline;
+      }
+
+      .review-item{
+        grid-template-columns:1fr auto;
+      }
+
+      .review-section-button{
+        grid-column:1/-1;
+        justify-self:start;
+      }
     }
 
 
@@ -971,21 +1185,26 @@
 
     .feedback-grid{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:16px;
+      grid-template-columns:1fr;
+      gap:14px;
       align-items:start;
     }
 
     .feedback-card{
       min-width:0;
-      padding:17px 18px;
+      width:100%;
+      min-height:215px;
+      padding:19px 20px;
       border:1px solid #d6dcdf;
       border-radius:8px;
       background:#fbfcfc;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
     }
 
     .feedback-card.full{
-      grid-column:1/-1;
+      grid-column:auto;
     }
 
     .feedback-card .question-label{
@@ -1049,15 +1268,6 @@
       color:#4f5a60;
       font-size:14px;
       line-height:1.55;
-    }
-
-    @media (max-width:800px){
-      .feedback-grid{
-        grid-template-columns:1fr;
-      }
-      .feedback-card.full{
-        grid-column:auto;
-      }
     }
 
     @media (max-width:600px){
@@ -2505,7 +2715,7 @@
       <div class="section-shell">
         <div class="section-heading">
           <h2>7. Acondicionamiento de espacios (HVAC)</h2>
-          <p>Aire acondicionado, ventiladores y calefacción utilizados para acondicionar espacios del establecimiento.</p>
+          <p>Heating, Ventilation, and Air Conditioning- Calefacción, Ventilación y Aire Acondicionado.</p>
         </div>
 
         <div class="section-content">
@@ -2580,8 +2790,8 @@
                 </div>
 
                 <div id="acAutoAllocation" class="hvac-auto-allocation" hidden>
-                  Al no utilizar aire acondicionado en espacios vinculados con la producción, el formulario considera
-                  <strong>100 % en espacios administrativos y 0 % en producción</strong>.
+                  Al seleccionar que <strong>NO</strong>, se considera que el <strong>100 % de los equipos de aire acondicionado</strong>
+                  se usa en espacios administrativos.
                 </div>
 
                 <!-- PRODUCCIÓN -->
@@ -2638,7 +2848,7 @@
                  7.2 VENTILADORES
             ================================================== -->
             <div class="subsection" id="s7-fans" data-anchor>
-              <h3 class="subsection-title"><span class="number">7.2</span> Ventiladores</h3>
+              <h3 class="subsection-title"><span class="number">7.2</span> Ventilación</h3>
 
               <div>
                 <span class="question-label">
@@ -2698,8 +2908,8 @@
                 </div>
 
                 <div id="fanAutoAllocation" class="hvac-auto-allocation" hidden>
-                  Al no utilizar ventiladores en espacios vinculados con la producción, el formulario considera
-                  <strong>100 % en espacios administrativos y 0 % en producción</strong>.
+                  Al seleccionar que <strong>NO</strong>, se considera que el <strong>100 % de los ventiladores</strong>
+                  se usa en espacios administrativos.
                 </div>
 
                 <div id="fanInventoryBlock" hidden style="margin-top:24px">
@@ -2961,32 +3171,105 @@
       </div>
     </section>
 
-    <!-- Revisión: no es sección 9 -->
+    <!-- Revisión final: no es sección 9 -->
     <section class="section-view" data-section="review" data-anchor>
       <div class="section-shell">
         <div class="section-heading">
           <h2>Revisión y envío</h2>
-          <p>Esta página no forma parte de la numeración del cuestionario.</p>
+          <p>Último paso antes de finalizar el formulario.</p>
         </div>
+
         <div class="section-content">
-          <div class="review-list">
-            <div class="review-item"><span>1. Información general</span><span class="status-badge" id="reviewS1">Por revisar</span></div>
-            <div class="review-item"><span>2. Consumo energético, autogeneración y cogeneración</span><span class="status-badge" id="reviewS2">Por revisar</span></div>
-            <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge" id="reviewS3">Por revisar</span></div>
-            <div class="review-item"><span>4. Refrigeración</span><span class="status-badge" id="reviewS4">Por revisar</span></div>
-            <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge" id="reviewS5">Por revisar</span></div>
-            <div class="review-item"><span>6. Iluminación</span><span class="status-badge" id="reviewS6">Por revisar</span></div>
-            <div class="review-item"><span>7. Acondicionamiento de espacios (HVAC)</span><span class="status-badge" id="reviewS7">Por revisar</span></div>
-            <div class="review-item"><span>8. Feedback</span><span class="status-badge" id="reviewS8">Por revisar</span></div>
+          <div class="review-completion-hero">
+            <div class="review-checkmark">✓</div>
+            <div>
+              <h3 id="reviewHeroTitle">¡Ya casi terminamos!</h3>
+              <p id="reviewHeroText">
+                Revisa que las ocho secciones aparezcan como completas. Si deseas verificar alguna respuesta,
+                puedes regresar directamente a esa sección antes de finalizar.
+              </p>
+            </div>
+            <div class="review-counter">
+              <strong id="reviewCompletedCount">0 / 8</strong>
+              <span>secciones completas</span>
+            </div>
           </div>
 
-          <div class="note-box warning" style="margin-top:22px">
-            <strong>Envío deshabilitado durante esta fase.</strong>
-            Primero validaremos el frontend y después conectaremos la captura con Supabase.
+          <div class="review-progress-track" aria-hidden="true">
+            <div class="review-progress-fill" id="reviewProgressFill"></div>
+          </div>
+
+          <div class="review-list">
+            <div class="review-item">
+              <span class="review-item-title">1. Información general</span>
+              <span class="status-badge" id="reviewS1">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="1">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">2. Consumo energético, autogeneración y cogeneración</span>
+              <span class="status-badge" id="reviewS2">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="2">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">3. Procesos térmicos</span>
+              <span class="status-badge" id="reviewS3">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="3">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">4. Refrigeración</span>
+              <span class="status-badge" id="reviewS4">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="4">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">5. Fuerza motriz</span>
+              <span class="status-badge" id="reviewS5">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="5">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">6. Iluminación</span>
+              <span class="status-badge" id="reviewS6">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="6">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">7. Acondicionamiento de espacios (HVAC)</span>
+              <span class="status-badge" id="reviewS7">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="7">Revisar</button>
+            </div>
+            <div class="review-item">
+              <span class="review-item-title">8. Feedback</span>
+              <span class="status-badge" id="reviewS8">Por revisar</span>
+              <button type="button" class="review-section-button" data-review-section="8">Revisar</button>
+            </div>
+          </div>
+
+          <div class="review-final-card">
+            <h3 id="reviewFinalTitle">Confirma que todo esté listo</h3>
+            <p id="reviewFinalText">
+              Cuando las ocho secciones estén completas, podrás finalizar el formulario.
+            </p>
+
+            <button type="button" class="review-final-button" id="finalizeSubmitButton" disabled>
+              Finalizar y enviar
+            </button>
+
+            <span class="review-final-hint" id="reviewFinalHint">
+              El botón se habilitará cuando las ocho secciones estén completas.
+            </span>
+
+            <div class="review-finished-message" id="reviewFinishedMessage">
+              <strong>¡Formulario finalizado!</strong><br>
+              Has completado correctamente las ocho secciones. La interfaz está lista para realizar el envío.
+              Durante esta etapa de validación del frontend todavía no se transmiten datos; la conexión con Supabase
+              se habilitará en la siguiente fase del proyecto.
+            </div>
           </div>
         </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="8">← Anterior</button><button class="nav-button next" disabled>Enviar formulario</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="8">← Anterior</button>
+        <span></span>
+      </div>
     </section>
   </main>
 
@@ -4845,6 +5128,7 @@
       progressLabel.textContent = "Revisión y envío";
       progressPercent.textContent = "100%";
       progressFill.style.width = "100%";
+      updateFinalReviewState();
     } else {
       const n = Number(view);
       const pct = (n / 8) * 100;
@@ -8110,6 +8394,82 @@
 
   syncFeedbackDifficultTerms();
   syncFeedbackDifficultSections();
+
+
+
+  /* =========================================================
+     REVISIÓN FINAL Y CIERRE DEL FORMULARIO
+  ========================================================= */
+  function updateFinalReviewState(){
+    const badges = Array.from({length:8}, (_,i) => qs(`#reviewS${i+1}`));
+    const completeCount = badges.filter(badge => badge && badge.textContent.trim() === "Completa").length;
+    const allComplete = completeCount === 8;
+
+    badges.forEach(badge => {
+      if (!badge) return;
+      const complete = badge.textContent.trim() === "Completa";
+      badge.classList.toggle("complete", complete);
+      badge.classList.toggle("pending", !complete);
+    });
+
+    const count = qs("#reviewCompletedCount");
+    const fill = qs("#reviewProgressFill");
+    const button = qs("#finalizeSubmitButton");
+    const heroTitle = qs("#reviewHeroTitle");
+    const heroText = qs("#reviewHeroText");
+    const finalTitle = qs("#reviewFinalTitle");
+    const finalText = qs("#reviewFinalText");
+    const finalHint = qs("#reviewFinalHint");
+
+    if (count) count.textContent = `${completeCount} / 8`;
+    if (fill) fill.style.width = `${(completeCount / 8) * 100}%`;
+
+    if (button) button.disabled = !allComplete;
+
+    if (allComplete){
+      if (heroTitle) heroTitle.textContent = "¡Terminaste las 8 secciones!";
+      if (heroText) heroText.textContent =
+        "Tu formulario está completo. Puedes revisar cualquier sección una última vez o finalizar cuando estés listo.";
+      if (finalTitle) finalTitle.textContent = "Todo está listo";
+      if (finalText) finalText.textContent =
+        "Has completado toda la información requerida. Presiona “Finalizar y enviar” para cerrar el formulario.";
+      if (finalHint) finalHint.textContent = "Las 8 secciones están completas.";
+    } else {
+      if (heroTitle) heroTitle.textContent = "¡Ya casi terminamos!";
+      if (heroText) heroText.textContent =
+        "Revisa que las ocho secciones aparezcan como completas. Si deseas verificar alguna respuesta, puedes regresar directamente a esa sección antes de finalizar.";
+      if (finalTitle) finalTitle.textContent = "Confirma que todo esté listo";
+      if (finalText) finalText.textContent =
+        "Cuando las ocho secciones estén completas, podrás finalizar el formulario.";
+      if (finalHint) finalHint.textContent =
+        "El botón se habilitará cuando las ocho secciones estén completas.";
+    }
+
+    return allComplete;
+  }
+
+  document.addEventListener("click", e => {
+    const reviewButton = e.target.closest("[data-review-section]");
+    if (reviewButton){
+      showView(reviewButton.dataset.reviewSection);
+      return;
+    }
+
+    const finalizeButton = e.target.closest("#finalizeSubmitButton");
+    if (finalizeButton){
+      if (!updateFinalReviewState()) return;
+
+      const message = qs("#reviewFinishedMessage");
+      if (message){
+        message.classList.add("visible");
+        message.scrollIntoView({behavior:"smooth", block:"center"});
+      }
+
+      finalizeButton.textContent = "Formulario finalizado";
+      finalizeButton.disabled = true;
+      finalizeButton.dataset.finalized = "true";
+    }
+  });
 
 
   /* =========================================================
