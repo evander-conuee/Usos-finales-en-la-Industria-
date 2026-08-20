@@ -1186,10 +1186,9 @@
     .feedback-grid{
       display:grid;
       grid-template-columns:1fr;
-      gap:14px;
+      gap:12px;
       align-items:start;
-      width:88%;
-      max-width:840px;
+      width:min(100%,690px);
       margin-left:auto;
       margin-right:auto;
     }
@@ -1197,8 +1196,8 @@
     .feedback-card{
       min-width:0;
       width:100%;
-      min-height:215px;
-      padding:19px 20px;
+      min-height:145px;
+      padding:16px 18px;
       border:1px solid #d6dcdf;
       border-radius:8px;
       background:#fbfcfc;
@@ -1224,16 +1223,28 @@
       padding:8px 12px;
     }
 
-    .feedback-time-row{
+    .feedback-time-question{
       display:flex;
       align-items:center;
       gap:9px;
       flex-wrap:wrap;
     }
 
+    .feedback-time-question label{
+      margin:0;
+      display:inline;
+    }
+
+    .feedback-time-row{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:nowrap;
+    }
+
     .feedback-time-row input{
-      width:105px;
-      max-width:105px;
+      width:88px;
+      max-width:88px;
     }
 
     .feedback-conditional{
@@ -1277,7 +1288,9 @@
     @media (max-width:600px){
       .feedback-grid{
         width:100%;
-        max-width:none;
+      }
+      .feedback-time-question{
+        align-items:flex-start;
       }
       .feedback-sections-grid{
         grid-template-columns:1fr;
@@ -3002,13 +3015,15 @@
 
               <!-- 8.2 -->
               <div class="feedback-card">
-                <label for="feedback_completion_minutes">
-                  8.2 Aproximadamente, ¿cuántos minutos le tomó completar el formulario?
-                  <span class="required-mark">*</span>
-                </label>
-                <div class="feedback-time-row">
-                  <input id="feedback_completion_minutes" name="feedback_completion_minutes" type="number" min="1" step="1" required>
-                  <span class="unit">minutos</span>
+                <div class="feedback-time-question">
+                  <label for="feedback_completion_minutes">
+                    8.2 Aproximadamente, ¿cuántos minutos le tomó completar el formulario?
+                    <span class="required-mark">*</span>
+                  </label>
+                  <div class="feedback-time-row">
+                    <input id="feedback_completion_minutes" name="feedback_completion_minutes" type="number" min="1" step="1" required>
+                    <span class="unit">minutos</span>
+                  </div>
                 </div>
                 <div class="field-error">Capture un número entero mayor que 0.</div>
               </div>
