@@ -1188,22 +1188,21 @@
       grid-template-columns:1fr;
       gap:12px;
       align-items:start;
-      width:min(100%,690px);
-      margin-left:auto;
-      margin-right:auto;
+      width:100%;
+      max-width:none;
+      margin:0;
     }
 
     .feedback-card{
       min-width:0;
       width:100%;
-      min-height:145px;
+      min-height:0;
+      height:auto;
       padding:16px 18px;
       border:1px solid #d6dcdf;
       border-radius:8px;
       background:#fbfcfc;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
+      display:block;
     }
 
     .feedback-card.full{
@@ -1226,19 +1225,22 @@
     .feedback-time-question{
       display:flex;
       align-items:center;
-      gap:9px;
-      flex-wrap:wrap;
+      gap:10px;
+      flex-wrap:nowrap;
+      width:100%;
     }
 
     .feedback-time-question label{
       margin:0;
       display:inline;
+      flex:0 1 auto;
     }
 
     .feedback-time-row{
       display:inline-flex;
       align-items:center;
       gap:8px;
+      flex:0 0 auto;
       flex-wrap:nowrap;
     }
 
@@ -1291,6 +1293,7 @@
       }
       .feedback-time-question{
         align-items:flex-start;
+        flex-wrap:wrap;
       }
       .feedback-sections-grid{
         grid-template-columns:1fr;
