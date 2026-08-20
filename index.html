@@ -890,6 +890,52 @@
       .battery-fields{grid-template-columns:1fr}
     }
 
+
+    /* =========================================================
+       SECCIÓN 6 · ILUMINACIÓN
+    ========================================================= */
+    .lighting-card .lighting-main-grid{
+      display:grid;
+      grid-template-columns:minmax(220px,1.3fr) minmax(130px,.55fr) minmax(160px,.65fr);
+      gap:20px;
+      align-items:start;
+    }
+    .lighting-card .lighting-time-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(140px,1fr));
+      gap:20px;
+      align-items:start;
+    }
+    .lighting-card .lighting-power-input{
+      width:115px;
+      max-width:115px;
+    }
+    .lighting-card .lighting-count-input{
+      width:105px;
+      max-width:105px;
+    }
+    .lighting-card .lighting-other-input{
+      width:min(100%,360px);
+      max-width:360px;
+    }
+    @media (max-width:850px){
+      .lighting-card .lighting-main-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .lighting-card .lighting-main-grid > .lighting-tech-group{
+        grid-column:1/-1;
+      }
+    }
+    @media (max-width:650px){
+      .lighting-card .lighting-main-grid,
+      .lighting-card .lighting-time-grid{
+        grid-template-columns:1fr;
+      }
+      .lighting-card .lighting-main-grid > .lighting-tech-group{
+        grid-column:auto;
+      }
+    }
+
     /* =========================================================
        RESPONSIVE
     ========================================================= */
@@ -1904,7 +1950,7 @@
                   <button type="button" class="info-button" data-info="stationaryFuelMotorInfo" aria-label="Información sobre motores estacionarios">i</button>
                 </span>
                 <div id="stationaryFuelMotorInfo" class="info-panel">
-                  Incluya únicamente motores estacionarios que accionan directamente equipos o procesos productivos.
+                  Incluya únicamente motores estacionarios que accionan directamente equipos que son parte de procesos productivos.
                   <strong>No incluya plantas de emergencia ni equipos de autogeneración eléctrica.</strong>
                 </div>
                 <div class="radio-row">
@@ -2054,10 +2100,119 @@
 
     <section class="section-view" data-section="6" data-anchor>
       <div class="section-shell">
-        <div class="section-heading"><h2>6. Iluminación</h2></div>
-        <div class="placeholder"><strong>Estructura preparada</strong>Planta industrial, áreas administrativas/comunes y exteriores.</div>
+        <div class="section-heading">
+          <h2>6. Iluminación</h2>
+          <p>Características de la iluminación en planta industrial, áreas administrativas/comunes y exteriores.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box">
+            Registre la iluminación por <strong>grupos homogéneos</strong>. Agrupe lámparas o focos únicamente cuando tengan la
+            <strong>misma tecnología, la misma potencia y el mismo tiempo de funcionamiento</strong>.
+            Si alguna de estas características cambia, regístrelos como otro grupo.
+          </div>
+
+          <form id="section6Form" novalidate>
+
+            <!-- =================================================
+                 6.1 PLANTA INDUSTRIAL
+            ================================================== -->
+            <div class="subsection" id="s6-industrial" data-anchor>
+              <h3 class="subsection-title"><span class="number">6.1</span> Planta industrial</h3>
+
+              <div>
+                <span class="question-label">
+                  6.1 ¿Cuenta con iluminación en la planta industrial
+                  <strong>(nave, almacenes, bodegas, depósitos y áreas de producción)</strong>?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="industrial_lighting_present" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="industrial_lighting_present" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="industrial_lighting_present">Seleccione una opción.</div>
+              </div>
+
+              <div id="industrialLightingBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  Registre los grupos de lámparas o focos utilizados en la <strong>planta industrial</strong>.
+                  La potencia solicitada corresponde a <strong>una sola lámpara o foco</strong>, no a la suma del grupo.
+                </p>
+                <div id="industrialLightingGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" data-add-lighting-group="industrial">＋ Agregar tecnología</button>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 6.2 ÁREAS ADMINISTRATIVAS Y COMUNES
+            ================================================== -->
+            <div class="subsection" id="s6-admin-common" data-anchor>
+              <h3 class="subsection-title"><span class="number">6.2</span> Áreas administrativas y comunes</h3>
+
+              <div>
+                <span class="question-label">
+                  6.2 ¿Cuenta con iluminación en áreas administrativas y/o comunes
+                  <strong>(oficinas, comedores, vestuarios, baños, etc.)</strong>?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="admin_common_lighting_present" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="admin_common_lighting_present" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="admin_common_lighting_present">Seleccione una opción.</div>
+              </div>
+
+              <div id="adminCommonLightingBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  Registre los grupos de lámparas o focos utilizados en <strong>áreas administrativas y comunes</strong>.
+                  Separe los grupos cuando cambie la tecnología, la potencia o el tiempo de funcionamiento.
+                </p>
+                <div id="adminCommonLightingGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" data-add-lighting-group="admin_common">＋ Agregar tecnología</button>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 6.3 EXTERIORES
+            ================================================== -->
+            <div class="subsection" id="s6-exterior" data-anchor>
+              <h3 class="subsection-title"><span class="number">6.3</span> Exteriores</h3>
+
+              <div>
+                <span class="question-label">
+                  6.3 ¿Cuenta con iluminación exterior dentro del perímetro del establecimiento/planta?
+                  <span class="required-mark">*</span>
+                  <button type="button" class="info-button" data-info="exteriorLightingInfo" aria-label="Información sobre iluminación exterior">i</button>
+                </span>
+                <div id="exteriorLightingInfo" class="info-panel">
+                  Considere únicamente la iluminación ubicada <strong>dentro del perímetro del establecimiento</strong>.
+                  No incluya alumbrado público.
+                </div>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="exterior_lighting_present" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="exterior_lighting_present" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="exterior_lighting_present">Seleccione una opción.</div>
+              </div>
+
+              <div id="exteriorLightingBlock" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  Registre los grupos de lámparas o focos utilizados en <strong>áreas exteriores del establecimiento</strong>.
+                  Separe los grupos cuando cambie la tecnología, la potencia o el tiempo de funcionamiento.
+                </p>
+                <div id="exteriorLightingGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" data-add-lighting-group="exterior">＋ Agregar tecnología</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="5">← Anterior</button><button class="nav-button next" data-next="7">Continuar →</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="5">← Anterior</button>
+        <button class="nav-button next" data-next="7">Continuar →</button>
+      </div>
     </section>
 
     <section class="section-view" data-section="7" data-anchor>
@@ -2090,7 +2245,7 @@
             <div class="review-item"><span>3. Procesos térmicos</span><span class="status-badge" id="reviewS3">Por revisar</span></div>
             <div class="review-item"><span>4. Refrigeración</span><span class="status-badge" id="reviewS4">Por revisar</span></div>
             <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge" id="reviewS5">Por revisar</span></div>
-            <div class="review-item"><span>6. Iluminación</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>6. Iluminación</span><span class="status-badge" id="reviewS6">Por revisar</span></div>
             <div class="review-item"><span>7. HVAC</span><span class="status-badge">Pendiente de implementación</span></div>
             <div class="review-item"><span>8. Feedback</span><span class="status-badge">Pendiente de implementación</span></div>
           </div>
@@ -3499,6 +3654,101 @@
     </div>
   </template>
 
+
+  <!-- =========================================================
+       TEMPLATE SECCIÓN 6
+  ========================================================== -->
+  <template id="lightingGroupTemplate">
+    <div class="dynamic-card lighting-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo de iluminación</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="lighting-main-grid">
+        <div class="form-group lighting-tech-group">
+          <label>Tecnología de lámpara o foco <span class="required-mark">*</span></label>
+          <select data-field="technology" class="field-l" required>
+            <option value="">Seleccione</option>
+            <option value="led">LED</option>
+            <option value="cfl">Fluorescentes compactos</option>
+            <option value="incandescent">Incandescentes</option>
+            <option value="fluorescent_tube">Tubos fluorescentes</option>
+            <option value="halogen">Halógenos</option>
+            <option value="mercury_vapor">Vapor de mercurio</option>
+            <option value="sodium_vapor">Vapor de sodio</option>
+            <option value="metal_halide">De aditivos metálicos</option>
+            <option value="mixed_light">Luz mixta</option>
+            <option value="other">Otra tecnología</option>
+          </select>
+          <div class="field-error">Seleccione la tecnología.</div>
+
+          <div class="form-group lighting-other-wrap" hidden style="margin-top:14px">
+            <label>Nombre de la otra tecnología <span class="required-mark">*</span></label>
+            <input data-field="technology_other" class="lighting-other-input" type="text">
+            <div class="field-error">Indique el nombre de la otra tecnología.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Número de lámparas o focos <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="lamp_count" class="lighting-count-input" type="number" min="1" step="1" required>
+            <span class="unit">unidades</span>
+          </div>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Potencia de una lámpara o foco <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre potencia de lámpara">i</button>
+          </label>
+          <div class="input-with-unit">
+            <input data-field="power_w_per_lamp" class="lighting-power-input" type="number" min="0.000001" step="any" required>
+            <span class="unit">W</span>
+          </div>
+          <div class="info-panel local-info">
+            Reporte la potencia de <strong>una sola lámpara o foco</strong>, no la potencia total del grupo.
+          </div>
+          <div class="field-error">Capture una potencia mayor que 0.</div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de funcionamiento</h5>
+        <div class="lighting-time-grid">
+          <div class="form-group">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="hours_day" class="field-xs" type="number" min="1" max="24" step="0.1" required>
+              <span class="unit">h/día</span>
+            </div>
+            <div class="field-error">Capture un valor entre 1 y 24.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required>
+              <span class="unit">días/sem</span>
+            </div>
+            <div class="field-error">Capture un número entero entre 1 y 7.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit">
+              <input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required>
+              <span class="unit">sem/año</span>
+            </div>
+            <div class="field-error">Capture un número entero entre 1 y 52.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
 <script>
 (() => {
   "use strict";
@@ -3568,6 +3818,7 @@
       if (currentView === "3" && !validateSection3()) return;
       if (currentView === "4" && !validateSection4()) return;
       if (currentView === "5" && !validateSection5()) return;
+      if (currentView === "6" && !validateSection6()) return;
       showView(next.dataset.next);
     }
     if (prev) showView(prev.dataset.prev);
@@ -5794,6 +6045,178 @@
     }
 
     const review = qs("#reviewS5");
+    if (review) review.textContent = "Completa";
+    return true;
+  }
+
+
+
+  /* =========================================================
+     SECCIÓN 6 · ILUMINACIÓN
+  ========================================================= */
+  const section6Form = qs("#section6Form");
+  const lightingTemplate = qs("#lightingGroupTemplate");
+
+  const LIGHTING_SPACES = {
+    industrial:{
+      radioName:"industrial_lighting_present",
+      block:"#industrialLightingBlock",
+      list:"#industrialLightingGroups",
+      cardTitle:"Grupo de iluminación · Planta industrial"
+    },
+    admin_common:{
+      radioName:"admin_common_lighting_present",
+      block:"#adminCommonLightingBlock",
+      list:"#adminCommonLightingGroups",
+      cardTitle:"Grupo de iluminación · Áreas administrativas/comunes"
+    },
+    exterior:{
+      radioName:"exterior_lighting_present",
+      block:"#exteriorLightingBlock",
+      list:"#exteriorLightingGroups",
+      cardTitle:"Grupo de iluminación · Exteriores"
+    }
+  };
+
+  function lightingOtherCount(space, excludeCard=null){
+    const list = qs(LIGHTING_SPACES[space].list);
+    return qsa(".lighting-card", list)
+      .filter(card => card !== excludeCard)
+      .filter(card => qs('[data-field="technology"]', card)?.value === "other")
+      .length;
+  }
+
+  function syncLightingTechnology(card, space){
+    const technology = qs('[data-field="technology"]', card);
+    const otherWrap = qs(".lighting-other-wrap", card);
+    const otherInput = qs('[data-field="technology_other"]', card);
+    const isOther = technology.value === "other";
+
+    if (isOther && lightingOtherCount(space, card) >= 3){
+      technology.value = "";
+      otherWrap.hidden = true;
+      otherInput.disabled = true;
+      otherInput.required = false;
+      otherInput.value = "";
+
+      technology.classList.add("invalid");
+      const error = qs(".field-error", technology.closest(".form-group"));
+      if (error){
+        error.textContent = "Puede registrar como máximo 3 grupos con “Otra tecnología” en este espacio.";
+        error.classList.add("visible");
+      }
+      return;
+    }
+
+    otherWrap.hidden = !isOther;
+    otherInput.disabled = !isOther;
+    otherInput.required = isOther;
+
+    if (!isOther){
+      otherInput.value = "";
+      clearInvalid(otherInput);
+    }
+
+    if (!technology.classList.contains("invalid")){
+      const error = qs(".field-error", technology.closest(".form-group"));
+      if (error) error.textContent = "Seleccione la tecnología.";
+    }
+  }
+
+  function addLightingGroup(space){
+    const meta = LIGHTING_SPACES[space];
+    const list = qs(meta.list);
+    const card = lightingTemplate.content.firstElementChild.cloneNode(true);
+    card.dataset.lightingSpace = space;
+    qs(".card-title", card).textContent = meta.cardTitle;
+
+    const technology = qs('[data-field="technology"]', card);
+    technology.addEventListener("change", () => {
+      clearInvalid(technology);
+      const error = qs(".field-error", technology.closest(".form-group"));
+      if (error){
+        error.textContent = "Seleccione la tecnología.";
+        error.classList.remove("visible");
+      }
+      syncLightingTechnology(card, space);
+    });
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (list.children.length <= 1) return;
+      card.remove();
+      renumberCards(list, meta.cardTitle);
+    });
+
+    wireVisibleValidation(card);
+    list.appendChild(card);
+    renumberCards(list, meta.cardTitle);
+    standardizeWeeksYearInfo(card);
+  }
+
+  Object.entries(LIGHTING_SPACES).forEach(([space, meta]) => {
+    qsa(`input[name="${meta.radioName}"]`).forEach(radio => {
+      radio.addEventListener("change", () => {
+        const yes = qs(`input[name="${meta.radioName}"][value="yes"]`).checked;
+        const block = qs(meta.block);
+        const list = qs(meta.list);
+
+        block.hidden = !yes;
+
+        if (yes && !list.children.length){
+          addLightingGroup(space);
+        }
+
+        if (!yes){
+          list.innerHTML = "";
+        }
+      });
+    });
+  });
+
+  qsa("[data-add-lighting-group]").forEach(button => {
+    button.addEventListener("click", () => {
+      addLightingGroup(button.dataset.addLightingGroup);
+    });
+  });
+
+  function validateLightingSpace(space){
+    const meta = LIGHTING_SPACES[space];
+    const yes = qs(`input[name="${meta.radioName}"][value="yes"]`).checked;
+    if (!yes) return true;
+
+    const list = qs(meta.list);
+    if (!list.children.length) return false;
+
+    let ok = true;
+    qsa(".lighting-card", list).forEach(card => {
+      qsa("input,select,textarea", card).forEach(el => {
+        if (["radio","checkbox"].includes(el.type)) return;
+        if (!validateElement(el)) ok = false;
+      });
+    });
+    return ok;
+  }
+
+  function validateSection6(){
+    let ok = true;
+
+    if (!validateRadioGroup("industrial_lighting_present")) ok = false;
+    if (!validateRadioGroup("admin_common_lighting_present")) ok = false;
+    if (!validateRadioGroup("exterior_lighting_present")) ok = false;
+
+    if (!validateLightingSpace("industrial")) ok = false;
+    if (!validateLightingSpace("admin_common")) ok = false;
+    if (!validateLightingSpace("exterior")) ok = false;
+
+    if (!ok){
+      const first = qs("#section6Form .invalid, #section6Form .field-error.visible");
+      if (first) first.scrollIntoView({behavior:"smooth",block:"center"});
+      const review = qs("#reviewS6");
+      if (review) review.textContent = "Con pendientes";
+      return false;
+    }
+
+    const review = qs("#reviewS6");
     if (review) review.textContent = "Completa";
     return true;
   }
