@@ -3283,10 +3283,9 @@
             </span>
 
             <div class="review-finished-message" id="reviewFinishedMessage">
-              <strong>¡Formulario finalizado!</strong><br>
-              Has completado correctamente las ocho secciones. La interfaz está lista para realizar el envío.
-              Durante esta etapa de validación del frontend todavía no se transmiten datos; la conexión con Supabase
-              se habilitará en la siguiente fase del proyecto.
+              <strong>¡Formulario enviado correctamente!</strong><br>
+              La información de las ocho secciones fue recibida y almacenada correctamente.
+              Gracias por participar en este ejercicio piloto.
             </div>
           </div>
         </div>
@@ -8423,6 +8422,1003 @@
 
 
 
+
+  /* =========================================================
+     SUPABASE · ENVÍO TRANSACCIONAL 1–8
+     La clave incluida aquí es la Publishable Key pública.
+     La escritura directa a tablas permanece cerrada; el
+     formulario utiliza exclusivamente la RPC:
+     submit_industrial_response(p_payload jsonb)
+  ========================================================= */
+  const SUPABASE_URL = "https://jlsnxhsexqsthzfhjrrh.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_e9Nqqqv-NSVGpUNbt4_CYQ_GcSFbvtF";
+  const SURVEY_VERSION = "industrial_pilot_v1";
+  const clientSubmissionId = createClientSubmissionId();
+  let submissionInFlight = false;
+
+  function createClientSubmissionId(){
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+    const hex = [...bytes].map(b => b.toString(16).padStart(2,"0"));
+    return [
+      hex.slice(0,4).join(""),
+      hex.slice(4,6).join(""),
+      hex.slice(6,8).join(""),
+      hex.slice(8,10).join(""),
+      hex.slice(10,16).join("")
+    ].join("-");
+  }
+
+  function cleanValue(value){
+    const text = value == null ? "" : String(value).trim();
+    return text === "" ? null : text;
+  }
+
+  function elementValue(selector, root=document){
+    const el = qs(selector, root);
+    return el ? cleanValue(el.value) : null;
+  }
+
+  function elementNumber(selector, root=document){
+    const value = elementValue(selector, root);
+    if (value === null) return null;
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function fieldValue(card, field){
+    return elementValue(`[data-field="${field}"]`, card);
+  }
+
+  function fieldNumber(card, field){
+    const value = fieldValue(card, field);
+    if (value === null) return null;
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function selectedRadioValue(name, root=document){
+    const checked = qs(`input[name="${name}"]:checked`, root);
+    return checked ? checked.value : null;
+  }
+
+  function selectedRadioBoolean(name, root=document){
+    const value = selectedRadioValue(name, root);
+    if (value === "yes") return true;
+    if (value === "no") return false;
+    return null;
+  }
+
+  function selectedCheckboxValues(containerSelector){
+    const container = qs(containerSelector);
+    if (!container) return [];
+    return qsa('input[type="checkbox"]:checked', container).map(input => input.value);
+  }
+
+  function serializeWorkShift(card){
+    const result = {};
+
+    ["weekdays","saturday","sunday"].forEach(day => {
+      const row = qs(`.day-schedule[data-day="${day}"]`, card);
+      const operates = Boolean(qs("[data-operates]", row)?.checked);
+      const start = qs("[data-start]", row);
+      const end = qs("[data-end]", row);
+
+      result[`${day}_operates`] = operates;
+      result[`${day}_start_time`] = operates ? cleanValue(start?.value) : null;
+      result[`${day}_end_time`] = operates ? cleanValue(end?.value) : null;
+    });
+
+    return result;
+  }
+
+  function serializeSection1(){
+    const productionItem = (card, quantityKey) => ({
+      name: fieldValue(card, "name"),
+      [quantityKey]: fieldNumber(card, "quantity"),
+      unit: fieldValue(card, "unit"),
+      unit_other: fieldValue(card, "unit") === "other"
+        ? fieldValue(card, "unit_other")
+        : null
+    });
+
+    return {
+      general_info: {
+        company_name: elementValue("#company_name"),
+        industry_subsector_code: elementValue("#industry_subsector_code"),
+        operation_start_year: elementNumber("#operation_start_year"),
+        plant_branch_name: elementValue("#plant_branch_name"),
+        state_code: elementValue("#state_code"),
+        municipality_borough: elementValue("#municipality_borough"),
+        postal_code: elementValue("#postal_code"),
+        establishment_phone: elementValue("#establishment_phone"),
+        establishment_email: elementValue("#establishment_email")
+      },
+
+      informants: qsa(".informant-card", qs("#informantsList")).map(card => ({
+        name: fieldValue(card, "name"),
+        position: fieldValue(card, "position"),
+        phone: fieldValue(card, "phone"),
+        email: fieldValue(card, "email")
+      })),
+
+      operation_info: {
+        weeks_operation_month: elementNumber("#weeks_operation_month"),
+        days_operation_week: elementNumber("#days_operation_week"),
+        hours_operation_day: elementNumber("#hours_operation_day"),
+        operates_all_months: selectedRadioBoolean("operates_all_months"),
+        months_operation_year:
+          selectedRadioValue("operates_all_months") === "no"
+            ? elementNumber("#months_operation_year")
+            : null,
+        employee_count: elementNumber("#employee_count")
+      },
+
+      work_shifts: qsa(".shift-card", qs("#shiftsList")).map(serializeWorkShift),
+
+      production_info: {
+        has_relevant_byproducts: selectedRadioBoolean("has_relevant_byproducts"),
+        process_description: elementValue("#process_description")
+      },
+
+      raw_materials: qsa(".production-item-card", qs("#rawMaterialsList"))
+        .map(card => productionItem(card, "quantity_daily")),
+
+      products: qsa(".production-item-card", qs("#productsList"))
+        .map(card => productionItem(card, "quantity_daily")),
+
+      byproducts:
+        selectedRadioValue("has_relevant_byproducts") === "yes"
+          ? qsa(".production-item-card", qs("#byproductsList"))
+              .map(card => productionItem(card, "quantity_weekly"))
+          : []
+    };
+  }
+
+  function serializeSection2(){
+    const energyGroups = qsa("[data-energy-block]", qs("#energyBlocks")).map(block => {
+      const unit = elementValue("[data-energy-unit]", block);
+      return {
+        energy_type_code: cleanValue(block.dataset.energyType),
+        energy_other_name:
+          block.dataset.energyType === "other"
+            ? elementValue("[data-energy-other-name]", block)
+            : null,
+        unit_original: unit,
+        unit_other:
+          unit === "other"
+            ? elementValue("[data-energy-other-unit]", block)
+            : null,
+        monthly: qsa('input[data-month]', block)
+          .sort((a,b) => Number(a.dataset.month) - Number(b.dataset.month))
+          .map(input => Number(input.value))
+      };
+    });
+
+    const tariffGroups = qsa(".tariff-group-card", qs("#tariffGroups")).map(card => ({
+      meter_count: fieldNumber(card, "meter_count"),
+      tariff_code: fieldValue(card, "tariff"),
+      contracted_power_kw: fieldNumber(card, "contracted_power"),
+      monthly_kwh: qsa('input[data-month]', card)
+        .sort((a,b) => Number(a.dataset.month) - Number(b.dataset.month))
+        .map(input => Number(input.value))
+    }));
+
+    const autogenerates = selectedRadioBoolean("autogenerates_electricity");
+    const renewable = autogenerates === true
+      ? selectedRadioBoolean("autogen_main_source_is_renewable")
+      : null;
+
+    return {
+      energy_groups: energyGroups,
+
+      electricity: {
+        meter_count: elementNumber("#electric_meter_count"),
+        tariff_groups: tariffGroups
+      },
+
+      autogeneration: {
+        autogenerates_electricity: autogenerates,
+        use_frequency:
+          autogenerates === true ? elementValue("#autogen_use_frequency") : null,
+        avg_hours_week:
+          autogenerates === true ? elementNumber("#autogen_avg_hours_week") : null,
+        main_source_is_renewable: renewable,
+
+        renewable_system:
+          autogenerates === true && renewable === true
+            ? {
+                source_type: elementValue("#renewable_autogen_source_type"),
+                source_other:
+                  elementValue("#renewable_autogen_source_type") === "other"
+                    ? elementValue("#renewable_autogen_source_other")
+                    : null,
+                installed_power_kw:
+                  elementNumber("#renewable_autogen_installed_power_kw"),
+                avg_monthly_generation_kwh:
+                  elementNumber("#renewable_autogen_avg_monthly_generation_kwh")
+              }
+            : null,
+
+        plants:
+          autogenerates === true && renewable === false
+            ? qsa(".autogen-plant-card", qs("#autogenPlants")).map(card => ({
+                fuel_type: fieldValue(card, "fuel"),
+                installed_power_kw: fieldNumber(card, "installed_power"),
+                avg_monthly_generation_kwh: fieldNumber(card, "monthly_generation")
+              }))
+            : []
+      },
+
+      cogeneration: {
+        does_cogeneration: selectedRadioBoolean("does_cogeneration"),
+        processes:
+          selectedRadioValue("does_cogeneration") === "yes"
+            ? qsa(".cogeneration-process-card", qs("#cogenerationProcesses"))
+                .map(card => ({
+                  process_name: fieldValue(card, "process_name"),
+                  heat_share_pct: fieldNumber(card, "heat_share")
+                }))
+            : []
+      }
+    };
+  }
+
+  function serializeElectricThermalCard(card, includeEquipment){
+    const data = {
+      count: fieldNumber(card, "count"),
+      input_method: fieldValue(card, "input_method"),
+      power_original: fieldNumber(card, "power"),
+      power_unit: fieldValue(card, "power_unit"),
+      power_unit_other:
+        fieldValue(card, "power_unit") === "other"
+          ? fieldValue(card, "power_unit_other")
+          : null,
+      current_original: fieldNumber(card, "current"),
+      current_unit: fieldValue(card, "current_unit"),
+      voltage_original: fieldNumber(card, "voltage"),
+      voltage_unit: fieldValue(card, "voltage_unit"),
+      phases: fieldNumber(card, "phases"),
+      power_factor: fieldNumber(card, "power_factor"),
+      hours_day: fieldNumber(card, "hours_day"),
+      days_week: fieldNumber(card, "days_week"),
+      weeks_year: fieldNumber(card, "weeks_year"),
+      downtime_days_year: fieldNumber(card, "downtime_days")
+    };
+
+    if (includeEquipment){
+      data.equipment_type = fieldValue(card, "equipment_type");
+      data.equipment_detail =
+        data.equipment_type === "other"
+          ? fieldValue(card, "equipment_detail")
+          : null;
+    }
+
+    return data;
+  }
+
+  function serializeSection3(){
+    const usesSteam = selectedRadioBoolean("uses_steam_boilers");
+    const usesDirectFuel = selectedRadioBoolean("uses_direct_heat_fuel_equipment");
+    const usesDirectElectric = selectedRadioBoolean("uses_direct_heat_electric_equipment");
+    const usesWaterHeating = selectedRadioBoolean("uses_water_heating_equipment");
+
+    return {
+      steam: {
+        uses_steam_boilers: usesSteam,
+        energy_routes:
+          usesSteam === true
+            ? selectedCheckboxValues("#steamEnergyRoutes")
+            : [],
+
+        fuel_boiler_groups:
+          usesSteam === true
+            ? qsa(".steam-fuel-card", qs("#steamFuelGroups")).map(card => ({
+                energy_source_code: fieldValue(card, "source"),
+                energy_source_other:
+                  fieldValue(card, "source") === "other"
+                    ? fieldValue(card, "source_other")
+                    : null,
+                boiler_count: fieldNumber(card, "count"),
+                thermal_power_original: fieldNumber(card, "thermal_power"),
+                thermal_power_unit: fieldValue(card, "thermal_power_unit"),
+                monthly_energy_consumption_original:
+                  fieldNumber(card, "monthly_consumption"),
+                monthly_energy_consumption_unit:
+                  fieldValue(card, "consumption_unit"),
+                monthly_energy_consumption_unit_other:
+                  fieldValue(card, "consumption_unit") === "other"
+                    ? fieldValue(card, "consumption_unit_other")
+                    : null,
+                hours_day: fieldNumber(card, "hours_day"),
+                days_week: fieldNumber(card, "days_week"),
+                weeks_year: fieldNumber(card, "weeks_year"),
+                downtime_days_year: fieldNumber(card, "downtime_days"),
+                aux_power_original: fieldNumber(card, "aux_power"),
+                aux_power_unit: fieldValue(card, "aux_power_unit")
+              }))
+            : [],
+
+        electric_boiler_groups:
+          usesSteam === true
+            ? qsa(".electric-thermal-card", qs("#steamElectricGroups")).map(card => {
+                const d = serializeElectricThermalCard(card, false);
+                return {
+                  boiler_count: d.count,
+                  power_original: d.power_original,
+                  power_unit: d.power_unit,
+                  power_unit_other: d.power_unit_other,
+                  current_original: d.current_original,
+                  current_unit: d.current_unit,
+                  voltage_original: d.voltage_original,
+                  voltage_unit: d.voltage_unit,
+                  phases: d.phases,
+                  power_factor: d.power_factor,
+                  hours_day: d.hours_day,
+                  days_week: d.days_week,
+                  weeks_year: d.weeks_year,
+                  downtime_days_year: d.downtime_days_year
+                };
+              })
+            : []
+      },
+
+      direct_heat: {
+        uses_fuel_equipment: usesDirectFuel,
+        uses_electric_equipment: usesDirectElectric,
+
+        fuel_groups:
+          usesDirectFuel === true
+            ? qsa(".direct-heat-fuel-card", qs("#directHeatFuelGroups")).map(card => ({
+                equipment_type: fieldValue(card, "equipment_type"),
+                equipment_other:
+                  fieldValue(card, "equipment_type") === "other"
+                    ? fieldValue(card, "equipment_other")
+                    : null,
+                fuel_type: fieldValue(card, "fuel"),
+                fuel_other:
+                  fieldValue(card, "fuel") === "other"
+                    ? fieldValue(card, "fuel_other")
+                    : null,
+                equipment_count: fieldNumber(card, "count"),
+                thermal_power_original: fieldNumber(card, "thermal_power"),
+                thermal_power_unit: fieldValue(card, "thermal_power_unit"),
+                monthly_consumption_original:
+                  fieldNumber(card, "monthly_consumption"),
+                monthly_consumption_unit:
+                  fieldValue(card, "consumption_unit"),
+                monthly_consumption_unit_other:
+                  fieldValue(card, "consumption_unit") === "other"
+                    ? fieldValue(card, "consumption_unit_other")
+                    : null,
+                hours_day: fieldNumber(card, "hours_day"),
+                days_week: fieldNumber(card, "days_week"),
+                weeks_year: fieldNumber(card, "weeks_year"),
+                downtime_days_year: fieldNumber(card, "downtime_days")
+              }))
+            : [],
+
+        electric_groups:
+          usesDirectElectric === true
+            ? qsa(".electric-thermal-card", qs("#directHeatElectricGroups"))
+                .map(card => {
+                  const d = serializeElectricThermalCard(card, true);
+                  return {
+                    equipment_type: d.equipment_type,
+                    equipment_detail: d.equipment_detail,
+                    equipment_count: d.count,
+                    power_original: d.power_original,
+                    power_unit: d.power_unit,
+                    power_unit_other: d.power_unit_other,
+                    current_original: d.current_original,
+                    current_unit: d.current_unit,
+                    voltage_original: d.voltage_original,
+                    voltage_unit: d.voltage_unit,
+                    phases: d.phases,
+                    power_factor: d.power_factor,
+                    hours_day: d.hours_day,
+                    days_week: d.days_week,
+                    weeks_year: d.weeks_year,
+                    downtime_days_year: d.downtime_days_year
+                  };
+                })
+            : []
+      },
+
+      water_heating: {
+        uses_equipment: usesWaterHeating,
+        groups:
+          usesWaterHeating === true
+            ? qsa(".water-heating-card", qs("#waterHeatingGroups")).map(card => ({
+                equipment_type: fieldValue(card, "equipment_type"),
+                equipment_other:
+                  fieldValue(card, "equipment_type") === "other"
+                    ? fieldValue(card, "equipment_other")
+                    : null,
+                energy_type: fieldValue(card, "energy_type"),
+                energy_other:
+                  fieldValue(card, "energy_type") === "other"
+                    ? fieldValue(card, "energy_other")
+                    : null,
+                equipment_count: fieldNumber(card, "count"),
+                thermal_power_original: fieldNumber(card, "thermal_power"),
+                thermal_power_unit: fieldValue(card, "thermal_power_unit"),
+                monthly_consumption_original:
+                  fieldNumber(card, "monthly_consumption"),
+                monthly_consumption_unit:
+                  fieldValue(card, "consumption_unit"),
+                monthly_consumption_unit_other:
+                  fieldValue(card, "consumption_unit") === "other"
+                    ? fieldValue(card, "consumption_unit_other")
+                    : null,
+                hours_day: fieldNumber(card, "hours_day"),
+                days_week: fieldNumber(card, "days_week"),
+                weeks_year: fieldNumber(card, "weeks_year"),
+                downtime_days_year: fieldNumber(card, "downtime_days"),
+                aux_power_original: fieldNumber(card, "aux_power"),
+                aux_power_unit: fieldValue(card, "aux_power_unit")
+              }))
+            : []
+      }
+    };
+  }
+
+  function serializeSection4(){
+    const usesComponents = selectedRadioBoolean("uses_refrigeration_component_systems");
+    const usesAppliances = selectedRadioBoolean("uses_refrigerators_freezers");
+
+    return {
+      uses_component_systems: usesComponents,
+      uses_refrigerators_freezers: usesAppliances,
+
+      component_groups:
+        usesComponents === true
+          ? qsa(".refrigeration-component-card", qs("#section4Form")).map(card => ({
+              component_type: cleanValue(card.dataset.componentType),
+              equipment_count: fieldNumber(card, "count"),
+              power_original: fieldNumber(card, "power"),
+              power_unit: fieldValue(card, "power_unit"),
+              hours_day: fieldNumber(card, "hours_day"),
+              days_week: fieldNumber(card, "days_week"),
+              weeks_year: fieldNumber(card, "weeks_year")
+            }))
+          : [],
+
+      appliance_groups:
+        usesAppliances === true
+          ? qsa(".refrigeration-appliance-card", qs("#refrigerationApplianceGroups"))
+              .map(card => {
+                const labelChoice =
+                  qs(".appliance-label-radios input:checked", card)?.value || null;
+                const hasLabel =
+                  labelChoice === "yes" ? true :
+                  labelChoice === "no" ? false :
+                  null;
+
+                return {
+                  appliance_type: fieldValue(card, "appliance_type"),
+                  unit_count: fieldNumber(card, "unit_count"),
+                  inverter_count: fieldNumber(card, "inverter_count"),
+                  has_energy_label: hasLabel,
+                  label_annual_kwh_per_unit:
+                    hasLabel === true
+                      ? fieldNumber(card, "label_annual_kwh")
+                      : null,
+                  power_original:
+                    hasLabel === false
+                      ? fieldNumber(card, "power")
+                      : null,
+                  power_unit:
+                    hasLabel === false
+                      ? fieldValue(card, "power_unit")
+                      : null,
+                  capacity_size_original: fieldNumber(card, "capacity_size"),
+                  capacity_unit: fieldValue(card, "capacity_unit"),
+                  hours_day: fieldNumber(card, "hours_day"),
+                  days_week: fieldNumber(card, "days_week"),
+                  weeks_year: fieldNumber(card, "weeks_year")
+                };
+              })
+          : []
+    };
+  }
+
+  function serializeSection5(){
+    const usesElectricMotors = selectedRadioBoolean("uses_electric_motors");
+    const usesFuelMotors = selectedRadioBoolean("uses_stationary_fuel_motors");
+    const usesForklifts = selectedRadioBoolean("uses_forklifts");
+    const hasEmergency = selectedRadioBoolean("has_emergency_generators");
+    const usesNonconventional =
+      selectedRadioBoolean("uses_nonconventional_force_equipment");
+
+    return {
+      electric_motors: {
+        uses_electric_motors: usesElectricMotors,
+        has_technical_list:
+          usesElectricMotors === true
+            ? selectedRadioBoolean("has_electric_motor_technical_list")
+            : null,
+        groups:
+          usesElectricMotors === true
+            ? qsa(".electric-motor-card", qs("#electricMotorGroups")).map(card => ({
+                application_code: fieldValue(card, "application"),
+                application_other:
+                  fieldValue(card, "application") === "other"
+                    ? fieldValue(card, "application_other")
+                    : null,
+                motor_count: fieldNumber(card, "count"),
+                power_original: fieldNumber(card, "power"),
+                power_unit: fieldValue(card, "power_unit"),
+                current_a: fieldNumber(card, "current"),
+                voltage_v: fieldNumber(card, "voltage"),
+                phases: fieldNumber(card, "phases"),
+                power_factor: fieldNumber(card, "power_factor"),
+                hours_day: fieldNumber(card, "hours_day"),
+                days_week: fieldNumber(card, "days_week"),
+                weeks_year: fieldNumber(card, "weeks_year")
+              }))
+            : []
+      },
+
+      stationary_fuel_motors: {
+        uses_stationary_fuel_motors: usesFuelMotors,
+        has_technical_list:
+          usesFuelMotors === true
+            ? selectedRadioBoolean("has_stationary_fuel_motor_technical_list")
+            : null,
+        groups:
+          usesFuelMotors === true
+            ? qsa(".stationary-fuel-motor-card", qs("#stationaryFuelMotorGroups"))
+                .map(card => ({
+                  application_code: fieldValue(card, "application"),
+                  application_other:
+                    fieldValue(card, "application") === "other"
+                      ? fieldValue(card, "application_other")
+                      : null,
+                  motor_count: fieldNumber(card, "count"),
+                  power_original: fieldNumber(card, "power"),
+                  power_unit: fieldValue(card, "power_unit"),
+                  fuel_type: fieldValue(card, "fuel_type"),
+                  monthly_consumption_l:
+                    fieldNumber(card, "monthly_consumption_l"),
+                  hours_day: fieldNumber(card, "hours_day"),
+                  days_week: fieldNumber(card, "days_week"),
+                  weeks_year: fieldNumber(card, "weeks_year")
+                }))
+            : []
+      },
+
+      forklifts: {
+        uses_forklifts: usesForklifts,
+        groups:
+          usesForklifts === true
+            ? qsa(".forklift-card", qs("#forkliftGroups")).map(card => {
+                const energyType = fieldValue(card, "energy_type");
+                const electric = energyType === "electricity";
+                return {
+                  energy_type: energyType,
+                  energy_other:
+                    energyType === "other"
+                      ? fieldValue(card, "energy_other")
+                      : null,
+                  forklift_count: fieldNumber(card, "count"),
+                  load_capacity_t: fieldNumber(card, "load_capacity_t"),
+                  monthly_consumption_original:
+                    electric ? null : fieldNumber(card, "monthly_consumption"),
+                  monthly_consumption_unit:
+                    electric ? null : fieldValue(card, "monthly_consumption_unit"),
+                  monthly_consumption_unit_other:
+                    !electric && fieldValue(card, "monthly_consumption_unit") === "other"
+                      ? fieldValue(card, "monthly_consumption_unit_other")
+                      : null,
+                  charges_per_day:
+                    electric ? fieldNumber(card, "charges_per_day") : null,
+                  battery_capacity_original:
+                    electric ? fieldNumber(card, "battery_capacity") : null,
+                  battery_capacity_unit:
+                    electric ? fieldValue(card, "battery_capacity_unit") : null,
+                  hours_day: fieldNumber(card, "hours_day"),
+                  days_week: fieldNumber(card, "days_week"),
+                  weeks_year: fieldNumber(card, "weeks_year")
+                };
+              })
+            : []
+      },
+
+      emergency_generation: {
+        has_emergency_generators: hasEmergency,
+        plants:
+          hasEmergency === true
+            ? qsa(".emergency-generator-card", qs("#emergencyGeneratorGroups"))
+                .map(card => ({
+                  energy_type: fieldValue(card, "energy_type"),
+                  energy_other:
+                    fieldValue(card, "energy_type") === "other"
+                      ? fieldValue(card, "energy_other")
+                      : null,
+                  power_original: fieldNumber(card, "power"),
+                  power_unit: fieldValue(card, "power_unit"),
+                  consumption_original: fieldNumber(card, "consumption"),
+                  consumption_unit: fieldValue(card, "consumption_unit"),
+                  consumption_unit_other:
+                    fieldValue(card, "consumption_unit") === "other"
+                      ? fieldValue(card, "consumption_unit_other")
+                      : null,
+                  hours_day: fieldNumber(card, "hours_day"),
+                  days_week: fieldNumber(card, "days_week"),
+                  weeks_year: fieldNumber(card, "weeks_year")
+                }))
+            : []
+      },
+
+      nonconventional: {
+        uses_nonconventional_equipment: usesNonconventional,
+        equipment_types:
+          usesNonconventional === true
+            ? selectedCheckboxValues("#nonconventionalChoices")
+            : [],
+        equipment_other:
+          usesNonconventional === true &&
+          selectedCheckboxValues("#nonconventionalChoices").includes("other")
+            ? elementValue("#nonconventional_other")
+            : null
+      }
+    };
+  }
+
+  function serializeSection6(){
+    return {
+      industrial_lighting_present:
+        selectedRadioBoolean("industrial_lighting_present"),
+      admin_common_lighting_present:
+        selectedRadioBoolean("admin_common_lighting_present"),
+      exterior_lighting_present:
+        selectedRadioBoolean("exterior_lighting_present"),
+
+      groups: qsa(".lighting-card", qs("#section6Form")).map(card => ({
+        space_type: cleanValue(card.dataset.lightingSpace),
+        technology_code: fieldValue(card, "technology"),
+        technology_other:
+          fieldValue(card, "technology") === "other"
+            ? fieldValue(card, "technology_other")
+            : null,
+        lamp_count: fieldNumber(card, "lamp_count"),
+        power_w_per_lamp: fieldNumber(card, "power_w_per_lamp"),
+        hours_day: fieldNumber(card, "hours_day"),
+        days_week: fieldNumber(card, "days_week"),
+        weeks_year: fieldNumber(card, "weeks_year")
+      }))
+    };
+  }
+
+  function serializeSection7(){
+    const hasAc = selectedRadioBoolean("has_air_conditioning");
+    const acProduction = hasAc === true
+      ? selectedRadioBoolean("ac_used_in_production")
+      : null;
+
+    const usesFans = selectedRadioBoolean("uses_cooling_fans");
+    const fansProduction = usesFans === true
+      ? selectedRadioBoolean("fans_used_in_production")
+      : null;
+
+    const usesHeating = selectedRadioBoolean("uses_space_heaters");
+
+    return {
+      air_conditioning: {
+        has_air_conditioning: hasAc,
+        used_in_production: acProduction,
+        admin_share_pct: hasAc === true ? elementNumber("#ac_admin_share_pct") : null,
+        production_share_pct:
+          hasAc === true ? elementNumber("#ac_production_share_pct") : null,
+        production_has_temperature_control:
+          hasAc === true && acProduction === true
+            ? selectedRadioBoolean("ac_production_temperature_control")
+            : null,
+        admin_has_temperature_control:
+          hasAc === true &&
+          (elementNumber("#ac_admin_share_pct") || 0) > 0
+            ? selectedRadioBoolean("ac_admin_temperature_control")
+            : null,
+
+        groups:
+          hasAc === true
+            ? qsa(".ac-group-card", qs("#section7Form")).map(card => ({
+                space_type: cleanValue(card.dataset.acSpace),
+                equipment_type: fieldValue(card, "equipment_type"),
+                equipment_other:
+                  fieldValue(card, "equipment_type") === "other"
+                    ? fieldValue(card, "equipment_other")
+                    : null,
+                unit_count: fieldNumber(card, "unit_count"),
+                thermal_capacity_original: fieldNumber(card, "thermal_capacity"),
+                thermal_capacity_unit: fieldValue(card, "thermal_capacity_unit"),
+                electrical_power_kw_per_unit:
+                  fieldNumber(card, "electrical_power_kw"),
+                age_years: fieldNumber(card, "age_years"),
+                hours_day: fieldNumber(card, "hours_day"),
+                days_week: fieldNumber(card, "days_week"),
+                weeks_year: fieldNumber(card, "weeks_year")
+              }))
+            : []
+      },
+
+      fans: {
+        uses_cooling_fans: usesFans,
+        used_in_production: fansProduction,
+        admin_share_pct: usesFans === true ? elementNumber("#fan_admin_share_pct") : null,
+        production_share_pct:
+          usesFans === true ? elementNumber("#fan_production_share_pct") : null,
+
+        groups:
+          usesFans === true
+            ? qsa(".fan-group-card", qs("#fanGroups")).map(card => ({
+                fan_type: fieldValue(card, "fan_type"),
+                fan_type_other:
+                  fieldValue(card, "fan_type") === "other"
+                    ? fieldValue(card, "fan_type_other")
+                    : null,
+                fan_count: fieldNumber(card, "fan_count"),
+                power_original: fieldNumber(card, "fan_power"),
+                power_unit: fieldValue(card, "fan_power_unit"),
+                hours_day: fieldNumber(card, "hours_day"),
+                days_week: fieldNumber(card, "days_week"),
+                weeks_year: fieldNumber(card, "weeks_year")
+              }))
+            : []
+      },
+
+      heating: {
+        uses_space_heaters: usesHeating,
+        groups:
+          usesHeating === true
+            ? qsa(".heating-group-card", qs("#heatingGroups")).map(card => {
+                const energyType = fieldValue(card, "heating_energy_type");
+                const electric = energyType === "electricity";
+
+                return {
+                  equipment_type: fieldValue(card, "heating_type"),
+                  equipment_other:
+                    fieldValue(card, "heating_type") === "other"
+                      ? fieldValue(card, "heating_type_other")
+                      : null,
+                  unit_count: fieldNumber(card, "unit_count"),
+                  thermal_capacity_original: fieldNumber(card, "thermal_capacity"),
+                  thermal_capacity_unit: fieldValue(card, "thermal_capacity_unit"),
+                  energy_type: energyType,
+                  energy_other:
+                    energyType === "other"
+                      ? fieldValue(card, "heating_energy_other")
+                      : null,
+                  electrical_power_kw_per_unit:
+                    electric ? fieldNumber(card, "electrical_power_kw") : null,
+                  monthly_fuel_consumption_original:
+                    electric ? null : fieldNumber(card, "monthly_fuel_consumption"),
+                  monthly_fuel_consumption_unit:
+                    electric ? null : fieldValue(card, "monthly_fuel_consumption_unit"),
+                  monthly_fuel_consumption_unit_other:
+                    !electric &&
+                    fieldValue(card, "monthly_fuel_consumption_unit") === "other"
+                      ? fieldValue(card, "monthly_fuel_consumption_unit_other")
+                      : null,
+                  age_years: fieldNumber(card, "age_years"),
+                  hours_day: fieldNumber(card, "hours_day"),
+                  days_week: fieldNumber(card, "days_week"),
+                  weeks_year: fieldNumber(card, "weeks_year")
+                };
+              })
+            : []
+      }
+    };
+  }
+
+  function serializeSection8(){
+    const difficultTerms = selectedRadioBoolean("feedback_difficult_terms");
+    const difficultSections = selectedRadioBoolean("feedback_section_difficulty");
+    const selectedSections =
+      difficultSections === true
+        ? selectedCheckboxValues("#feedbackDifficultSections")
+        : [];
+
+    return {
+      clarity: selectedRadioValue("feedback_clarity"),
+      completion_time_minutes: elementNumber("#feedback_completion_minutes"),
+      filling_intuitiveness: selectedRadioValue("feedback_intuitiveness"),
+      instructions_sufficient:
+        selectedRadioBoolean("feedback_instructions_sufficient"),
+      information_identification_ease:
+        selectedRadioValue("feedback_information_availability"),
+      technical_level: selectedRadioValue("feedback_technical_level"),
+      has_difficult_terms: difficultTerms,
+      difficult_terms_detail:
+        difficultTerms === true
+          ? elementValue("#feedback_difficult_terms_detail")
+          : null,
+      has_difficult_sections: difficultSections,
+      difficult_sections: selectedSections,
+      difficult_sections_other:
+        selectedSections.includes("other")
+          ? elementValue("#feedback_other_section")
+          : null,
+      support_tools_usefulness:
+        selectedRadioValue("feedback_support_tools"),
+      units_adequate:
+        selectedRadioBoolean("feedback_units_adequate"),
+      additional_comments: elementValue("#feedback_comments")
+    };
+  }
+
+  function buildIndustrialPayload(){
+    return {
+      client_submission_id: clientSubmissionId,
+      survey_version: SURVEY_VERSION,
+      section1: serializeSection1(),
+      section2: serializeSection2(),
+      section3: serializeSection3(),
+      section4: serializeSection4(),
+      section5: serializeSection5(),
+      section6: serializeSection6(),
+      section7: serializeSection7(),
+      section8: serializeSection8()
+    };
+  }
+
+  function validateAllSectionsBeforeSubmit(){
+    const validators = [
+      validateSection1,
+      validateSection2,
+      validateSection3,
+      validateSection4,
+      validateSection5,
+      validateSection6,
+      validateSection7,
+      validateSection8
+    ];
+
+    for (let i=0; i<validators.length; i++){
+      if (!validators[i]()){
+        updateFinalReviewState();
+        showView(String(i + 1));
+        return false;
+      }
+    }
+
+    updateFinalReviewState();
+    return true;
+  }
+
+  function showSubmissionError(message){
+    const hint = qs("#reviewFinalHint");
+    if (hint){
+      hint.style.display = "";
+      hint.style.color = "var(--danger)";
+      hint.textContent =
+        message ||
+        "No fue posible enviar el formulario. La información capturada permanece en pantalla; inténtelo nuevamente.";
+    }
+  }
+
+  function clearSubmissionError(){
+    const hint = qs("#reviewFinalHint");
+    if (!hint) return;
+    hint.style.color = "";
+    if (updateFinalReviewState()){
+      hint.style.display = "none";
+      hint.textContent = "";
+    }
+  }
+
+  async function submitIndustrialForm(finalizeButton){
+    if (submissionInFlight || finalizeButton.dataset.finalized === "true") return;
+
+    if (!validateAllSectionsBeforeSubmit()) return;
+
+    clearSubmissionError();
+    submissionInFlight = true;
+
+    const originalText = finalizeButton.textContent;
+    finalizeButton.disabled = true;
+    finalizeButton.textContent = "Enviando…";
+
+    try{
+      const payload = buildIndustrialPayload();
+
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/rpc/submit_industrial_response`,
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({ p_payload: payload })
+        }
+      );
+
+      let data = null;
+      const raw = await response.text();
+
+      if (raw){
+        try{
+          data = JSON.parse(raw);
+        }catch(_error){
+          data = raw;
+        }
+      }
+
+      if (!response.ok){
+        const serverMessage =
+          data && typeof data === "object"
+            ? (data.message || data.details || data.hint)
+            : null;
+
+        throw new Error(
+          serverMessage ||
+          `Supabase respondió con HTTP ${response.status}.`
+        );
+      }
+
+      const result = Array.isArray(data) ? data[0] : data;
+      const submitted =
+        result &&
+        result.ok === true &&
+        result.status === "submitted" &&
+        (
+          Number(result.progress) === 100 ||
+          result.already_exists === true
+        );
+
+      if (!submitted){
+        throw new Error(
+          "Supabase no confirmó que la respuesta quedara completamente enviada."
+        );
+      }
+
+      const message = qs("#reviewFinishedMessage");
+      if (message){
+        message.innerHTML = `
+          <strong>¡Formulario enviado correctamente!</strong><br>
+          La información de las ocho secciones fue recibida y almacenada correctamente.
+          Gracias por participar en este ejercicio piloto.
+        `;
+        message.classList.add("visible");
+        message.scrollIntoView({behavior:"smooth", block:"center"});
+      }
+
+      finalizeButton.textContent = "Formulario enviado";
+      finalizeButton.disabled = true;
+      finalizeButton.dataset.finalized = "true";
+
+      const hint = qs("#reviewFinalHint");
+      if (hint){
+        hint.style.display = "none";
+        hint.style.color = "";
+        hint.textContent = "";
+      }
+
+    }catch(error){
+      console.error("Error al enviar el formulario:", error);
+
+      showSubmissionError(
+        "No fue posible enviar el formulario en este momento. " +
+        "La información capturada permanece en pantalla. " +
+        "Verifique su conexión e inténtelo nuevamente."
+      );
+
+      finalizeButton.textContent = originalText;
+      finalizeButton.disabled = false;
+
+    }finally{
+      submissionInFlight = false;
+    }
+  }
+
   /* =========================================================
      REVISIÓN FINAL Y CIERRE DEL FORMULARIO
   ========================================================= */
@@ -8489,17 +9485,8 @@
 
     const finalizeButton = e.target.closest("#finalizeSubmitButton");
     if (finalizeButton){
-      if (!updateFinalReviewState()) return;
-
-      const message = qs("#reviewFinishedMessage");
-      if (message){
-        message.classList.add("visible");
-        message.scrollIntoView({behavior:"smooth", block:"center"});
-      }
-
-      finalizeButton.textContent = "Formulario finalizado";
-      finalizeButton.disabled = true;
-      finalizeButton.dataset.finalized = "true";
+      e.preventDefault();
+      submitIndustrialForm(finalizeButton);
     }
   });
 
