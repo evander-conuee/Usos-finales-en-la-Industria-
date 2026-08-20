@@ -896,37 +896,62 @@
     ========================================================= */
     .lighting-card .lighting-main-grid{
       display:grid;
-      grid-template-columns:minmax(220px,1.3fr) minmax(130px,.55fr) minmax(160px,.65fr);
-      gap:20px;
+      grid-template-columns:minmax(300px,1.55fr) minmax(180px,.72fr) minmax(190px,.78fr);
+      gap:18px 24px;
       align-items:start;
     }
     .lighting-card .lighting-time-grid{
       display:grid;
-      grid-template-columns:repeat(3,minmax(140px,1fr));
-      gap:20px;
+      grid-template-columns:repeat(3,minmax(170px,1fr));
+      gap:18px 24px;
       align-items:start;
     }
+
+    /* La cuadrícula propia de iluminación debe prevalecer sobre
+       el span general usado por .form-group en el resto del formulario. */
+    .lighting-card .lighting-main-grid > .form-group,
+    .lighting-card .lighting-time-grid > .form-group{
+      grid-column:auto;
+      min-width:0;
+    }
+
+    .lighting-card .lighting-main-grid select[data-field="technology"]{
+      width:100%;
+      max-width:460px;
+    }
     .lighting-card .lighting-power-input{
-      width:115px;
-      max-width:115px;
+      width:110px;
+      max-width:110px;
     }
     .lighting-card .lighting-count-input{
       width:105px;
       max-width:105px;
     }
     .lighting-card .lighting-other-input{
-      width:min(100%,360px);
-      max-width:360px;
+      width:min(100%,320px);
+      max-width:320px;
     }
-    @media (max-width:850px){
+    .lighting-card .equipment-card-section{
+      margin-top:16px;
+      padding-top:14px;
+    }
+    .lighting-card .equipment-card-section h5{
+      margin-bottom:12px;
+    }
+
+    @media (max-width:900px){
       .lighting-card .lighting-main-grid{
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:minmax(260px,1.2fr) minmax(160px,.7fr);
       }
       .lighting-card .lighting-main-grid > .lighting-tech-group{
         grid-column:1/-1;
       }
+      .lighting-card .lighting-time-grid{
+        grid-template-columns:repeat(3,minmax(140px,1fr));
+      }
     }
-    @media (max-width:650px){
+
+    @media (max-width:700px){
       .lighting-card .lighting-main-grid,
       .lighting-card .lighting-time-grid{
         grid-template-columns:1fr;
@@ -2118,7 +2143,7 @@
                  6.1 PLANTA INDUSTRIAL
             ================================================== -->
             <div class="subsection" id="s6-industrial" data-anchor>
-              <h3 class="subsection-title"><span class="number">6.1</span> Planta industrial</h3>
+              <h3 class="subsection-title"><span class="number">6.1</span> Iluminación en Planta Industrial</h3>
 
               <div>
                 <span class="question-label">
@@ -2147,7 +2172,7 @@
                  6.2 ÁREAS ADMINISTRATIVAS Y COMUNES
             ================================================== -->
             <div class="subsection" id="s6-admin-common" data-anchor>
-              <h3 class="subsection-title"><span class="number">6.2</span> Áreas administrativas y comunes</h3>
+              <h3 class="subsection-title"><span class="number">6.2</span> Iluminación en Áreas Administrativas y Comunes</h3>
 
               <div>
                 <span class="question-label">
@@ -2176,7 +2201,7 @@
                  6.3 EXTERIORES
             ================================================== -->
             <div class="subsection" id="s6-exterior" data-anchor>
-              <h3 class="subsection-title"><span class="number">6.3</span> Exteriores</h3>
+              <h3 class="subsection-title"><span class="number">6.3</span> Iluminación en Exteriores</h3>
 
               <div>
                 <span class="question-label">
