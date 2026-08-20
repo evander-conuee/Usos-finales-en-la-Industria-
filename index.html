@@ -1645,8 +1645,8 @@
                   <button type="button" class="info-button" data-info="refrigerationSystemInfo" aria-label="Información sobre sistemas de refrigeración">i</button>
                 </span>
                 <div id="refrigerationSystemInfo" class="info-panel">
-                  Este bloque corresponde a sistemas en los que el <strong>compresor, evaporador y condensador</strong> pueden identificarse como componentes del sistema.
-                  Si solamente utiliza refrigeradores o congeladores integrados, responda “No” y continúe con 4.2.
+                  Corresponde a sistemas en los que el <strong>compresor, evaporador y condensador están juntos</strong>.
+                  Si solo hace uso de refrigeradores y/o congeladores, responda “No” y continúe con 4.2.
                 </div>
 
                 <div class="radio-row">
@@ -2682,30 +2682,51 @@
         <div class="field-error appliance-label-error">Seleccione una opción.</div>
 
         <div class="label-route-panel appliance-label-route" hidden>
-          <div class="form-group">
-            <label>Consumo anual indicado en la etiqueta amarilla, por equipo <span class="required-mark">*</span></label>
-            <div class="input-with-unit">
-              <input data-field="label_annual_kwh" class="field-s" type="number" min="0" step="any">
-              <span class="unit">kWh/año por equipo</span>
+          <div class="form-grid appliance-energy-details">
+            <div class="form-group span-6">
+              <label>Consumo anual indicado en la etiqueta amarilla, por equipo <span class="required-mark">*</span></label>
+              <div class="input-with-unit">
+                <input data-field="label_annual_kwh" class="field-s" type="number" min="0" step="any">
+                <span class="unit">kWh/año por equipo</span>
+              </div>
+              <div class="field-error">Capture un valor igual o mayor que 0.</div>
+              <span class="help-text">Capture el valor de <strong>una sola unidad</strong>, tal como aparece en la etiqueta.</span>
             </div>
-            <div class="field-error">Capture un valor igual o mayor que 0.</div>
-            <span class="help-text">Capture el valor de <strong>una sola unidad</strong>, tal como aparece en la etiqueta.</span>
+            <div class="capacity-slot span-6"></div>
           </div>
         </div>
 
         <div class="label-route-panel appliance-power-route" hidden>
-          <div class="form-group">
-            <label>Potencia eléctrica por equipo <span class="required-mark">*</span></label>
-            <div class="input-with-unit">
-              <input data-field="power" class="field-s" type="number" min="0.000001" step="any">
-              <select data-field="power_unit">
-                <option value="">Unidad</option>
-                <option value="kw">kW</option>
-                <option value="hp">HP</option>
-              </select>
+          <div class="form-grid appliance-energy-details">
+            <div class="form-group span-6">
+              <label>Potencia eléctrica por equipo <span class="required-mark">*</span></label>
+              <div class="input-with-unit">
+                <input data-field="power" class="field-s" type="number" min="0.000001" step="any">
+                <select data-field="power_unit">
+                  <option value="">Unidad</option>
+                  <option value="kw">kW</option>
+                  <option value="hp">HP</option>
+                </select>
+              </div>
+              <div class="field-error">Capture una potencia mayor que 0 y seleccione la unidad.</div>
             </div>
-            <div class="field-error">Capture una potencia mayor que 0 y seleccione la unidad.</div>
+            <div class="capacity-slot span-6"></div>
           </div>
+        </div>
+
+        <div class="form-group appliance-capacity-field" data-capacity-field hidden>
+          <label data-capacity-label>Indique la capacidad o tamaño del equipo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="capacity_size" class="field-s" type="number" min="0.000001" step="any">
+            <select data-field="capacity_unit">
+              <option value="">Unidad</option>
+              <option value="m3">m³</option>
+              <option value="ft3">pies³</option>
+              <option value="l">L</option>
+            </select>
+          </div>
+          <div class="field-error">Capture una capacidad mayor que 0 y seleccione la unidad.</div>
+          <span class="help-text">Reporte la capacidad o tamaño correspondiente a <strong>un solo equipo</strong> del grupo.</span>
         </div>
       </div>
 
@@ -4328,6 +4349,19 @@
     return valid;
   }
 
+  function syncApplianceCapacityLabel(card){
+    const type = qs('[data-field="appliance_type"]', card)?.value || "";
+    const label = qs("[data-capacity-label]", card);
+    if (!label) return;
+
+    const noun =
+      type === "refrigerator" ? "refrigerador" :
+      type === "freezer" ? "congelador" :
+      "equipo";
+
+    label.innerHTML = `Indique la capacidad o tamaño del ${noun} <span class="required-mark">*</span>`;
+  }
+
   function syncApplianceEnergyRoute(card){
     const selected = qs(".appliance-label-radios input:checked", card)?.value || "";
     const labelRoute = qs(".appliance-label-route", card);
@@ -4337,8 +4371,13 @@
     const powerInput = qs('[data-field="power"]', card);
     const powerUnit = qs('[data-field="power_unit"]', card);
 
+    const capacityField = qs("[data-capacity-field]", card);
+    const capacityInput = qs('[data-field="capacity_size"]', card);
+    const capacityUnit = qs('[data-field="capacity_unit"]', card);
+
     const useLabel = selected === "yes";
     const usePower = selected === "no";
+    const hasRoute = useLabel || usePower;
 
     labelRoute.hidden = !useLabel;
     powerRoute.hidden = !usePower;
@@ -4351,6 +4390,22 @@
     powerInput.required = usePower;
     powerUnit.required = usePower;
 
+    if (hasRoute){
+      const destination = qs(".capacity-slot", useLabel ? labelRoute : powerRoute);
+      if (destination) destination.appendChild(capacityField);
+      capacityField.hidden = false;
+      capacityInput.disabled = false;
+      capacityUnit.disabled = false;
+      capacityInput.required = true;
+      capacityUnit.required = true;
+    } else {
+      capacityField.hidden = true;
+      capacityInput.disabled = true;
+      capacityUnit.disabled = true;
+      capacityInput.required = false;
+      capacityUnit.required = false;
+    }
+
     if (!useLabel){
       labelInput.value = "";
       clearInvalid(labelInput);
@@ -4362,6 +4417,7 @@
       clearInvalid(powerUnit);
     }
 
+    syncApplianceCapacityLabel(card);
     qs(".appliance-label-error", card).classList.remove("visible");
   }
 
@@ -4380,8 +4436,12 @@
       radio.addEventListener("change", () => syncApplianceEnergyRoute(card));
     });
 
+    const applianceType = qs('[data-field="appliance_type"]', card);
     const totalInput = qs('[data-field="unit_count"]', card);
     const inverterInput = qs('[data-field="inverter_count"]', card);
+
+    applianceType.addEventListener("change", () => syncApplianceCapacityLabel(card));
+    syncApplianceCapacityLabel(card);
 
     totalInput.addEventListener("input", () => {
       if (inverterInput.value !== "") validateInverterCount(card, true);
