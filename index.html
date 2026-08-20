@@ -961,6 +961,267 @@
       }
     }
 
+
+    /* =========================================================
+       SECCIÓN 8 · FEEDBACK
+    ========================================================= */
+    .feedback-intro{
+      margin-bottom:22px;
+    }
+
+    .feedback-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+      align-items:start;
+    }
+
+    .feedback-card{
+      min-width:0;
+      padding:17px 18px;
+      border:1px solid #d6dcdf;
+      border-radius:8px;
+      background:#fbfcfc;
+    }
+
+    .feedback-card.full{
+      grid-column:1/-1;
+    }
+
+    .feedback-card .question-label{
+      margin-bottom:11px;
+    }
+
+    .feedback-card .radio-row{
+      gap:8px;
+    }
+
+    .feedback-card .radio-card{
+      min-height:39px;
+      padding:8px 12px;
+    }
+
+    .feedback-time-row{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      flex-wrap:wrap;
+    }
+
+    .feedback-time-row input{
+      width:105px;
+      max-width:105px;
+    }
+
+    .feedback-conditional{
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px dashed #d7ddda;
+    }
+
+    .feedback-conditional[hidden]{
+      display:none;
+    }
+
+    .feedback-sections-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(220px,1fr));
+      gap:9px;
+      margin-top:10px;
+    }
+
+    .feedback-sections-grid .check-card{
+      min-height:42px;
+      padding:9px 11px;
+    }
+
+    .feedback-other-input{
+      width:min(100%,430px);
+      max-width:430px;
+    }
+
+    .feedback-comments{
+      min-height:130px;
+    }
+
+    .feedback-note{
+      margin:0 0 18px;
+      color:#4f5a60;
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    @media (max-width:800px){
+      .feedback-grid{
+        grid-template-columns:1fr;
+      }
+      .feedback-card.full{
+        grid-column:auto;
+      }
+    }
+
+    @media (max-width:600px){
+      .feedback-sections-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    /* =========================================================
+       SECCIÓN 7 · ACONDICIONAMIENTO DE ESPACIOS (HVAC)
+    ========================================================= */
+    .hvac-allocation{
+      margin-top:16px;
+      padding:15px 16px;
+      border:1px solid #d7ddda;
+      border-radius:8px;
+      background:#f9fbfa;
+    }
+
+    .hvac-allocation-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(210px,1fr));
+      gap:18px;
+      align-items:start;
+    }
+
+    .hvac-allocation-status{
+      margin-top:12px;
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:13.5px;
+    }
+
+    .hvac-allocation-status strong{
+      color:var(--green-dark);
+    }
+
+    .hvac-allocation-status.good strong{
+      color:#315f21;
+    }
+
+    .hvac-allocation-status.bad strong{
+      color:#9a3028;
+    }
+
+    .hvac-space-block{
+      margin-top:22px;
+      padding:18px;
+      border:1px solid #d5dcda;
+      border-radius:9px;
+      background:#fbfcfc;
+    }
+
+    .hvac-space-block > h4{
+      margin:0 0 6px;
+      color:var(--green-dark);
+      font-size:16px;
+    }
+
+    .hvac-space-block > .context-text{
+      margin-bottom:16px;
+    }
+
+    .hvac-card .hvac-main-grid{
+      display:grid;
+      grid-template-columns:minmax(230px,1.2fr) minmax(130px,.55fr) minmax(235px,1fr);
+      gap:18px 22px;
+      align-items:start;
+    }
+
+    .hvac-card .hvac-main-grid > .form-group,
+    .hvac-card .hvac-time-grid > .form-group{
+      grid-column:auto;
+      min-width:0;
+    }
+
+    .hvac-card .hvac-time-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(145px,1fr));
+      gap:18px 22px;
+      align-items:start;
+    }
+
+    .hvac-card .hvac-secondary-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(220px,1fr));
+      gap:18px 22px;
+      align-items:start;
+      margin-top:16px;
+    }
+
+    .hvac-card .hvac-secondary-grid > .form-group{
+      grid-column:auto;
+      min-width:0;
+    }
+
+    .hvac-warning{
+      display:none;
+      margin-top:8px;
+      color:#8a6500;
+      font-size:12.8px;
+      line-height:1.45;
+    }
+
+    .hvac-warning.visible{
+      display:block;
+    }
+
+    .hvac-route-panel{
+      margin-top:16px;
+      padding:14px;
+      border:1px solid #d7dddf;
+      border-radius:7px;
+      background:#f9fbfa;
+    }
+
+    .hvac-route-panel[hidden]{
+      display:none;
+    }
+
+    .hvac-auto-allocation{
+      margin-top:13px;
+      padding:10px 13px;
+      border-radius:7px;
+      background:#f1f6ee;
+      border:1px solid #d4e2cd;
+      color:#3f5e36;
+      font-size:13.5px;
+      line-height:1.5;
+    }
+
+    .hvac-card .compact-number{
+      width:110px;
+      max-width:110px;
+    }
+
+    .hvac-card .compact-select{
+      width:155px;
+      max-width:155px;
+    }
+
+    @media (max-width:900px){
+      .hvac-card .hvac-main-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .hvac-card .hvac-main-grid > .hvac-wide{
+        grid-column:1/-1;
+      }
+    }
+
+    @media (max-width:720px){
+      .hvac-allocation-grid,
+      .hvac-card .hvac-main-grid,
+      .hvac-card .hvac-secondary-grid,
+      .hvac-card .hvac-time-grid{
+        grid-template-columns:1fr;
+      }
+      .hvac-card .hvac-main-grid > .hvac-wide{
+        grid-column:auto;
+      }
+    }
+
     /* =========================================================
        RESPONSIVE
     ========================================================= */
@@ -2242,18 +2503,462 @@
 
     <section class="section-view" data-section="7" data-anchor>
       <div class="section-shell">
-        <div class="section-heading"><h2>7. Acondicionamiento de espacios (HVAC)</h2></div>
-        <div class="placeholder"><strong>Estructura preparada</strong>Aire acondicionado, ventiladores y calefacción.</div>
+        <div class="section-heading">
+          <h2>7. Acondicionamiento de espacios (HVAC)</h2>
+          <p>Aire acondicionado, ventiladores y calefacción utilizados para acondicionar espacios del establecimiento.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box">
+            Registre los equipos por <strong>grupos homogéneos</strong>. Agrupe únicamente los equipos que tengan el mismo tipo,
+            capacidad o potencia y el mismo tiempo de funcionamiento. Si alguna de estas características cambia, regístrelos como otro grupo.
+          </div>
+
+          <form id="section7Form" novalidate>
+
+            <!-- =================================================
+                 7.1 AIRE ACONDICIONADO
+            ================================================== -->
+            <div class="subsection" id="s7-ac" data-anchor>
+              <h3 class="subsection-title"><span class="number">7.1</span> Aire acondicionado</h3>
+
+              <div>
+                <span class="question-label">
+                  7.1.1 ¿En este establecimiento cuentan con equipos de aire acondicionado?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="has_air_conditioning" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="has_air_conditioning" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="has_air_conditioning">Seleccione una opción.</div>
+              </div>
+
+              <div id="acDetails" hidden style="margin-top:24px">
+                <div>
+                  <span class="question-label">
+                    7.1.2 ¿Una parte de estos equipos se utiliza para acondicionar espacios directamente vinculados a la producción?
+                    <span class="required-mark">*</span>
+                  </span>
+                  <div class="radio-row">
+                    <label class="radio-card"><input type="radio" name="ac_used_in_production" value="yes"> Sí</label>
+                    <label class="radio-card"><input type="radio" name="ac_used_in_production" value="no"> No</label>
+                  </div>
+                  <div class="field-error" data-error-for="ac_used_in_production">Seleccione una opción.</div>
+                </div>
+
+                <div id="acAllocationBlock" class="hvac-allocation" hidden>
+                  <p class="question-prompt" style="margin-bottom:12px">
+                    <strong>7.1.2.1</strong> Indique cómo se distribuyen los equipos de aire acondicionado entre los espacios administrativos y los espacios directamente vinculados con la producción.
+                    La suma debe ser exactamente <strong>100 %</strong>.
+                  </p>
+
+                  <div class="hvac-allocation-grid">
+                    <div class="form-group">
+                      <label for="ac_admin_share_pct">Espacios administrativos <span class="required-mark">*</span></label>
+                      <div class="input-with-unit">
+                        <input id="ac_admin_share_pct" class="field-xs" type="number" min="0" max="100" step="0.1">
+                        <span class="unit">%</span>
+                      </div>
+                      <div class="field-error">Capture un valor entre 0 y 100.</div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="ac_production_share_pct">Espacios vinculados con la producción <span class="required-mark">*</span></label>
+                      <div class="input-with-unit">
+                        <input id="ac_production_share_pct" class="field-xs" type="number" min="0.1" max="100" step="0.1">
+                        <span class="unit">%</span>
+                      </div>
+                      <div class="field-error">Capture un valor mayor que 0 y menor o igual que 100.</div>
+                    </div>
+                  </div>
+
+                  <div class="hvac-allocation-status" id="acAllocationStatus">
+                    <span>Total asignado: <strong id="acShareTotal">0%</strong></span>
+                    <span>Porcentaje restante: <strong id="acShareRemaining">100%</strong></span>
+                  </div>
+                </div>
+
+                <div id="acAutoAllocation" class="hvac-auto-allocation" hidden>
+                  Al no utilizar aire acondicionado en espacios vinculados con la producción, el formulario considera
+                  <strong>100 % en espacios administrativos y 0 % en producción</strong>.
+                </div>
+
+                <!-- PRODUCCIÓN -->
+                <div id="acProductionSpaceBlock" class="hvac-space-block" hidden>
+                  <h4>Aire acondicionado en espacios vinculados con la producción</h4>
+                  <p class="context-text">Este bloque corresponde únicamente a los equipos utilizados en espacios relacionados directamente con la producción.</p>
+
+                  <div>
+                    <span class="question-label">
+                      7.1.2.2 ¿Cuentan con algún sistema de control de temperatura en los equipos de aire acondicionado usados en espacios vinculados a la producción?
+                      <span class="required-mark">*</span>
+                    </span>
+                    <div class="radio-row">
+                      <label class="radio-card"><input type="radio" name="ac_production_temperature_control" value="yes"> Sí</label>
+                      <label class="radio-card"><input type="radio" name="ac_production_temperature_control" value="no"> No</label>
+                    </div>
+                    <div class="field-error" data-error-for="ac_production_temperature_control">Seleccione una opción.</div>
+                  </div>
+
+                  <p class="question-prompt" style="margin-top:20px">
+                    <strong>7.1.2.3</strong> Registre los grupos de equipos de aire acondicionado utilizados en espacios vinculados con la producción.
+                  </p>
+                  <div id="acProductionGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" data-add-ac-group="production">＋ Agregar grupo de aire acondicionado</button>
+                </div>
+
+                <!-- ADMINISTRATIVOS -->
+                <div id="acAdminSpaceBlock" class="hvac-space-block" hidden>
+                  <h4>Aire acondicionado en espacios administrativos</h4>
+                  <p class="context-text">Este bloque corresponde únicamente a los equipos utilizados en oficinas y otros espacios administrativos.</p>
+
+                  <div>
+                    <span class="question-label">
+                      7.1.3 ¿Cuentan con algún sistema de control de temperatura en los equipos de aire acondicionado para los espacios administrativos?
+                      <span class="required-mark">*</span>
+                    </span>
+                    <div class="radio-row">
+                      <label class="radio-card"><input type="radio" name="ac_admin_temperature_control" value="yes"> Sí</label>
+                      <label class="radio-card"><input type="radio" name="ac_admin_temperature_control" value="no"> No</label>
+                    </div>
+                    <div class="field-error" data-error-for="ac_admin_temperature_control">Seleccione una opción.</div>
+                  </div>
+
+                  <p class="question-prompt" style="margin-top:20px">
+                    <strong>7.1.3.1</strong> Registre los grupos de equipos de aire acondicionado utilizados en espacios administrativos.
+                  </p>
+                  <div id="acAdminGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" data-add-ac-group="admin">＋ Agregar grupo de aire acondicionado</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 7.2 VENTILADORES
+            ================================================== -->
+            <div class="subsection" id="s7-fans" data-anchor>
+              <h3 class="subsection-title"><span class="number">7.2</span> Ventiladores</h3>
+
+              <div>
+                <span class="question-label">
+                  7.2.1 ¿En este establecimiento utilizan ventiladores para enfriar espacios?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_cooling_fans" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_cooling_fans" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_cooling_fans">Seleccione una opción.</div>
+              </div>
+
+              <div id="fansDetails" hidden style="margin-top:24px">
+                <div>
+                  <span class="question-label">
+                    7.2.2 ¿Utilizan ventiladores para enfriar espacios directamente vinculados a la producción?
+                    <span class="required-mark">*</span>
+                  </span>
+                  <div class="radio-row">
+                    <label class="radio-card"><input type="radio" name="fans_used_in_production" value="yes"> Sí</label>
+                    <label class="radio-card"><input type="radio" name="fans_used_in_production" value="no"> No</label>
+                  </div>
+                  <div class="field-error" data-error-for="fans_used_in_production">Seleccione una opción.</div>
+                </div>
+
+                <div id="fanAllocationBlock" class="hvac-allocation" hidden>
+                  <p class="question-prompt" style="margin-bottom:12px">
+                    <strong>7.2.2.1</strong> Indique cómo se distribuyen los ventiladores entre espacios administrativos y espacios directamente vinculados con la producción.
+                    La suma debe ser exactamente <strong>100 %</strong>.
+                  </p>
+
+                  <div class="hvac-allocation-grid">
+                    <div class="form-group">
+                      <label for="fan_admin_share_pct">Espacios administrativos <span class="required-mark">*</span></label>
+                      <div class="input-with-unit">
+                        <input id="fan_admin_share_pct" class="field-xs" type="number" min="0" max="100" step="0.1">
+                        <span class="unit">%</span>
+                      </div>
+                      <div class="field-error">Capture un valor entre 0 y 100.</div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="fan_production_share_pct">Espacios vinculados con la producción <span class="required-mark">*</span></label>
+                      <div class="input-with-unit">
+                        <input id="fan_production_share_pct" class="field-xs" type="number" min="0.1" max="100" step="0.1">
+                        <span class="unit">%</span>
+                      </div>
+                      <div class="field-error">Capture un valor mayor que 0 y menor o igual que 100.</div>
+                    </div>
+                  </div>
+
+                  <div class="hvac-allocation-status" id="fanAllocationStatus">
+                    <span>Total asignado: <strong id="fanShareTotal">0%</strong></span>
+                    <span>Porcentaje restante: <strong id="fanShareRemaining">100%</strong></span>
+                  </div>
+                </div>
+
+                <div id="fanAutoAllocation" class="hvac-auto-allocation" hidden>
+                  Al no utilizar ventiladores en espacios vinculados con la producción, el formulario considera
+                  <strong>100 % en espacios administrativos y 0 % en producción</strong>.
+                </div>
+
+                <div id="fanInventoryBlock" hidden style="margin-top:24px">
+                  <p class="question-prompt">
+                    <strong>7.2.3</strong> Registre los grupos de ventiladores utilizados en el establecimiento.
+                    Este inventario es único; no es necesario repetir los ventiladores por espacio.
+                  </p>
+                  <div id="fanGroups" class="dynamic-list"></div>
+                  <button type="button" class="add-button" id="addFanGroup">＋ Agregar grupo de ventiladores</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 7.3 CALEFACCIÓN
+            ================================================== -->
+            <div class="subsection" id="s7-heating" data-anchor>
+              <h3 class="subsection-title"><span class="number">7.3</span> Calefacción</h3>
+
+              <div>
+                <span class="question-label">
+                  7.3.1 ¿En este establecimiento utilizan calefactores para calentar espacios?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="uses_space_heaters" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="uses_space_heaters" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="uses_space_heaters">Seleccione una opción.</div>
+              </div>
+
+              <div id="heatingDetails" hidden style="margin-top:24px">
+                <p class="question-prompt">
+                  <strong>7.3.1.1</strong> Registre los grupos de equipos utilizados para calefacción de espacios.
+                  La <strong>capacidad térmica</strong> caracteriza el equipo; adicionalmente se solicitará la potencia eléctrica o el consumo de combustible según corresponda.
+                </p>
+                <div id="heatingGroups" class="dynamic-list"></div>
+                <button type="button" class="add-button" id="addHeatingGroup">＋ Agregar grupo de calefacción</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="6">← Anterior</button><button class="nav-button next" data-next="8">Continuar →</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="6">← Anterior</button>
+        <button class="nav-button next" data-next="8">Continuar →</button>
+      </div>
     </section>
 
     <section class="section-view" data-section="8" data-anchor>
       <div class="section-shell">
-        <div class="section-heading"><h2>8. Feedback</h2></div>
-        <div class="placeholder"><strong>Estructura preparada</strong>Evaluación breve de claridad, experiencia de llenado y utilidad del formulario.</div>
+        <div class="section-heading">
+          <h2>8. Feedback</h2>
+          <p>Evaluación de la claridad, experiencia de llenado y utilidad del formulario.</p>
+        </div>
+
+        <div class="section-content">
+          <div class="instruction-box feedback-intro">
+            Sus respuestas nos ayudarán a <strong>mejorar la claridad, funcionalidad y experiencia de uso</strong> del instrumento.
+            Esta sección es breve. Seleccione la opción que mejor represente su experiencia durante el llenado.
+          </div>
+
+          <form id="section8Form" novalidate>
+            <div class="feedback-grid">
+
+              <!-- 8.1 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.1 En términos generales, ¿qué tan claras le parecieron las preguntas del formulario?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_clarity" value="very_clear" required> Muy claras</label>
+                  <label class="radio-card"><input type="radio" name="feedback_clarity" value="clear"> Claras</label>
+                  <label class="radio-card"><input type="radio" name="feedback_clarity" value="not_very_clear"> Poco claras</label>
+                  <label class="radio-card"><input type="radio" name="feedback_clarity" value="not_clear"> Nada claras</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_clarity">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.2 -->
+              <div class="feedback-card">
+                <label for="feedback_completion_minutes">
+                  8.2 Aproximadamente, ¿cuántos minutos le tomó completar el formulario?
+                  <span class="required-mark">*</span>
+                </label>
+                <div class="feedback-time-row">
+                  <input id="feedback_completion_minutes" name="feedback_completion_minutes" type="number" min="1" step="1" required>
+                  <span class="unit">minutos</span>
+                </div>
+                <div class="field-error">Capture un número entero mayor que 0.</div>
+              </div>
+
+              <!-- 8.3 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.3 Considerando todo el proceso de llenado en el sitio web, ¿qué tan intuitiva le resultó la experiencia?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_intuitiveness" value="very_intuitive" required> Muy intuitiva</label>
+                  <label class="radio-card"><input type="radio" name="feedback_intuitiveness" value="intuitive"> Intuitiva</label>
+                  <label class="radio-card"><input type="radio" name="feedback_intuitiveness" value="not_very_intuitive"> Poco intuitiva</label>
+                  <label class="radio-card"><input type="radio" name="feedback_intuitiveness" value="not_intuitive"> Nada intuitiva</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_intuitiveness">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.4 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.4 ¿Considera que las instrucciones y aclaraciones proporcionadas fueron suficientes para responder el formulario?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_instructions_sufficient" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="feedback_instructions_sufficient" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_instructions_sufficient">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.5 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.5 ¿Qué tan fácil o difícil le resultó identificar y localizar la información solicitada dentro del establecimiento?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_information_availability" value="very_easy" required> Muy fácil</label>
+                  <label class="radio-card"><input type="radio" name="feedback_information_availability" value="easy"> Fácil</label>
+                  <label class="radio-card"><input type="radio" name="feedback_information_availability" value="difficult"> Difícil</label>
+                  <label class="radio-card"><input type="radio" name="feedback_information_availability" value="very_difficult"> Muy difícil</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_information_availability">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.6 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.6 ¿Cómo considera el nivel técnico de las preguntas del formulario?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_technical_level" value="adequate" required> Adecuado</label>
+                  <label class="radio-card"><input type="radio" name="feedback_technical_level" value="high"> Alto</label>
+                  <label class="radio-card"><input type="radio" name="feedback_technical_level" value="low"> Bajo</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_technical_level">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.7 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.7 ¿Encontró términos o conceptos que le resultaran difíciles de comprender?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_difficult_terms" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="feedback_difficult_terms" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_difficult_terms">Seleccione una opción.</div>
+
+                <div class="feedback-conditional" id="feedbackDifficultTermsWrap" hidden>
+                  <label for="feedback_difficult_terms_detail">
+                    Indique cuáles términos o conceptos <span class="required-mark">*</span>
+                  </label>
+                  <input id="feedback_difficult_terms_detail" name="feedback_difficult_terms_detail" class="field-l" type="text">
+                  <div class="field-error">Indique al menos un término o concepto.</div>
+                </div>
+              </div>
+
+              <!-- 8.8 -->
+              <div class="feedback-card full">
+                <span class="question-label">
+                  8.8 ¿Tuvo dificultad para responder alguna sección del formulario?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_section_difficulty" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="feedback_section_difficulty" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_section_difficulty">Seleccione una opción.</div>
+
+                <div class="feedback-conditional" id="feedbackDifficultSectionsWrap" hidden>
+                  <span class="question-label" style="font-size:14px">
+                    Seleccione la o las secciones que le resultaron difíciles:
+                    <span class="required-mark">*</span>
+                  </span>
+                  <div class="feedback-sections-grid" id="feedbackDifficultSections">
+                    <label class="check-card"><input type="checkbox" value="general_information"> Información general</label>
+                    <label class="check-card"><input type="checkbox" value="energy"> Consumo energético, autogeneración y cogeneración</label>
+                    <label class="check-card"><input type="checkbox" value="thermal"> Procesos térmicos</label>
+                    <label class="check-card"><input type="checkbox" value="refrigeration"> Refrigeración</label>
+                    <label class="check-card"><input type="checkbox" value="motive_power"> Fuerza motriz</label>
+                    <label class="check-card"><input type="checkbox" value="lighting"> Iluminación</label>
+                    <label class="check-card"><input type="checkbox" value="hvac"> Acondicionamiento de espacios (HVAC)</label>
+                    <label class="check-card"><input type="checkbox" value="other"> Otra</label>
+                  </div>
+                  <div class="field-error" id="feedbackDifficultSectionsError">Seleccione al menos una sección.</div>
+
+                  <div class="form-group" id="feedbackOtherSectionWrap" hidden style="margin-top:14px">
+                    <label for="feedback_other_section">Indique cuál otra sección o aspecto <span class="required-mark">*</span></label>
+                    <input id="feedback_other_section" name="feedback_other_section" class="feedback-other-input" type="text">
+                    <div class="field-error">Indique la otra sección o aspecto.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 8.9 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.9 ¿Qué tan útiles le resultaron los apoyos incorporados en el formulario, como instrucciones, mensajes e íconos de información (ⓘ)?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_support_tools" value="very_useful" required> Muy útiles</label>
+                  <label class="radio-card"><input type="radio" name="feedback_support_tools" value="useful"> Útiles</label>
+                  <label class="radio-card"><input type="radio" name="feedback_support_tools" value="not_very_useful"> Poco útiles</label>
+                  <label class="radio-card"><input type="radio" name="feedback_support_tools" value="not_useful"> Nada útiles</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_support_tools">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.10 -->
+              <div class="feedback-card">
+                <span class="question-label">
+                  8.10 ¿Considera adecuadas las unidades de medida disponibles en los campos de captura?
+                  <span class="required-mark">*</span>
+                </span>
+                <div class="radio-row">
+                  <label class="radio-card"><input type="radio" name="feedback_units_adequate" value="yes" required> Sí</label>
+                  <label class="radio-card"><input type="radio" name="feedback_units_adequate" value="no"> No</label>
+                </div>
+                <div class="field-error" data-error-for="feedback_units_adequate">Seleccione una opción.</div>
+              </div>
+
+              <!-- 8.11 -->
+              <div class="feedback-card full">
+                <label for="feedback_comments">
+                  8.11 Comentarios adicionales u observaciones
+                </label>
+                <p class="feedback-note">
+                  Si desea agregar algún comentario sobre el contenido, la experiencia de llenado o alguna mejora que considere importante, puede hacerlo en este espacio.
+                </p>
+                <textarea id="feedback_comments" name="feedback_comments" class="feedback-comments" maxlength="12000" placeholder="Escriba aquí sus comentarios u observaciones…"></textarea>
+                <div class="word-counter"><span id="feedbackCommentsWordCount">0</span> / 500 palabras</div>
+              </div>
+
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="nav-row"><button class="nav-button previous" data-prev="7">← Anterior</button><button class="nav-button next" data-next="review">Revisión →</button></div>
+
+      <div class="nav-row">
+        <button class="nav-button previous" data-prev="7">← Anterior</button>
+        <button class="nav-button next" data-next="review">Revisión →</button>
+      </div>
     </section>
 
     <!-- Revisión: no es sección 9 -->
@@ -2271,8 +2976,8 @@
             <div class="review-item"><span>4. Refrigeración</span><span class="status-badge" id="reviewS4">Por revisar</span></div>
             <div class="review-item"><span>5. Fuerza motriz</span><span class="status-badge" id="reviewS5">Por revisar</span></div>
             <div class="review-item"><span>6. Iluminación</span><span class="status-badge" id="reviewS6">Por revisar</span></div>
-            <div class="review-item"><span>7. HVAC</span><span class="status-badge">Pendiente de implementación</span></div>
-            <div class="review-item"><span>8. Feedback</span><span class="status-badge">Pendiente de implementación</span></div>
+            <div class="review-item"><span>7. Acondicionamiento de espacios (HVAC)</span><span class="status-badge" id="reviewS7">Por revisar</span></div>
+            <div class="review-item"><span>8. Feedback</span><span class="status-badge" id="reviewS8">Por revisar</span></div>
           </div>
 
           <div class="note-box warning" style="margin-top:22px">
@@ -3774,6 +4479,322 @@
     </div>
   </template>
 
+
+  <!-- =========================================================
+       TEMPLATES SECCIÓN 7 · HVAC
+  ========================================================== -->
+  <template id="acGroupTemplate">
+    <div class="dynamic-card hvac-card ac-group-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo de aire acondicionado</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="hvac-main-grid">
+        <div class="form-group hvac-wide">
+          <label>Tipo de equipo <span class="required-mark">*</span></label>
+          <select data-field="equipment_type" class="field-l" required>
+            <option value="">Seleccione</option>
+            <option value="window">Ventana</option>
+            <option value="cooler">Coolers (aire lavado)</option>
+            <option value="minisplit">Minisplit</option>
+            <option value="chiller">Chiller (tipo industrial)</option>
+            <option value="package">Tipo paquete</option>
+            <option value="other">Otro</option>
+          </select>
+          <div class="field-error">Seleccione el tipo de equipo.</div>
+
+          <div class="form-group equipment-other-wrap" hidden style="margin-top:13px">
+            <label>Nombre del otro tipo de equipo <span class="required-mark">*</span></label>
+            <input data-field="equipment_other" class="field-l" type="text">
+            <div class="field-error">Indique el otro tipo de equipo.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad de unidades <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="unit_count" class="compact-number" type="number" min="1" step="1" required>
+            <span class="unit">unidades</span>
+          </div>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Capacidad térmica por equipo <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre capacidad térmica">i</button>
+          </label>
+          <div class="input-with-unit">
+            <input data-field="thermal_capacity" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="thermal_capacity_unit" class="compact-select" required>
+              <option value="">Unidad</option>
+              <option value="tr">TR</option>
+              <option value="btu_h">BTU/h</option>
+            </select>
+          </div>
+          <div class="info-panel local-info">La capacidad térmica indica la capacidad de enfriamiento del equipo. No corresponde a su consumo eléctrico.</div>
+          <div class="field-error">Capture una capacidad mayor que 0 y seleccione la unidad.</div>
+          <div class="hvac-warning" data-capacity-warning></div>
+        </div>
+      </div>
+
+      <div class="hvac-secondary-grid">
+        <div class="form-group">
+          <label>
+            Potencia eléctrica nominal de entrada por equipo <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre potencia eléctrica">i</button>
+          </label>
+          <div class="input-with-unit">
+            <input data-field="electrical_power_kw" class="field-s" type="number" min="0.000001" step="any" required>
+            <span class="unit">kW</span>
+          </div>
+          <div class="info-panel local-info">Reporte la potencia eléctrica de entrada o consumo nominal del equipo en kW. <strong>No reporte TR ni BTU/h</strong> en este campo.</div>
+          <div class="field-error">Capture una potencia eléctrica mayor que 0.</div>
+        </div>
+
+        <div class="form-group">
+          <label>Antigüedad aproximada <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="age_years" class="field-s" type="number" min="0" step="0.1" required>
+            <span class="unit">años</span>
+          </div>
+          <span class="help-text">Puede capturar 0 para equipos con menos de un año.</span>
+          <div class="field-error">Capture un valor igual o mayor que 0.</div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de funcionamiento</h5>
+        <div class="hvac-time-grid">
+          <div class="form-group">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="1" max="24" step="0.1" required><span class="unit">h/día</span></div>
+            <div class="field-error">Capture un valor entre 1 y 24.</div>
+          </div>
+          <div class="form-group">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div>
+            <div class="field-error">Capture un número entero entre 1 y 7.</div>
+          </div>
+          <div class="form-group">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div>
+            <div class="field-error">Capture un número entero entre 1 y 52.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="fanGroupTemplate">
+    <div class="dynamic-card hvac-card fan-group-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo de ventiladores</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="hvac-main-grid">
+        <div class="form-group hvac-wide">
+          <label>Tipo de ventilador <span class="required-mark">*</span></label>
+          <select data-field="fan_type" class="field-l" required>
+            <option value="">Seleccione</option>
+            <option value="pedestal">De pedestal</option>
+            <option value="table">De mesa</option>
+            <option value="ceiling">De techo</option>
+            <option value="wall">De pared</option>
+            <option value="other">Otro</option>
+          </select>
+          <div class="field-error">Seleccione el tipo de ventilador.</div>
+
+          <div class="form-group fan-other-wrap" hidden style="margin-top:13px">
+            <label>Nombre del otro tipo de ventilador <span class="required-mark">*</span></label>
+            <input data-field="fan_type_other" class="field-l" type="text">
+            <div class="field-error">Indique el otro tipo de ventilador.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="fan_count" class="compact-number" type="number" min="1" step="1" required>
+            <span class="unit">ventiladores</span>
+          </div>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
+        <div class="form-group">
+          <label>Potencia de un ventilador <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="fan_power" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="fan_power_unit" class="compact-select" required>
+              <option value="">Unidad</option>
+              <option value="w">W</option>
+              <option value="kw">kW</option>
+            </select>
+          </div>
+          <div class="field-error">Capture una potencia mayor que 0 y seleccione la unidad.</div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de funcionamiento</h5>
+        <div class="hvac-time-grid">
+          <div class="form-group">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="1" max="24" step="0.1" required><span class="unit">h/día</span></div>
+            <div class="field-error">Capture un valor entre 1 y 24.</div>
+          </div>
+          <div class="form-group">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div>
+            <div class="field-error">Capture un número entero entre 1 y 7.</div>
+          </div>
+          <div class="form-group">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div>
+            <div class="field-error">Capture un número entero entre 1 y 52.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="heatingGroupTemplate">
+    <div class="dynamic-card hvac-card heating-group-card">
+      <div class="dynamic-card-head">
+        <h4 class="card-title">Grupo de calefacción</h4>
+        <button type="button" class="remove-button">Eliminar grupo</button>
+      </div>
+
+      <div class="hvac-main-grid">
+        <div class="form-group hvac-wide">
+          <label>Tipo de equipo para calefacción <span class="required-mark">*</span></label>
+          <select data-field="heating_type" class="field-l" required>
+            <option value="">Seleccione</option>
+            <option value="central">Calefacción central</option>
+            <option value="package">Tipo paquete</option>
+            <option value="electric">Eléctrico</option>
+            <option value="gas">A gas</option>
+            <option value="other">Otro</option>
+          </select>
+          <div class="field-error">Seleccione el tipo de equipo.</div>
+
+          <div class="form-group heating-other-wrap" hidden style="margin-top:13px">
+            <label>Nombre del otro tipo de equipo <span class="required-mark">*</span></label>
+            <input data-field="heating_type_other" class="field-l" type="text">
+            <div class="field-error">Indique el otro tipo de equipo.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad de unidades <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="unit_count" class="compact-number" type="number" min="1" step="1" required>
+            <span class="unit">unidades</span>
+          </div>
+          <div class="field-error">Capture un entero igual o mayor que 1.</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Capacidad térmica por equipo <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre capacidad térmica">i</button>
+          </label>
+          <div class="input-with-unit">
+            <input data-field="thermal_capacity" class="field-s" type="number" min="0.000001" step="any" required>
+            <select data-field="thermal_capacity_unit" class="compact-select" required>
+              <option value="">Unidad</option>
+              <option value="tr">TR</option>
+              <option value="btu_h">BTU/h</option>
+            </select>
+          </div>
+          <div class="info-panel local-info">La capacidad térmica caracteriza la capacidad de calefacción. Por sí sola no representa el consumo energético del equipo.</div>
+          <div class="field-error">Capture una capacidad mayor que 0 y seleccione la unidad.</div>
+          <div class="hvac-warning" data-capacity-warning></div>
+        </div>
+      </div>
+
+      <div class="hvac-secondary-grid">
+        <div class="form-group">
+          <label>Fuente principal de energía <span class="required-mark">*</span></label>
+          <select data-field="heating_energy_type" class="field-l" required></select>
+          <div class="field-error">Seleccione la fuente principal de energía.</div>
+
+          <div class="form-group heating-energy-other-wrap" hidden style="margin-top:13px">
+            <label>Nombre del otro combustible <span class="required-mark">*</span></label>
+            <input data-field="heating_energy_other" class="field-l" type="text">
+            <div class="field-error">Indique el otro combustible.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Antigüedad aproximada <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="age_years" class="field-s" type="number" min="0" step="0.1" required>
+            <span class="unit">años</span>
+          </div>
+          <span class="help-text">Puede capturar 0 para equipos con menos de un año.</span>
+          <div class="field-error">Capture un valor igual o mayor que 0.</div>
+        </div>
+      </div>
+
+      <div class="hvac-route-panel heating-electric-route" hidden>
+        <div class="form-group">
+          <label>
+            Potencia eléctrica nominal de entrada por equipo <span class="required-mark">*</span>
+            <button type="button" class="info-button" data-info-local aria-label="Información sobre potencia eléctrica">i</button>
+          </label>
+          <div class="input-with-unit">
+            <input data-field="electrical_power_kw" class="field-s" type="number" min="0.000001" step="any">
+            <span class="unit">kW</span>
+          </div>
+          <div class="info-panel local-info">Reporte la potencia eléctrica nominal de entrada en kW. <strong>No reporte TR ni BTU/h</strong> en este campo.</div>
+          <div class="field-error">Capture una potencia eléctrica mayor que 0.</div>
+        </div>
+      </div>
+
+      <div class="hvac-route-panel heating-fuel-route" hidden>
+        <div class="form-group">
+          <label>Consumo mensual del combustible de todos los equipos del grupo <span class="required-mark">*</span></label>
+          <div class="input-with-unit">
+            <input data-field="monthly_fuel_consumption" class="field-s" type="number" min="0" step="any">
+            <select data-field="monthly_fuel_consumption_unit" class="field-m"></select>
+          </div>
+          <div class="field-error">Capture el consumo mensual y seleccione la unidad.</div>
+          <span class="help-text">Reporte el consumo mensual total de todos los equipos incluidos en este grupo.</span>
+
+          <div class="form-group heating-fuel-unit-other-wrap" hidden style="margin-top:13px">
+            <label>Otra unidad de consumo mensual <span class="required-mark">*</span></label>
+            <input data-field="monthly_fuel_consumption_unit_other" class="field-m" type="text">
+            <div class="field-error">Especifique la unidad utilizada.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="equipment-card-section">
+        <h5>Tiempo de funcionamiento</h5>
+        <div class="hvac-time-grid">
+          <div class="form-group">
+            <label>Horas al día <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="hours_day" class="field-xs" type="number" min="1" max="24" step="0.1" required><span class="unit">h/día</span></div>
+            <div class="field-error">Capture un valor entre 1 y 24.</div>
+          </div>
+          <div class="form-group">
+            <label>Días a la semana <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="days_week" class="field-xs" type="number" min="1" max="7" step="1" required><span class="unit">días/sem</span></div>
+            <div class="field-error">Capture un número entero entre 1 y 7.</div>
+          </div>
+          <div class="form-group">
+            <label>Semanas al año <span class="required-mark">*</span></label>
+            <div class="input-with-unit"><input data-field="weeks_year" class="field-xs" type="number" min="1" max="52" step="1" required><span class="unit">sem/año</span></div>
+            <div class="field-error">Capture un número entero entre 1 y 52.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
 <script>
 (() => {
   "use strict";
@@ -3844,6 +4865,8 @@
       if (currentView === "4" && !validateSection4()) return;
       if (currentView === "5" && !validateSection5()) return;
       if (currentView === "6" && !validateSection6()) return;
+      if (currentView === "7" && !validateSection7()) return;
+      if (currentView === "8" && !validateSection8()) return;
       showView(next.dataset.next);
     }
     if (prev) showView(prev.dataset.prev);
@@ -6245,6 +7268,848 @@
     if (review) review.textContent = "Completa";
     return true;
   }
+
+
+
+
+  /* =========================================================
+     SECCIÓN 7 · ACONDICIONAMIENTO DE ESPACIOS (HVAC)
+  ========================================================= */
+  const section7Form = qs("#section7Form");
+
+  function hvacFillSelect(select, options, placeholder="Seleccione"){
+    const current = select.value;
+    select.innerHTML = `<option value="">${placeholder}</option>` +
+      options.map(([value,label]) => `<option value="${value}">${label}</option>`).join("");
+    if ([...select.options].some(o => o.value === current)) select.value = current;
+  }
+
+  function hvacSetBlock(block, show){
+    block.hidden = !show;
+    qsa("input,select,textarea", block).forEach(el => {
+      el.disabled = !show;
+      if (!show){
+        if (["radio","checkbox"].includes(el.type)) el.checked = false;
+        else el.value = "";
+        clearInvalid(el);
+      }
+    });
+  }
+
+  function hvacValidateContainer(container){
+    let ok = true;
+    qsa("input,select,textarea", container).forEach(el => {
+      if (["radio","checkbox"].includes(el.type)) return;
+      if (!validateElement(el)) ok = false;
+    });
+    return ok;
+  }
+
+  function hvacFormatPct(value){
+    if (!Number.isFinite(value)) return "0";
+    return Number.isInteger(value) ? String(value) : value.toFixed(1);
+  }
+
+  function updateThermalCapacityWarning(card){
+    const value = Number(qs('[data-field="thermal_capacity"]', card)?.value);
+    const unit = qs('[data-field="thermal_capacity_unit"]', card)?.value;
+    const warning = qs("[data-capacity-warning]", card);
+    if (!warning) return;
+
+    let message = "";
+    if (Number.isFinite(value) && value > 0){
+      if (unit === "tr" && value > 100){
+        message = "Verifique la unidad: un valor mayor a 100 TR puede indicar que la capacidad fue reportada en otra unidad.";
+      }
+      if (unit === "btu_h" && value < 9000){
+        message = "Verifique la unidad: un valor menor a 9,000 BTU/h puede indicar que la capacidad fue reportada en TR.";
+      }
+    }
+
+    warning.textContent = message;
+    warning.classList.toggle("visible", Boolean(message));
+  }
+
+  /* -------------------------
+     7.1 Aire acondicionado
+  -------------------------- */
+  const acDetails = qs("#acDetails");
+  const acAllocationBlock = qs("#acAllocationBlock");
+  const acAutoAllocation = qs("#acAutoAllocation");
+  const acAdminShare = qs("#ac_admin_share_pct");
+  const acProductionShare = qs("#ac_production_share_pct");
+  const acProductionSpaceBlock = qs("#acProductionSpaceBlock");
+  const acAdminSpaceBlock = qs("#acAdminSpaceBlock");
+  const acProductionGroups = qs("#acProductionGroups");
+  const acAdminGroups = qs("#acAdminGroups");
+  const acTemplate = qs("#acGroupTemplate");
+
+  function acOtherCount(space, excludeCard=null){
+    const list = space === "production" ? acProductionGroups : acAdminGroups;
+    return qsa(".ac-group-card", list)
+      .filter(card => card !== excludeCard)
+      .filter(card => qs('[data-field="equipment_type"]', card)?.value === "other")
+      .length;
+  }
+
+  function addAcGroup(space){
+    const list = space === "production" ? acProductionGroups : acAdminGroups;
+    const card = acTemplate.content.firstElementChild.cloneNode(true);
+    const title = space === "production"
+      ? "Grupo de aire acondicionado · Producción"
+      : "Grupo de aire acondicionado · Administrativo";
+
+    card.dataset.acSpace = space;
+    qs(".card-title", card).textContent = title;
+
+    const type = qs('[data-field="equipment_type"]', card);
+    const otherWrap = qs(".equipment-other-wrap", card);
+    const otherInput = qs('[data-field="equipment_other"]', card);
+
+    type.addEventListener("change", () => {
+      const other = type.value === "other";
+
+      if (other && acOtherCount(space, card) >= 5){
+        type.value = "";
+        otherWrap.hidden = true;
+        otherInput.required = false;
+        otherInput.disabled = true;
+        type.classList.add("invalid");
+        const err = qs(".field-error", type.closest(".form-group"));
+        if (err){
+          err.textContent = "Puede registrar como máximo 5 grupos con tipo “Otro” en este espacio.";
+          err.classList.add("visible");
+        }
+        return;
+      }
+
+      otherWrap.hidden = !other;
+      otherInput.required = other;
+      otherInput.disabled = !other;
+      if (!other){
+        otherInput.value = "";
+        clearInvalid(otherInput);
+      }
+    });
+
+    qsa('[data-field="thermal_capacity"],[data-field="thermal_capacity_unit"]', card)
+      .forEach(el => {
+        el.addEventListener("input", () => updateThermalCapacityWarning(card));
+        el.addEventListener("change", () => updateThermalCapacityWarning(card));
+      });
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (list.children.length <= 1) return;
+      card.remove();
+      renumberCards(list, title);
+    });
+
+    wireVisibleValidation(card);
+    list.appendChild(card);
+    renumberCards(list, title);
+    standardizeWeeksYearInfo(card);
+  }
+
+  function updateAcAllocation(){
+    const admin = Number(acAdminShare.value || 0);
+    const production = Number(acProductionShare.value || 0);
+    const total = admin + production;
+    const remaining = 100 - total;
+
+    qs("#acShareTotal").textContent = `${hvacFormatPct(total)}%`;
+    qs("#acShareRemaining").textContent = `${hvacFormatPct(remaining)}%`;
+
+    const status = qs("#acAllocationStatus");
+    const good = Math.abs(total - 100) < 0.000001 && production > 0;
+    status.classList.toggle("good", good);
+    status.classList.toggle("bad", total > 100 || (acProductionShare.value !== "" && production <= 0));
+
+    syncAcSpaces();
+  }
+
+  function syncAcSpaces(){
+    const usedProduction = qs('input[name="ac_used_in_production"][value="yes"]').checked;
+    const answeredNo = qs('input[name="ac_used_in_production"][value="no"]').checked;
+
+    let adminShare = Number(acAdminShare.value || 0);
+    let productionShare = Number(acProductionShare.value || 0);
+
+    if (answeredNo){
+      adminShare = 100;
+      productionShare = 0;
+      acAdminShare.value = "100";
+      acProductionShare.value = "0";
+    }
+
+    const showProduction = usedProduction && productionShare > 0;
+    const showAdmin = (usedProduction && adminShare > 0) || answeredNo;
+
+    acProductionSpaceBlock.hidden = !showProduction;
+    acAdminSpaceBlock.hidden = !showAdmin;
+
+    if (showProduction && !acProductionGroups.children.length) addAcGroup("production");
+    if (!showProduction) acProductionGroups.innerHTML = "";
+
+    if (showAdmin && !acAdminGroups.children.length) addAcGroup("admin");
+    if (!showAdmin) acAdminGroups.innerHTML = "";
+  }
+
+  qsa('input[name="has_air_conditioning"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="has_air_conditioning"][value="yes"]').checked;
+      acDetails.hidden = !yes;
+
+      if (!yes){
+        qsa('input[name="ac_used_in_production"],input[name="ac_production_temperature_control"],input[name="ac_admin_temperature_control"]')
+          .forEach(r => r.checked = false);
+        acAdminShare.value = "";
+        acProductionShare.value = "";
+        acAllocationBlock.hidden = true;
+        acAutoAllocation.hidden = true;
+        acProductionSpaceBlock.hidden = true;
+        acAdminSpaceBlock.hidden = true;
+        acProductionGroups.innerHTML = "";
+        acAdminGroups.innerHTML = "";
+      }
+    });
+  });
+
+  qsa('input[name="ac_used_in_production"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="ac_used_in_production"][value="yes"]').checked;
+      const no = qs('input[name="ac_used_in_production"][value="no"]').checked;
+
+      acAllocationBlock.hidden = !yes;
+      acAutoAllocation.hidden = !no;
+
+      if (yes){
+        acAdminShare.value = "";
+        acProductionShare.value = "";
+      } else if (no){
+        acAdminShare.value = "100";
+        acProductionShare.value = "0";
+      }
+
+      updateAcAllocation();
+      syncAcSpaces();
+    });
+  });
+
+  acAdminShare.addEventListener("input", updateAcAllocation);
+  acProductionShare.addEventListener("input", updateAcAllocation);
+
+  qsa("[data-add-ac-group]").forEach(button => {
+    button.addEventListener("click", () => addAcGroup(button.dataset.addAcGroup));
+  });
+
+  /* -------------------------
+     7.2 Ventiladores
+  -------------------------- */
+  const fansDetails = qs("#fansDetails");
+  const fanAllocationBlock = qs("#fanAllocationBlock");
+  const fanAutoAllocation = qs("#fanAutoAllocation");
+  const fanAdminShare = qs("#fan_admin_share_pct");
+  const fanProductionShare = qs("#fan_production_share_pct");
+  const fanInventoryBlock = qs("#fanInventoryBlock");
+  const fanGroups = qs("#fanGroups");
+  const fanTemplate = qs("#fanGroupTemplate");
+
+  function fanOtherCount(excludeCard=null){
+    return qsa(".fan-group-card", fanGroups)
+      .filter(card => card !== excludeCard)
+      .filter(card => qs('[data-field="fan_type"]', card)?.value === "other")
+      .length;
+  }
+
+  function addFanGroup(){
+    const card = fanTemplate.content.firstElementChild.cloneNode(true);
+    const type = qs('[data-field="fan_type"]', card);
+    const otherWrap = qs(".fan-other-wrap", card);
+    const otherInput = qs('[data-field="fan_type_other"]', card);
+
+    type.addEventListener("change", () => {
+      const other = type.value === "other";
+
+      if (other && fanOtherCount(card) >= 5){
+        type.value = "";
+        otherWrap.hidden = true;
+        otherInput.required = false;
+        otherInput.disabled = true;
+        type.classList.add("invalid");
+        const err = qs(".field-error", type.closest(".form-group"));
+        if (err){
+          err.textContent = "Puede registrar como máximo 5 grupos con tipo “Otro”.";
+          err.classList.add("visible");
+        }
+        return;
+      }
+
+      otherWrap.hidden = !other;
+      otherInput.required = other;
+      otherInput.disabled = !other;
+      if (!other){
+        otherInput.value = "";
+        clearInvalid(otherInput);
+      }
+    });
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (fanGroups.children.length <= 1) return;
+      card.remove();
+      renumberCards(fanGroups, "Grupo de ventiladores");
+    });
+
+    wireVisibleValidation(card);
+    fanGroups.appendChild(card);
+    renumberCards(fanGroups, "Grupo de ventiladores");
+    standardizeWeeksYearInfo(card);
+  }
+
+  function updateFanAllocation(){
+    const admin = Number(fanAdminShare.value || 0);
+    const production = Number(fanProductionShare.value || 0);
+    const total = admin + production;
+    const remaining = 100 - total;
+
+    qs("#fanShareTotal").textContent = `${hvacFormatPct(total)}%`;
+    qs("#fanShareRemaining").textContent = `${hvacFormatPct(remaining)}%`;
+
+    const status = qs("#fanAllocationStatus");
+    const good = Math.abs(total - 100) < 0.000001 && production > 0;
+    status.classList.toggle("good", good);
+    status.classList.toggle("bad", total > 100 || (fanProductionShare.value !== "" && production <= 0));
+  }
+
+  qsa('input[name="uses_cooling_fans"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="uses_cooling_fans"][value="yes"]').checked;
+      fansDetails.hidden = !yes;
+
+      if (!yes){
+        qsa('input[name="fans_used_in_production"]').forEach(r => r.checked = false);
+        fanAdminShare.value = "";
+        fanProductionShare.value = "";
+        fanAllocationBlock.hidden = true;
+        fanAutoAllocation.hidden = true;
+        fanInventoryBlock.hidden = true;
+        fanGroups.innerHTML = "";
+      }
+    });
+  });
+
+  qsa('input[name="fans_used_in_production"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="fans_used_in_production"][value="yes"]').checked;
+      const no = qs('input[name="fans_used_in_production"][value="no"]').checked;
+
+      fanAllocationBlock.hidden = !yes;
+      fanAutoAllocation.hidden = !no;
+      fanInventoryBlock.hidden = !(yes || no);
+
+      if (yes){
+        fanAdminShare.value = "";
+        fanProductionShare.value = "";
+      } else if (no){
+        fanAdminShare.value = "100";
+        fanProductionShare.value = "0";
+      }
+
+      updateFanAllocation();
+
+      if ((yes || no) && !fanGroups.children.length) addFanGroup();
+      if (!(yes || no)) fanGroups.innerHTML = "";
+    });
+  });
+
+  fanAdminShare.addEventListener("input", updateFanAllocation);
+  fanProductionShare.addEventListener("input", updateFanAllocation);
+  qs("#addFanGroup").addEventListener("click", addFanGroup);
+
+  /* -------------------------
+     7.3 Calefacción
+  -------------------------- */
+  const heatingDetails = qs("#heatingDetails");
+  const heatingGroups = qs("#heatingGroups");
+  const heatingTemplate = qs("#heatingGroupTemplate");
+
+  const HEATING_ALL_ENERGIES = [
+    ["electricity","Electricidad"],
+    ["lpg","GLP"],
+    ["dry_gas","Gas seco"],
+    ["other","Otro combustible"]
+  ];
+
+  function heatingOtherCount(excludeCard=null){
+    return qsa(".heating-group-card", heatingGroups)
+      .filter(card => card !== excludeCard)
+      .filter(card => qs('[data-field="heating_type"]', card)?.value === "other")
+      .length;
+  }
+
+  function syncHeatingEnergyOptions(card){
+    const type = qs('[data-field="heating_type"]', card);
+    const energy = qs('[data-field="heating_energy_type"]', card);
+
+    if (type.value === "electric"){
+      hvacFillSelect(energy, [["electricity","Electricidad"]]);
+      energy.value = "electricity";
+    } else if (type.value === "gas"){
+      hvacFillSelect(energy, [["lpg","GLP"],["dry_gas","Gas seco"],["other","Otro combustible"]]);
+    } else {
+      hvacFillSelect(energy, HEATING_ALL_ENERGIES);
+    }
+
+    syncHeatingEnergyRoute(card);
+  }
+
+  function syncHeatingFuelUnits(card){
+    const energy = qs('[data-field="heating_energy_type"]', card).value;
+    const unit = qs('[data-field="monthly_fuel_consumption_unit"]', card);
+
+    if (energy === "lpg" || energy === "dry_gas"){
+      hvacFillSelect(unit, [["m3_month","m³/mes"],["l_month","L/mes"]], "Seleccione unidad");
+    } else if (energy === "other"){
+      hvacFillSelect(
+        unit,
+        [["kg_month","kg/mes"],["t_month","ton/mes"],["m3_month","m³/mes"],["l_month","L/mes"],["other","Otra unidad"]],
+        "Seleccione unidad"
+      );
+    } else {
+      unit.innerHTML = '<option value="">Unidad</option>';
+    }
+
+    const otherWrap = qs(".heating-fuel-unit-other-wrap", card);
+    const otherInput = qs('[data-field="monthly_fuel_consumption_unit_other"]', card);
+    const custom = unit.value === "other";
+    otherWrap.hidden = !custom;
+    otherInput.disabled = !custom;
+    otherInput.required = custom;
+    if (!custom){
+      otherInput.value = "";
+      clearInvalid(otherInput);
+    }
+  }
+
+  function syncHeatingEnergyRoute(card){
+    const energy = qs('[data-field="heating_energy_type"]', card);
+    const otherWrap = qs(".heating-energy-other-wrap", card);
+    const otherInput = qs('[data-field="heating_energy_other"]', card);
+    const electricRoute = qs(".heating-electric-route", card);
+    const fuelRoute = qs(".heating-fuel-route", card);
+    const power = qs('[data-field="electrical_power_kw"]', card);
+    const fuelConsumption = qs('[data-field="monthly_fuel_consumption"]', card);
+    const fuelUnit = qs('[data-field="monthly_fuel_consumption_unit"]', card);
+
+    const isElectric = energy.value === "electricity";
+    const isFuel = ["lpg","dry_gas","other"].includes(energy.value);
+    const isOther = energy.value === "other";
+
+    otherWrap.hidden = !isOther;
+    otherInput.disabled = !isOther;
+    otherInput.required = isOther;
+    if (!isOther){
+      otherInput.value = "";
+      clearInvalid(otherInput);
+    }
+
+    electricRoute.hidden = !isElectric;
+    fuelRoute.hidden = !isFuel;
+
+    power.disabled = !isElectric;
+    power.required = isElectric;
+
+    fuelConsumption.disabled = !isFuel;
+    fuelUnit.disabled = !isFuel;
+    fuelConsumption.required = isFuel;
+    fuelUnit.required = isFuel;
+
+    if (!isElectric){
+      power.value = "";
+      clearInvalid(power);
+    }
+
+    if (!isFuel){
+      fuelConsumption.value = "";
+      fuelUnit.value = "";
+      clearInvalid(fuelConsumption);
+      clearInvalid(fuelUnit);
+      const otherUnit = qs('[data-field="monthly_fuel_consumption_unit_other"]', card);
+      otherUnit.value = "";
+      otherUnit.disabled = true;
+      otherUnit.required = false;
+      qs(".heating-fuel-unit-other-wrap", card).hidden = true;
+    } else {
+      syncHeatingFuelUnits(card);
+    }
+  }
+
+  function addHeatingGroup(){
+    const card = heatingTemplate.content.firstElementChild.cloneNode(true);
+    const type = qs('[data-field="heating_type"]', card);
+    const typeOtherWrap = qs(".heating-other-wrap", card);
+    const typeOther = qs('[data-field="heating_type_other"]', card);
+    const energy = qs('[data-field="heating_energy_type"]', card);
+    const fuelUnit = qs('[data-field="monthly_fuel_consumption_unit"]', card);
+
+    hvacFillSelect(energy, HEATING_ALL_ENERGIES);
+
+    type.addEventListener("change", () => {
+      const other = type.value === "other";
+
+      if (other && heatingOtherCount(card) >= 5){
+        type.value = "";
+        typeOtherWrap.hidden = true;
+        typeOther.disabled = true;
+        typeOther.required = false;
+        type.classList.add("invalid");
+        const err = qs(".field-error", type.closest(".form-group"));
+        if (err){
+          err.textContent = "Puede registrar como máximo 5 grupos con tipo “Otro”.";
+          err.classList.add("visible");
+        }
+        return;
+      }
+
+      typeOtherWrap.hidden = !other;
+      typeOther.disabled = !other;
+      typeOther.required = other;
+      if (!other){
+        typeOther.value = "";
+        clearInvalid(typeOther);
+      }
+
+      syncHeatingEnergyOptions(card);
+    });
+
+    energy.addEventListener("change", () => syncHeatingEnergyRoute(card));
+    fuelUnit.addEventListener("change", () => syncHeatingFuelUnits(card));
+
+    qsa('[data-field="thermal_capacity"],[data-field="thermal_capacity_unit"]', card)
+      .forEach(el => {
+        el.addEventListener("input", () => updateThermalCapacityWarning(card));
+        el.addEventListener("change", () => updateThermalCapacityWarning(card));
+      });
+
+    qs(".remove-button", card).addEventListener("click", () => {
+      if (heatingGroups.children.length <= 1) return;
+      card.remove();
+      renumberCards(heatingGroups, "Grupo de calefacción");
+    });
+
+    wireVisibleValidation(card);
+    heatingGroups.appendChild(card);
+    renumberCards(heatingGroups, "Grupo de calefacción");
+    standardizeWeeksYearInfo(card);
+    syncHeatingEnergyOptions(card);
+  }
+
+  qsa('input[name="uses_space_heaters"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const yes = qs('input[name="uses_space_heaters"][value="yes"]').checked;
+      heatingDetails.hidden = !yes;
+
+      if (yes && !heatingGroups.children.length) addHeatingGroup();
+      if (!yes) heatingGroups.innerHTML = "";
+    });
+  });
+
+  qs("#addHeatingGroup").addEventListener("click", addHeatingGroup);
+
+  /* -------------------------
+     Validación S7
+  -------------------------- */
+  function validateAcAllocation(){
+    const usedProduction = qs('input[name="ac_used_in_production"][value="yes"]').checked;
+    if (!usedProduction) return true;
+
+    let ok = true;
+    if (!validateElement(acAdminShare)) ok = false;
+    if (!validateElement(acProductionShare)) ok = false;
+
+    const admin = Number(acAdminShare.value || 0);
+    const production = Number(acProductionShare.value || 0);
+    const total = admin + production;
+
+    if (production <= 0 || Math.abs(total - 100) > 0.000001){
+      qs("#acAllocationStatus").classList.add("bad");
+      ok = false;
+    }
+    return ok;
+  }
+
+  function validateFanAllocation(){
+    const usedProduction = qs('input[name="fans_used_in_production"][value="yes"]').checked;
+    if (!usedProduction) return true;
+
+    let ok = true;
+    if (!validateElement(fanAdminShare)) ok = false;
+    if (!validateElement(fanProductionShare)) ok = false;
+
+    const admin = Number(fanAdminShare.value || 0);
+    const production = Number(fanProductionShare.value || 0);
+    const total = admin + production;
+
+    if (production <= 0 || Math.abs(total - 100) > 0.000001){
+      qs("#fanAllocationStatus").classList.add("bad");
+      ok = false;
+    }
+    return ok;
+  }
+
+  function validateSection7(){
+    let ok = true;
+
+    if (!validateRadioGroup("has_air_conditioning")) ok = false;
+    if (!validateRadioGroup("uses_cooling_fans")) ok = false;
+    if (!validateRadioGroup("uses_space_heaters")) ok = false;
+
+    const acYes = qs('input[name="has_air_conditioning"][value="yes"]').checked;
+    if (acYes){
+      if (!validateRadioGroup("ac_used_in_production")) ok = false;
+
+      const acProductionYes = qs('input[name="ac_used_in_production"][value="yes"]').checked;
+      const acProductionNo = qs('input[name="ac_used_in_production"][value="no"]').checked;
+
+      if (acProductionYes){
+        if (!validateAcAllocation()) ok = false;
+
+        const productionShare = Number(acProductionShare.value || 0);
+        const adminShare = Number(acAdminShare.value || 0);
+
+        if (productionShare > 0){
+          if (!validateRadioGroup("ac_production_temperature_control")) ok = false;
+          if (!acProductionGroups.children.length || !hvacValidateContainer(acProductionGroups)) ok = false;
+        }
+
+        if (adminShare > 0){
+          if (!validateRadioGroup("ac_admin_temperature_control")) ok = false;
+          if (!acAdminGroups.children.length || !hvacValidateContainer(acAdminGroups)) ok = false;
+        }
+      }
+
+      if (acProductionNo){
+        if (!validateRadioGroup("ac_admin_temperature_control")) ok = false;
+        if (!acAdminGroups.children.length || !hvacValidateContainer(acAdminGroups)) ok = false;
+      }
+    }
+
+    const fanYes = qs('input[name="uses_cooling_fans"][value="yes"]').checked;
+    if (fanYes){
+      if (!validateRadioGroup("fans_used_in_production")) ok = false;
+
+      const fanProdYes = qs('input[name="fans_used_in_production"][value="yes"]').checked;
+      const fanProdNo = qs('input[name="fans_used_in_production"][value="no"]').checked;
+
+      if (fanProdYes && !validateFanAllocation()) ok = false;
+
+      if (fanProdYes || fanProdNo){
+        if (!fanGroups.children.length || !hvacValidateContainer(fanGroups)) ok = false;
+      }
+    }
+
+    const heatingYes = qs('input[name="uses_space_heaters"][value="yes"]').checked;
+    if (heatingYes){
+      if (!heatingGroups.children.length || !hvacValidateContainer(heatingGroups)) ok = false;
+    }
+
+    if (!ok){
+      const first = qs("#section7Form .invalid, #section7Form .field-error.visible");
+      if (first) first.scrollIntoView({behavior:"smooth",block:"center"});
+      const review = qs("#reviewS7");
+      if (review) review.textContent = "Con pendientes";
+      return false;
+    }
+
+    const review = qs("#reviewS7");
+    if (review) review.textContent = "Completa";
+    return true;
+  }
+
+  /* Validación inmediata para campos estáticos de S7 */
+  qsa("#section7Form input,#section7Form select,#section7Form textarea").forEach(el => {
+    if (["radio","checkbox"].includes(el.type)) return;
+
+    el.addEventListener("blur", () => {
+      if (el.required) validateElement(el);
+    });
+
+    el.addEventListener("input", () => {
+      if (el.classList.contains("invalid")) validateElement(el);
+    });
+  });
+
+
+  /* =========================================================
+     SECCIÓN 8 · FEEDBACK
+  ========================================================= */
+  const section8Form = qs("#section8Form");
+  const feedbackDifficultTermsWrap = qs("#feedbackDifficultTermsWrap");
+  const feedbackDifficultTermsDetail = qs("#feedback_difficult_terms_detail");
+  const feedbackDifficultSectionsWrap = qs("#feedbackDifficultSectionsWrap");
+  const feedbackDifficultSections = qs("#feedbackDifficultSections");
+  const feedbackDifficultSectionsError = qs("#feedbackDifficultSectionsError");
+  const feedbackOtherSectionWrap = qs("#feedbackOtherSectionWrap");
+  const feedbackOtherSection = qs("#feedback_other_section");
+  const feedbackComments = qs("#feedback_comments");
+  const feedbackCommentsWordCount = qs("#feedbackCommentsWordCount");
+
+  function syncFeedbackDifficultTerms(){
+    const yes = qs('input[name="feedback_difficult_terms"][value="yes"]').checked;
+
+    feedbackDifficultTermsWrap.hidden = !yes;
+    feedbackDifficultTermsDetail.disabled = !yes;
+    feedbackDifficultTermsDetail.required = yes;
+
+    if (!yes){
+      feedbackDifficultTermsDetail.value = "";
+      clearInvalid(feedbackDifficultTermsDetail);
+    }
+  }
+
+  qsa('input[name="feedback_difficult_terms"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      syncFeedbackDifficultTerms();
+      validateRadioGroup("feedback_difficult_terms");
+    });
+  });
+
+  function syncFeedbackOtherSection(){
+    const otherChecked = qs('#feedbackDifficultSections input[value="other"]').checked;
+    const difficultyYes = qs('input[name="feedback_section_difficulty"][value="yes"]').checked;
+    const show = difficultyYes && otherChecked;
+
+    feedbackOtherSectionWrap.hidden = !show;
+    feedbackOtherSection.disabled = !show;
+    feedbackOtherSection.required = show;
+
+    if (!show){
+      feedbackOtherSection.value = "";
+      clearInvalid(feedbackOtherSection);
+    }
+  }
+
+  function syncFeedbackDifficultSections(){
+    const yes = qs('input[name="feedback_section_difficulty"][value="yes"]').checked;
+
+    feedbackDifficultSectionsWrap.hidden = !yes;
+
+    qsa("input[type='checkbox']", feedbackDifficultSections).forEach(cb => {
+      cb.disabled = !yes;
+      if (!yes) cb.checked = false;
+    });
+
+    feedbackDifficultSectionsError.classList.remove("visible");
+    syncFeedbackOtherSection();
+  }
+
+  qsa('input[name="feedback_section_difficulty"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      syncFeedbackDifficultSections();
+      validateRadioGroup("feedback_section_difficulty");
+    });
+  });
+
+  qsa("input[type='checkbox']", feedbackDifficultSections).forEach(cb => {
+    cb.addEventListener("change", () => {
+      if (qsa("input:checked", feedbackDifficultSections).length){
+        feedbackDifficultSectionsError.classList.remove("visible");
+      }
+      syncFeedbackOtherSection();
+    });
+  });
+
+  /* Comentarios: máximo 500 palabras */
+  feedbackComments.addEventListener("input", () => {
+    const current = words(feedbackComments.value);
+    if (current.length > 500){
+      feedbackComments.value = current.slice(0,500).join(" ");
+    }
+    feedbackCommentsWordCount.textContent = words(feedbackComments.value).length;
+  });
+
+  /* Validación inmediata de campos simples */
+  qsa("#section8Form input,#section8Form select,#section8Form textarea").forEach(el => {
+    if (["radio","checkbox"].includes(el.type)) return;
+
+    el.addEventListener("blur", () => {
+      if (el.required) validateElement(el);
+    });
+
+    el.addEventListener("input", () => {
+      if (el.classList.contains("invalid")) validateElement(el);
+    });
+  });
+
+  const feedbackRadioGroups = [
+    "feedback_clarity",
+    "feedback_intuitiveness",
+    "feedback_instructions_sufficient",
+    "feedback_information_availability",
+    "feedback_technical_level",
+    "feedback_difficult_terms",
+    "feedback_section_difficulty",
+    "feedback_support_tools",
+    "feedback_units_adequate"
+  ];
+
+  feedbackRadioGroups.forEach(name => {
+    qsa(`input[name="${name}"]`).forEach(radio => {
+      radio.addEventListener("change", () => validateRadioGroup(name));
+    });
+  });
+
+  function validateSection8(){
+    let ok = true;
+
+    feedbackRadioGroups.forEach(name => {
+      if (!validateRadioGroup(name)) ok = false;
+    });
+
+    const completionMinutes = qs("#feedback_completion_minutes");
+    if (!validateElement(completionMinutes)) ok = false;
+
+    const difficultTermsYes =
+      qs('input[name="feedback_difficult_terms"][value="yes"]').checked;
+
+    if (difficultTermsYes && !validateElement(feedbackDifficultTermsDetail)){
+      ok = false;
+    }
+
+    const sectionDifficultyYes =
+      qs('input[name="feedback_section_difficulty"][value="yes"]').checked;
+
+    if (sectionDifficultyYes){
+      const selectedSections = qsa("input:checked", feedbackDifficultSections);
+      const hasSelection = selectedSections.length > 0;
+      feedbackDifficultSectionsError.classList.toggle("visible", !hasSelection);
+      if (!hasSelection) ok = false;
+
+      const otherSelected =
+        qs('#feedbackDifficultSections input[value="other"]').checked;
+
+      if (otherSelected && !validateElement(feedbackOtherSection)){
+        ok = false;
+      }
+    } else {
+      feedbackDifficultSectionsError.classList.remove("visible");
+    }
+
+    if (!ok){
+      const first = qs("#section8Form .invalid, #section8Form .field-error.visible");
+      if (first) first.scrollIntoView({behavior:"smooth",block:"center"});
+
+      const review = qs("#reviewS8");
+      if (review) review.textContent = "Con pendientes";
+      return false;
+    }
+
+    const review = qs("#reviewS8");
+    if (review) review.textContent = "Completa";
+    return true;
+  }
+
+  syncFeedbackDifficultTerms();
+  syncFeedbackDifficultSections();
 
 
   /* =========================================================
