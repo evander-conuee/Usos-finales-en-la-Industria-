@@ -2565,7 +2565,7 @@
                 <p class="question-prompt">
                   <strong>5.6.1</strong> Indique la información de cada planta de emergencia.
                   Si existen plantas con distinta potencia, combustible o tiempo de uso, regístrelas por separado.
-                  Para el consumo energético, seleccione <strong>una sola unidad</strong>.
+                  La unidad del consumo se asigna automáticamente de acuerdo con el energético seleccionado.
                 </p>
 
                 <div id="emergencyGeneratorGroups" class="dynamic-list"></div>
@@ -4647,18 +4647,14 @@
 
         <div class="capture-stack">
           <div class="form-group">
-            <label>Consumo energético <span class="required-mark">*</span></label>
+            <label>Consumo energético del motor(es) de la planta de emergencia <strong style="color:var(--green-dark)">al mes</strong> <span class="required-mark">*</span></label>
             <div class="input-with-unit">
               <input data-field="consumption" class="field-s" type="number" min="0" step="any" required>
               <select data-field="consumption_unit" required>
                 <option value="">Unidad</option>
-                <option value="l_h">L/h</option>
-                <option value="m3_year">m³/año</option>
-                <option value="t_month">ton/mes</option>
-                <option value="other">Otra</option>
               </select>
             </div>
-            <div class="field-error">Capture un valor igual o mayor que 0 y seleccione la unidad.</div>
+            <div class="field-error">Capture un valor igual o mayor que 0. La unidad se asigna según el energético seleccionado.</div>
           </div>
           <div class="form-group consumption-other-unit-wrap" hidden>
             <label>Otra unidad de consumo <span class="required-mark">*</span></label>
@@ -7275,20 +7271,64 @@
     const otherUnitWrap = qs(".consumption-other-unit-wrap", card);
     const otherUnit = qs('[data-field="consumption_unit_other"]', card);
 
+    function syncEmergencyConsumptionUnit(){
+      const unitByEnergy = {
+        diesel: { value: "l", label: "L" },
+        gasoline: { value: "l", label: "L" },
+        lpg: { value: "m3", label: "m³" },
+        kerosene: { value: "m3", label: "m³" },
+        biomass: { value: "m3", label: "m³" }
+      };
+
+      const mapped = unitByEnergy[energy.value];
+      consumptionUnit.innerHTML = "";
+
+      if (mapped){
+        const option = document.createElement("option");
+        option.value = mapped.value;
+        option.textContent = mapped.label;
+        option.selected = true;
+        consumptionUnit.appendChild(option);
+
+        otherUnitWrap.hidden = true;
+        otherUnit.disabled = true;
+        otherUnit.required = false;
+        otherUnit.value = "";
+        clearInvalid(otherUnit);
+      } else if (energy.value === "other"){
+        const option = document.createElement("option");
+        option.value = "other";
+        option.textContent = "Otra";
+        option.selected = true;
+        consumptionUnit.appendChild(option);
+
+        otherUnitWrap.hidden = false;
+        otherUnit.disabled = false;
+        otherUnit.required = true;
+      } else {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "Unidad";
+        option.selected = true;
+        consumptionUnit.appendChild(option);
+
+        otherUnitWrap.hidden = true;
+        otherUnit.disabled = true;
+        otherUnit.required = false;
+        otherUnit.value = "";
+        clearInvalid(otherUnit);
+      }
+
+      clearInvalid(consumptionUnit);
+    }
+
     energy.addEventListener("change", () => {
       const other = energy.value === "other";
       energyOtherWrap.hidden = !other;
       energyOther.disabled = !other;
       energyOther.required = other;
       if (!other){ energyOther.value = ""; clearInvalid(energyOther); }
-    });
-
-    consumptionUnit.addEventListener("change", () => {
-      const other = consumptionUnit.value === "other";
-      otherUnitWrap.hidden = !other;
-      otherUnit.disabled = !other;
-      otherUnit.required = other;
-      if (!other){ otherUnit.value = ""; clearInvalid(otherUnit); }
+      syncEmergencyConsumptionUnit();
     });
 
     qs(".remove-button", card).addEventListener("click", () => {
