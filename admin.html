@@ -231,21 +231,16 @@
     .records-header{
       padding:16px 18px;
       border-bottom:1px solid #e0e5e7;
-      display:flex;
-      gap:14px;
-      justify-content:space-between;
-      align-items:center;
-      flex-wrap:wrap;
+      display:grid;
+      grid-template-columns:minmax(280px,1fr) auto minmax(280px,320px);
+      gap:18px;
+      align-items:end;
     }
     .records-header h2{margin:0;font-size:18px}
     .records-header p{margin:4px 0 0;color:var(--muted);font-size:12px}
-    .records-controls{
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+    .records-title{min-width:0}
+    .records-sort-slot{display:flex;align-items:center;justify-content:center}
+    .records-search-slot{display:flex;align-items:center;justify-content:flex-end}
     .sort-button{
       display:inline-flex;
       align-items:center;
@@ -265,7 +260,7 @@
     .sort-button:hover{background:#f5f7f3;border-color:#8da07f}
     .sort-button:focus-visible{outline:3px solid rgba(91,127,58,.22);outline-offset:2px}
     .sort-button svg{width:14px;height:14px;flex:0 0 auto}
-    .search-box{width:min(320px,100%)}
+    .search-box{width:100%}
     .search-box input{padding:9px 11px}
     .table-wrap{overflow:auto}
     table{width:100%;border-collapse:collapse;min-width:940px}
@@ -491,6 +486,7 @@
       .instrument-title p{display:none}
       .header-logout-button{padding:8px 12px}
       .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .records-header{grid-template-columns:1fr auto minmax(250px,300px);gap:12px}
     }
     @media (max-width:760px){
       .detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -511,9 +507,10 @@
       .metrics{grid-template-columns:1fr}
       .toolbar-actions{width:100%}
       .toolbar-actions button{flex:1}
-      .records-controls{width:100%;justify-content:stretch}
-      .sort-button{width:100%}
-      .search-box{width:100%}
+      .records-header{grid-template-columns:1fr}
+      .records-title,.records-sort-slot,.records-search-slot{grid-column:1}
+      .records-sort-slot,.records-search-slot{justify-content:stretch}
+      .sort-button,.search-box{width:100%}
     }
   </style>
 </head>
@@ -590,17 +587,19 @@
 
       <section class="records-card">
         <div class="records-header">
-          <div>
+          <div class="records-title">
             <h2>Registros recibidos</h2>
             <p>Vista resumida de las respuestas almacenadas en Supabase.</p>
           </div>
-          <div class="records-controls">
+          <div class="records-sort-slot">
             <button id="sortRecordsButton" class="sort-button" type="button" aria-label="Cambiar orden de los registros" title="Actualmente: más recientes primero">
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M8 6h13"></path><path d="M8 12h9"></path><path d="M8 18h5"></path><path d="m3 8 2-2 2 2"></path><path d="M5 6v12"></path>
               </svg>
               <span id="sortRecordsLabel">Más recientes primero</span>
             </button>
+          </div>
+          <div class="records-search-slot">
             <div class="search-box">
               <input id="recordsSearch" type="search" placeholder="Buscar empresa, estado o municipio…" aria-label="Buscar registros">
             </div>
@@ -677,6 +676,23 @@
     let session = null;
     let records = [];
     let recordsSortDirection = "desc";
+
+    const STATE_ABBREVIATIONS = Object.freeze({
+      "01":"AGS", "02":"BC", "03":"BCS", "04":"CAMP",
+      "05":"COAH", "06":"COL", "07":"CHIS", "08":"CHIH",
+      "09":"CDMX", "10":"DGO", "11":"GTO", "12":"GRO",
+      "13":"HGO", "14":"JAL", "15":"MEX", "16":"MICH",
+      "17":"MOR", "18":"NAY", "19":"NL", "20":"OAX",
+      "21":"PUE", "22":"QRO", "23":"QROO", "24":"SLP",
+      "25":"SIN", "26":"SON", "27":"TAB", "28":"TAMPS",
+      "29":"TLAX", "30":"VER", "31":"YUC", "32":"ZAC"
+    });
+
+    function stateAbbreviation(stateCode){
+      if (stateCode === null || stateCode === undefined || stateCode === "") return "—";
+      const normalized = String(stateCode).padStart(2,"0");
+      return STATE_ABBREVIATIONS[normalized] || String(stateCode);
+    }
 
     window.addEventListener("scroll", () => {
       qs("#siteHeader").classList.toggle("is-scrolled", window.scrollY > 4);
@@ -1004,6 +1020,7 @@
           r.company_name,
           r.industry_subsector_code,
           r.state_code,
+          stateAbbreviation(r.state_code),
           r.municipality_borough,
           r.id,
           r.status
@@ -1027,7 +1044,7 @@
         <tr>
           <td class="company-name">${escapeHtml(r.company_name || "Sin nombre")}</td>
           <td>${escapeHtml(r.industry_subsector_code || "—")}</td>
-          <td>${escapeHtml(r.state_code || "—")}</td>
+          <td>${escapeHtml(stateAbbreviation(r.state_code))}</td>
           <td>${escapeHtml(r.municipality_borough || "—")}</td>
           <td>${escapeHtml(formatDate(r.submitted_at || r.created_at))}</td>
           <td><span class="status-pill ${r.status === "draft" ? "draft" : ""}">${escapeHtml(r.status || "—")}</span></td>
