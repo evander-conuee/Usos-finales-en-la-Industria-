@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel administrativo | Usos finales de la energía</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green:#5b7f3a;
+      --green-dark:#3f5d2a;
+      --green-soft:#eef4e9;
+      --text:#263238;
+      --muted:#657078;
+      --border:#cfd6d9;
+      --danger:#b3261e;
+      --danger-bg:#fff5f5;
+      --success:#2f6d3b;
+      --success-bg:#eff8f0;
+      --shadow:0 3px 14px rgba(23,31,38,.10);
+      --radius:10px;
+      --header-h:100px;
+      --content-max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:#f3f5f7}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"Noto Sans",Arial,sans-serif;
+      background-color:#002f2a;
+      background-image:url("TexturaVerde.jpg");
+      background-position:center top;
+      background-size:cover;
+      background-attachment:fixed;
+      background-repeat:no-repeat;
+    }
+    button,input{font:inherit}
+    [hidden]{display:none !important}
+
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      width:100%;
+      min-height:var(--header-h);
+      background:#002f2a;
+      border-bottom:3px solid #1e5b4f;
+      transition:box-shadow .2s ease;
+    }
+    .site-header.is-scrolled{box-shadow:0 5px 16px rgba(0,0,0,.22)}
+    .header-inner{
+      min-height:var(--header-h);
+      max-width:var(--content-max);
+      margin:0 auto;
+      padding:12px 24px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+    .brand-logo{
+      width:172px;
+      flex:0 0 172px;
+      display:flex;
+      align-items:center;
+    }
+    .brand-logo img{
+      display:block;
+      width:100%;
+      max-height:78px;
+      object-fit:contain;
+      object-position:left center;
+    }
+    .instrument-title{min-width:0;flex:1}
+    .instrument-title h1{
+      margin:0;
+      color:#fff;
+      font-family:Arial,Helvetica,sans-serif;
+      font-size:24px;
+      line-height:1.22;
+      font-weight:700;
+    }
+    .instrument-title p{
+      margin:6px 0 0;
+      color:#d6e2de;
+      font-size:13px;
+      line-height:1.35;
+    }
+    .header-back-link{
+      position:absolute;
+      right:24px;
+      top:50%;
+      transform:translateY(-50%);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:38px;
+      padding:8px 13px;
+      border:1px solid rgba(255,255,255,.32);
+      border-radius:999px;
+      color:#eef5f2;
+      background:rgba(255,255,255,.055);
+      text-decoration:none;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .header-back-link:hover{background:rgba(255,255,255,.11);border-color:rgba(206,226,0,.68);color:#fff}
+    .header-back-link:focus-visible{outline:3px solid rgba(206,226,0,.48);outline-offset:3px}
+    .header-back-link svg{width:15px;height:15px}
+
+    main{
+      width:min(var(--content-max),calc(100% - 40px));
+      margin:26px auto 48px;
+    }
+
+    .panel{
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .panel-heading{
+      background:var(--green);
+      color:#fff;
+      padding:17px 20px;
+    }
+    .panel-heading h2{margin:0;font-size:20px;line-height:1.25}
+    .panel-heading p{margin:5px 0 0;font-size:13px;color:#eef4e9}
+    .panel-body{padding:24px}
+
+    .login-wrap{
+      max-width:520px;
+      margin:42px auto 0;
+    }
+    .security-note{
+      margin:0 0 20px;
+      padding:14px 16px;
+      border-left:4px solid var(--green);
+      background:#f4f7f2;
+      font-size:13px;
+      line-height:1.55;
+      color:#45535a;
+    }
+    .form-group{margin-bottom:17px}
+    label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}
+    input{
+      width:100%;
+      border:1px solid #bfc8cc;
+      border-radius:6px;
+      padding:11px 12px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+    input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(91,127,58,.14)}
+    .primary-button,.secondary-button,.danger-button{
+      border:0;
+      border-radius:7px;
+      min-height:42px;
+      padding:10px 16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:filter .15s ease,transform .15s ease;
+    }
+    .primary-button{background:var(--green-dark);color:#fff}
+    .secondary-button{background:#edf1f2;color:#33434a;border:1px solid #ccd4d7}
+    .danger-button{background:#fff;color:#8d2a25;border:1px solid #d9aaa6}
+    .primary-button:hover,.secondary-button:hover,.danger-button:hover{filter:brightness(.97)}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .login-button{width:100%}
+
+    .message{
+      margin-top:16px;
+      border-radius:7px;
+      padding:11px 13px;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .message.error{color:#8d241e;background:var(--danger-bg);border:1px solid #efc7c4}
+    .message.success{color:#245a30;background:var(--success-bg);border:1px solid #cce4d0}
+
+    .admin-shell{display:grid;gap:18px}
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:14px 16px;
+    }
+    .session-copy{min-width:0}
+    .session-copy strong{display:block;font-size:14px}
+    .session-copy span{display:block;margin-top:2px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+    .toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+    }
+    .metric{
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:17px 18px;
+    }
+    .metric-label{font-size:12px;color:var(--muted);font-weight:700}
+    .metric-value{margin-top:7px;font-size:25px;font-weight:700;color:#304b27}
+    .metric-value.small{font-size:14px;line-height:1.35;color:var(--text)}
+
+    .records-card{
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .records-header{
+      padding:16px 18px;
+      border-bottom:1px solid #e0e5e7;
+      display:flex;
+      gap:14px;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .records-header h2{margin:0;font-size:18px}
+    .records-header p{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .search-box{width:min(320px,100%)}
+    .search-box input{padding:9px 11px}
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse;min-width:940px}
+    th{
+      position:sticky;
+      top:0;
+      background:#f3f6f4;
+      color:#34453b;
+      text-align:left;
+      padding:11px 13px;
+      font-size:12px;
+      border-bottom:1px solid #d9e0dc;
+      white-space:nowrap;
+    }
+    td{
+      padding:12px 13px;
+      border-bottom:1px solid #edf0f1;
+      font-size:12.5px;
+      vertical-align:top;
+    }
+    tbody tr:hover{background:#fafcf9}
+    .company-name{font-weight:700;color:#263b2b}
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:11px;
+      font-weight:700;
+      background:#eef6ec;
+      color:#356431;
+      border:1px solid #cee0ca;
+    }
+    .status-pill.draft{background:#fff6df;color:#7d6100;border-color:#ead898}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#5d6b70}
+    .empty-state{padding:36px 20px;text-align:center;color:var(--muted);font-size:13px}
+    .loading-row{padding:28px 20px;text-align:center;color:var(--muted)}
+
+    @media (max-width:1400px){
+      .header-inner{padding-right:155px}
+      .header-back-link{right:18px}
+    }
+    @media (max-width:980px){
+      .header-inner{padding:10px 90px 10px 16px;gap:16px}
+      .brand-logo{width:132px;flex-basis:132px}
+      .brand-logo img{max-height:64px}
+      .instrument-title h1{font-size:21px}
+      .instrument-title p{display:none}
+      .header-back-link{right:12px;width:40px;height:40px;padding:0;justify-content:center}
+      .header-back-link .back-label{display:none}
+      .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (max-width:620px){
+      :root{--header-h:82px}
+      .header-inner{padding-right:58px;gap:12px}
+      .brand-logo{width:112px;flex-basis:112px}
+      .brand-logo img{max-height:58px}
+      .instrument-title h1{font-size:18px}
+      .header-back-link{right:8px;width:36px;height:36px}
+      main{width:min(100% - 24px,var(--content-max));margin-top:16px}
+      .panel-body{padding:18px}
+      .metrics{grid-template-columns:1fr}
+      .toolbar-actions{width:100%}
+      .toolbar-actions button{flex:1}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="brand-logo">
+        <img src="Conuee.png" alt="Comisión Nacional para el Uso Eficiente de la Energía">
+      </div>
+      <div class="instrument-title">
+        <h1>Panel administrativo</h1>
+        <p>Instrumento de recolección de información energética para establecimientos industriales</p>
+      </div>
+    </div>
+    <a class="header-back-link" href="index.html" aria-label="Volver al instrumento" title="Volver al instrumento">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+      </svg>
+      <span class="back-label">Volver al instrumento</span>
+    </a>
+  </header>
+
+  <main>
+    <section id="loginView" class="login-wrap">
+      <div class="panel">
+        <div class="panel-heading">
+          <h2>Acceso administrativo</h2>
+          <p>Consulta restringida de las respuestas recibidas.</p>
+        </div>
+        <div class="panel-body">
+          <p class="security-note">
+            Ingrese con una cuenta autorizada. El acceso al panel requiere autenticación y pertenecer al listado de administradores activos del instrumento.
+          </p>
+          <form id="loginForm" novalidate>
+            <div class="form-group">
+              <label for="adminEmail">Correo electrónico</label>
+              <input id="adminEmail" type="email" autocomplete="username" required>
+            </div>
+            <div class="form-group">
+              <label for="adminPassword">Contraseña</label>
+              <input id="adminPassword" type="password" autocomplete="current-password" required minlength="6">
+            </div>
+            <button id="loginButton" class="primary-button login-button" type="submit">Ingresar</button>
+            <div id="loginMessage" class="message error" role="alert" hidden></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="adminView" class="admin-shell" hidden>
+      <div class="toolbar">
+        <div class="session-copy">
+          <strong>Sesión administrativa activa</strong>
+          <span id="sessionEmail">—</span>
+        </div>
+        <div class="toolbar-actions">
+          <button id="refreshButton" class="secondary-button" type="button">Actualizar registros</button>
+          <button id="logoutButton" class="danger-button" type="button">Cerrar sesión</button>
+        </div>
+      </div>
+
+      <div class="metrics" aria-label="Resumen de registros">
+        <article class="metric">
+          <div class="metric-label">Respuestas totales</div>
+          <div class="metric-value" id="metricTotal">—</div>
+        </article>
+        <article class="metric">
+          <div class="metric-label">Enviadas</div>
+          <div class="metric-value" id="metricSubmitted">—</div>
+        </article>
+        <article class="metric">
+          <div class="metric-label">Borradores</div>
+          <div class="metric-value" id="metricDraft">—</div>
+        </article>
+        <article class="metric">
+          <div class="metric-label">Último envío</div>
+          <div class="metric-value small" id="metricLatest">—</div>
+        </article>
+      </div>
+
+      <section class="records-card">
+        <div class="records-header">
+          <div>
+            <h2>Registros recibidos</h2>
+            <p>Vista resumida de las respuestas almacenadas en Supabase.</p>
+          </div>
+          <div class="search-box">
+            <input id="recordsSearch" type="search" placeholder="Buscar empresa, estado o municipio…" aria-label="Buscar registros">
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table aria-label="Registros del instrumento">
+            <thead>
+              <tr>
+                <th>Empresa</th>
+                <th>Subsector</th>
+                <th>Estado</th>
+                <th>Municipio / Alcaldía</th>
+                <th>Enviado</th>
+                <th>Estatus</th>
+                <th>Progreso</th>
+                <th>ID de respuesta</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody">
+              <tr><td colspan="8" class="loading-row">Cargando registros…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty-state" hidden>No se encontraron registros con ese criterio.</div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+  (() => {
+    "use strict";
+
+    const SUPABASE_URL = "https://jlsnxhsexqsthzfhjrrh.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_e9Nqqqv-NSVGpUNbt4_CYQ_GcSFbvtF";
+    const SESSION_KEY = "industrial_admin_session_v1";
+
+    const qs = (selector, root = document) => root.querySelector(selector);
+
+    const loginView = qs("#loginView");
+    const adminView = qs("#adminView");
+    const loginForm = qs("#loginForm");
+    const loginButton = qs("#loginButton");
+    const loginMessage = qs("#loginMessage");
+    const refreshButton = qs("#refreshButton");
+    const logoutButton = qs("#logoutButton");
+    const recordsBody = qs("#recordsBody");
+    const recordsSearch = qs("#recordsSearch");
+    const emptyState = qs("#emptyState");
+
+    let session = null;
+    let records = [];
+
+    window.addEventListener("scroll", () => {
+      qs("#siteHeader").classList.toggle("is-scrolled", window.scrollY > 4);
+    }, {passive:true});
+
+    function authHeaders(token, includeJson = true){
+      const headers = {
+        "apikey": SUPABASE_PUBLISHABLE_KEY,
+        "Authorization": `Bearer ${token}`
+      };
+      if (includeJson) headers["Content-Type"] = "application/json";
+      return headers;
+    }
+
+    function publicHeaders(){
+      return {
+        "apikey": SUPABASE_PUBLISHABLE_KEY,
+        "Content-Type": "application/json"
+      };
+    }
+
+    function saveSession(data){
+      const expiresAt = data.expires_at || Math.floor(Date.now()/1000) + Number(data.expires_in || 3600);
+      session = {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        expires_at: expiresAt,
+        user: data.user ? {id:data.user.id, email:data.user.email} : (session?.user || null)
+      };
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    }
+
+    function clearSession(){
+      session = null;
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+
+    function readSession(){
+      try{
+        const raw = sessionStorage.getItem(SESSION_KEY);
+        session = raw ? JSON.parse(raw) : null;
+      }catch(_){
+        clearSession();
+      }
+      return session;
+    }
+
+    async function refreshSessionIfNeeded(){
+      if (!session) return false;
+      const now = Math.floor(Date.now()/1000);
+      if (Number(session.expires_at || 0) - now > 60) return true;
+      if (!session.refresh_token) return false;
+
+      const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+        method:"POST",
+        headers:publicHeaders(),
+        body:JSON.stringify({refresh_token:session.refresh_token})
+      });
+      if (!response.ok) return false;
+      const data = await response.json();
+      saveSession(data);
+      return true;
+    }
+
+    async function signIn(email, password){
+      const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method:"POST",
+        headers:publicHeaders(),
+        body:JSON.stringify({email, password})
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok){
+        const err = new Error("No fue posible iniciar sesión. Verifique el correo y la contraseña.");
+        err.details = data;
+        throw err;
+      }
+      saveSession(data);
+      return data;
+    }
+
+    async function verifyAdmin(){
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/is_admin`, {
+        method:"POST",
+        headers:authHeaders(session.access_token),
+        body:"{}"
+      });
+      if (!response.ok) return false;
+      const value = await response.json();
+      return value === true;
+    }
+
+    async function apiGet(path){
+      if (!(await refreshSessionIfNeeded())) throw new Error("La sesión administrativa expiró.");
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers:authHeaders(session.access_token, false)
+      });
+      if (response.status === 401) throw new Error("La sesión administrativa expiró.");
+      if (!response.ok){
+        const detail = await response.text().catch(() => "");
+        throw new Error(detail || "No fue posible consultar Supabase.");
+      }
+      return response.json();
+    }
+
+    function showLogin(message = ""){
+      adminView.hidden = true;
+      loginView.hidden = false;
+      loginButton.disabled = false;
+      loginButton.textContent = "Ingresar";
+      if (message){
+        loginMessage.textContent = message;
+        loginMessage.hidden = false;
+      } else {
+        loginMessage.hidden = true;
+        loginMessage.textContent = "";
+      }
+    }
+
+    function showAdmin(){
+      loginView.hidden = true;
+      adminView.hidden = false;
+      qs("#sessionEmail").textContent = session?.user?.email || "Usuario autenticado";
+    }
+
+    function formatDate(value){
+      if (!value) return "—";
+      try{
+        return new Intl.DateTimeFormat("es-MX", {
+          dateStyle:"medium",
+          timeStyle:"short"
+        }).format(new Date(value));
+      }catch(_){ return value; }
+    }
+
+    function escapeHtml(value){
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function updateMetrics(){
+      const total = records.length;
+      const submitted = records.filter(r => r.status === "submitted").length;
+      const draft = records.filter(r => r.status === "draft").length;
+      const latest = records
+        .map(r => r.submitted_at || r.created_at)
+        .filter(Boolean)
+        .sort((a,b) => new Date(b) - new Date(a))[0];
+
+      qs("#metricTotal").textContent = total;
+      qs("#metricSubmitted").textContent = submitted;
+      qs("#metricDraft").textContent = draft;
+      qs("#metricLatest").textContent = latest ? formatDate(latest) : "Sin envíos";
+    }
+
+    function renderRecords(){
+      const query = recordsSearch.value.trim().toLocaleLowerCase("es-MX");
+      const filtered = !query ? records : records.filter(r => {
+        const searchable = [
+          r.company_name,
+          r.industry_subsector_code,
+          r.state_code,
+          r.municipality_borough,
+          r.id,
+          r.status
+        ].join(" ").toLocaleLowerCase("es-MX");
+        return searchable.includes(query);
+      });
+
+      emptyState.hidden = filtered.length > 0;
+      if (!filtered.length){
+        recordsBody.innerHTML = "";
+        return;
+      }
+
+      recordsBody.innerHTML = filtered.map(r => `
+        <tr>
+          <td class="company-name">${escapeHtml(r.company_name || "Sin nombre")}</td>
+          <td>${escapeHtml(r.industry_subsector_code || "—")}</td>
+          <td>${escapeHtml(r.state_code || "—")}</td>
+          <td>${escapeHtml(r.municipality_borough || "—")}</td>
+          <td>${escapeHtml(formatDate(r.submitted_at || r.created_at))}</td>
+          <td><span class="status-pill ${r.status === "draft" ? "draft" : ""}">${escapeHtml(r.status || "—")}</span></td>
+          <td>${escapeHtml(r.progress ?? "—")}%</td>
+          <td class="mono">${escapeHtml(r.id)}</td>
+        </tr>
+      `).join("");
+    }
+
+    async function loadRecords(){
+      refreshButton.disabled = true;
+      refreshButton.textContent = "Actualizando…";
+      recordsBody.innerHTML = '<tr><td colspan="8" class="loading-row">Cargando registros…</td></tr>';
+      emptyState.hidden = true;
+
+      try{
+        const [responses, generalInfo] = await Promise.all([
+          apiGet("responses?select=id,status,progress,created_at,submitted_at,client_submission_id&order=submitted_at.desc.nullslast,created_at.desc"),
+          apiGet("general_info?select=response_id,company_name,state_code,municipality_borough,industry_subsector_code")
+        ]);
+
+        const infoByResponse = new Map(generalInfo.map(g => [g.response_id, g]));
+        records = responses.map(r => ({...r, ...(infoByResponse.get(r.id) || {})}));
+        updateMetrics();
+        renderRecords();
+      }catch(error){
+        if (/sesión/i.test(error.message)){
+          clearSession();
+          showLogin("La sesión expiró. Ingrese nuevamente.");
+          return;
+        }
+        recordsBody.innerHTML = `<tr><td colspan="8" class="loading-row">${escapeHtml(error.message || "No fue posible cargar los registros.")}</td></tr>`;
+      }finally{
+        refreshButton.disabled = false;
+        refreshButton.textContent = "Actualizar registros";
+      }
+    }
+
+    async function enterAdmin(){
+      if (!(await refreshSessionIfNeeded())){
+        clearSession();
+        showLogin();
+        return;
+      }
+      const allowed = await verifyAdmin().catch(() => false);
+      if (!allowed){
+        clearSession();
+        showLogin("La cuenta es válida, pero no tiene permisos de administrador para este instrumento.");
+        return;
+      }
+      showAdmin();
+      await loadRecords();
+    }
+
+    loginForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      loginMessage.hidden = true;
+      if (!loginForm.reportValidity()) return;
+
+      loginButton.disabled = true;
+      loginButton.textContent = "Verificando…";
+
+      try{
+        await signIn(qs("#adminEmail").value.trim(), qs("#adminPassword").value);
+        const allowed = await verifyAdmin();
+        if (!allowed){
+          clearSession();
+          throw new Error("La cuenta es válida, pero no tiene permisos de administrador para este instrumento.");
+        }
+        showAdmin();
+        await loadRecords();
+      }catch(error){
+        clearSession();
+        showLogin(error.message || "No fue posible iniciar sesión.");
+      }
+    });
+
+    refreshButton.addEventListener("click", loadRecords);
+    recordsSearch.addEventListener("input", renderRecords);
+
+    logoutButton.addEventListener("click", async () => {
+      const token = session?.access_token;
+      clearSession();
+      showLogin();
+      qs("#adminEmail").value = "";
+      qs("#adminPassword").value = "";
+      if (token){
+        fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+          method:"POST",
+          headers:authHeaders(token)
+        }).catch(() => {});
+      }
+    });
+
+    (async function init(){
+      readSession();
+      if (!session){
+        showLogin();
+        return;
+      }
+      await enterAdmin();
+    })();
+  })();
+  </script>
+</body>
+</html>
