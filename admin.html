@@ -239,6 +239,32 @@
     }
     .records-header h2{margin:0;font-size:18px}
     .records-header p{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .records-controls{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .sort-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      min-height:38px;
+      padding:8px 12px;
+      border:1px solid #b9c3c6;
+      border-radius:7px;
+      background:#fff;
+      color:var(--text);
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .sort-button:hover{background:#f5f7f3;border-color:#8da07f}
+    .sort-button:focus-visible{outline:3px solid rgba(91,127,58,.22);outline-offset:2px}
+    .sort-button svg{width:14px;height:14px;flex:0 0 auto}
     .search-box{width:min(320px,100%)}
     .search-box input{padding:9px 11px}
     .table-wrap{overflow:auto}
@@ -278,6 +304,182 @@
     .empty-state{padding:36px 20px;text-align:center;color:var(--muted);font-size:13px}
     .loading-row{padding:28px 20px;text-align:center;color:var(--muted)}
 
+
+    .detail-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:32px;
+      padding:6px 10px;
+      border:1px solid #476a31;
+      border-radius:7px;
+      background:#5b7f3a;
+      color:#fff;
+      font-size:11px;
+      font-weight:700;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .detail-button:hover{background:#476a31}
+    .detail-button:focus-visible{outline:3px solid rgba(91,127,58,.25);outline-offset:2px}
+
+    .detail-modal[hidden]{display:none}
+    .detail-modal{
+      position:fixed;
+      inset:0;
+      z-index:2200;
+      background:rgba(0,28,25,.72);
+      padding:22px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      overflow:auto;
+    }
+    .detail-dialog{
+      width:min(1180px,100%);
+      max-height:calc(100vh - 44px);
+      background:#f5f7f6;
+      border-radius:12px;
+      box-shadow:0 20px 60px rgba(0,0,0,.34);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      border:1px solid rgba(255,255,255,.55);
+    }
+    .detail-modal-header{
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:17px 20px;
+      background:#002f2a;
+      color:#fff;
+      border-bottom:3px solid #5b7f3a;
+    }
+    .detail-modal-header h2{margin:0;font-size:20px;line-height:1.25}
+    .detail-modal-header p{margin:4px 0 0;color:#d8e7e2;font-size:12px}
+    .detail-close{
+      flex:0 0 auto;
+      width:38px;
+      height:38px;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:8px;
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-size:24px;
+      line-height:1;
+      cursor:pointer;
+    }
+    .detail-close:hover{background:rgba(255,255,255,.16)}
+    .detail-content{padding:20px;overflow:auto}
+    .detail-loading,.detail-error{
+      padding:28px;
+      text-align:center;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:9px;
+      color:var(--muted);
+    }
+    .detail-error{color:#8d2a25;background:#fff6f5;border-color:#e4b8b4}
+    .detail-summary{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:9px;
+      padding:16px;
+      margin-bottom:18px;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+    .detail-section{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+      margin:0 0 18px;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+    .detail-section-title{
+      margin:0;
+      padding:13px 16px;
+      background:#5b7f3a;
+      color:#fff;
+      font-size:16px;
+    }
+    .detail-section-body{padding:15px}
+    .detail-block{
+      border:1px solid #dbe2df;
+      border-radius:8px;
+      background:#fbfcfb;
+      margin-bottom:12px;
+      overflow:hidden;
+    }
+    .detail-block:last-child{margin-bottom:0}
+    .detail-block-title{
+      margin:0;
+      padding:10px 12px;
+      background:#eef4e9;
+      border-bottom:1px solid #dbe2df;
+      color:#315025;
+      font-size:13px;
+      font-weight:700;
+    }
+    .detail-block-body{padding:12px}
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px 16px;
+    }
+    .detail-field{min-width:0}
+    .detail-field-label{
+      display:block;
+      margin-bottom:3px;
+      color:#6a7478;
+      font-size:10px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.025em;
+    }
+    .detail-field-value{
+      display:block;
+      color:#243036;
+      font-size:12px;
+      line-height:1.45;
+      overflow-wrap:anywhere;
+      white-space:pre-wrap;
+    }
+    .detail-record{
+      border:1px solid #e0e5e3;
+      border-radius:7px;
+      padding:11px;
+      background:#fff;
+      margin-bottom:10px;
+    }
+    .detail-record:last-child{margin-bottom:0}
+    .detail-record-number{
+      font-size:11px;
+      font-weight:700;
+      color:#5b7f3a;
+      margin-bottom:9px;
+    }
+    .detail-empty{font-size:12px;color:#788286;font-style:italic}
+    .month-grid{
+      grid-column:1/-1;
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:6px;
+      margin-top:4px;
+    }
+    .month-cell{
+      padding:7px 6px;
+      border:1px solid #dfe5e3;
+      border-radius:6px;
+      background:#f8faf9;
+      text-align:center;
+    }
+    .month-cell strong{display:block;color:#5b7f3a;font-size:10px;margin-bottom:2px}
+    .month-cell span{font-size:11px;color:#263238;overflow-wrap:anywhere}
+    body.detail-open{overflow:hidden}
+
     @media (max-width:1400px){
       .header-inner{padding-left:24px;padding-right:24px}
     }
@@ -290,6 +492,13 @@
       .header-logout-button{padding:8px 12px}
       .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
+    @media (max-width:760px){
+      .detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .month-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .detail-modal{padding:10px}
+      .detail-dialog{max-height:calc(100vh - 20px)}
+    }
+
     @media (max-width:620px){
       :root{--header-h:82px}
       .header-inner{gap:12px}
@@ -302,6 +511,9 @@
       .metrics{grid-template-columns:1fr}
       .toolbar-actions{width:100%}
       .toolbar-actions button{flex:1}
+      .records-controls{width:100%;justify-content:stretch}
+      .sort-button{width:100%}
+      .search-box{width:100%}
     }
   </style>
 </head>
@@ -382,8 +594,16 @@
             <h2>Registros recibidos</h2>
             <p>Vista resumida de las respuestas almacenadas en Supabase.</p>
           </div>
-          <div class="search-box">
-            <input id="recordsSearch" type="search" placeholder="Buscar empresa, estado o municipio…" aria-label="Buscar registros">
+          <div class="records-controls">
+            <button id="sortRecordsButton" class="sort-button" type="button" aria-label="Cambiar orden de los registros" title="Actualmente: más recientes primero">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 6h13"></path><path d="M8 12h9"></path><path d="M8 18h5"></path><path d="m3 8 2-2 2 2"></path><path d="M5 6v12"></path>
+              </svg>
+              <span id="sortRecordsLabel">Más recientes primero</span>
+            </button>
+            <div class="search-box">
+              <input id="recordsSearch" type="search" placeholder="Buscar empresa, estado o municipio…" aria-label="Buscar registros">
+            </div>
           </div>
         </div>
         <div class="table-wrap">
@@ -398,10 +618,11 @@
                 <th>Estatus</th>
                 <th>Progreso</th>
                 <th>ID de respuesta</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody id="recordsBody">
-              <tr><td colspan="8" class="loading-row">Cargando registros…</td></tr>
+              <tr><td colspan="9" class="loading-row">Cargando registros…</td></tr>
             </tbody>
           </table>
         </div>
@@ -409,6 +630,21 @@
       </section>
     </section>
   </main>
+
+    <div id="detailModal" class="detail-modal" hidden aria-hidden="true">
+      <section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+        <header class="detail-modal-header">
+          <div>
+            <h2 id="detailModalTitle">Detalle de respuesta</h2>
+            <p id="detailModalSubtitle">Consulta administrativa de las ocho secciones.</p>
+          </div>
+          <button id="detailCloseButton" class="detail-close" type="button" aria-label="Cerrar detalle" title="Cerrar">×</button>
+        </header>
+        <div id="detailContent" class="detail-content">
+          <div class="detail-loading">Seleccione un registro para consultar su detalle.</div>
+        </div>
+      </section>
+    </div>
 
   <script>
   (() => {
@@ -429,10 +665,18 @@
     const logoutButton = qs("#logoutButton");
     const recordsBody = qs("#recordsBody");
     const recordsSearch = qs("#recordsSearch");
+    const sortRecordsButton = qs("#sortRecordsButton");
+    const sortRecordsLabel = qs("#sortRecordsLabel");
     const emptyState = qs("#emptyState");
+    const detailModal = qs("#detailModal");
+    const detailContent = qs("#detailContent");
+    const detailModalTitle = qs("#detailModalTitle");
+    const detailModalSubtitle = qs("#detailModalSubtitle");
+    const detailCloseButton = qs("#detailCloseButton");
 
     let session = null;
     let records = [];
+    let recordsSortDirection = "desc";
 
     window.addEventListener("scroll", () => {
       qs("#siteHeader").classList.toggle("is-scrolled", window.scrollY > 4);
@@ -538,6 +782,22 @@
       return response.json();
     }
 
+    async function apiRpc(name, payload = {}){
+      if (!(await refreshSessionIfNeeded())) throw new Error("La sesión administrativa expiró.");
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
+        method:"POST",
+        headers:authHeaders(session.access_token),
+        body:JSON.stringify(payload)
+      });
+      if (response.status === 401) throw new Error("La sesión administrativa expiró.");
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok){
+        const message = data?.message || data?.hint || "No fue posible consultar el detalle en Supabase.";
+        throw new Error(message);
+      }
+      return data;
+    }
+
     function showLogin(message = ""){
       adminView.hidden = true;
       loginView.hidden = false;
@@ -579,6 +839,149 @@
         .replaceAll("'","&#039;");
     }
 
+
+    const DETAIL_LABELS = {
+      company_name:"Nombre de la empresa", industry_subsector_code:"Subsector industrial", operation_start_year:"Año de inicio de actividades", plant_branch_name:"Planta o sucursal", state_code:"Estado", municipality_borough:"Municipio / Alcaldía", postal_code:"C.P.", establishment_phone:"Teléfono", establishment_email:"Correo electrónico",
+      informant_name:"Nombre", informant_position:"Cargo", informant_phone:"Teléfono", informant_email:"Correo electrónico",
+      weeks_operation_month:"Semanas de operación al mes", days_operation_week:"Días de operación por semana", hours_operation_day:"Horas de operación al día", operates_all_months:"Opera todos los meses", months_operation_year:"Meses de operación al año", employee_count:"Número de empleados",
+      weekdays_operates:"Opera lunes a viernes", weekdays_start_time:"Inicio lunes a viernes", weekdays_end_time:"Fin lunes a viernes", saturday_operates:"Opera sábado", saturday_start_time:"Inicio sábado", saturday_end_time:"Fin sábado", sunday_operates:"Opera domingo", sunday_start_time:"Inicio domingo", sunday_end_time:"Fin domingo",
+      has_relevant_byproducts:"Tiene subproductos relevantes", process_description:"Descripción del proceso productivo",
+      raw_material_name:"Materia prima", raw_material_quantity_daily:"Cantidad diaria", raw_material_unit:"Unidad", raw_material_unit_other:"Otra unidad",
+      product_name:"Producto", product_quantity_daily:"Cantidad diaria", product_unit:"Unidad", product_unit_other:"Otra unidad",
+      byproduct_name:"Subproducto", byproduct_quantity_weekly:"Cantidad semanal", byproduct_unit:"Unidad", byproduct_unit_other:"Otra unidad",
+      energy_type_code:"Energético", energy_other_name:"Otro energético", unit_original:"Unidad original", unit_other:"Otra unidad", meter_count:"Número de medidores", tariff_code:"Tarifa", contracted_power_kw:"Potencia contratada (kW)",
+      autogenerates_electricity:"Autogenera electricidad", use_frequency:"Frecuencia de uso", avg_hours_week:"Horas promedio por semana", main_source_is_renewable:"Fuente principal renovable", source_type:"Fuente", source_other:"Otra fuente", installed_power_kw:"Potencia instalada (kW)", avg_monthly_generation_kwh:"Generación mensual promedio (kWh)", fuel_type:"Combustible", does_cogeneration:"Realiza cogeneración", process_name:"Proceso", heat_share_pct:"Participación del calor (%)",
+      uses_steam_boilers:"Utiliza calderas de vapor", energy_routes:"Rutas energéticas", energy_source_code:"Fuente energética", energy_source_other:"Otra fuente", boiler_count:"Número de calderas", thermal_power_original:"Potencia/capacidad térmica original", thermal_power_unit:"Unidad térmica", monthly_energy_consumption_original:"Consumo energético mensual", monthly_energy_consumption_unit:"Unidad de consumo", monthly_energy_consumption_unit_other:"Otra unidad", aux_power_original:"Potencia auxiliar", aux_power_unit:"Unidad de potencia auxiliar",
+      uses_fuel_equipment:"Usa equipos a combustible", uses_electric_equipment:"Usa equipos eléctricos", equipment_type:"Tipo de equipo", equipment_other:"Otro equipo", equipment_detail:"Detalle del equipo", equipment_count:"Número de equipos", fuel_other:"Otro combustible", monthly_consumption_original:"Consumo mensual original", monthly_consumption_unit:"Unidad de consumo mensual", monthly_consumption_unit_other:"Otra unidad", uses_equipment:"Utiliza equipos",
+      power_original:"Potencia original", power_unit:"Unidad de potencia", power_unit_other:"Otra unidad de potencia", current_original:"Corriente", current_unit:"Unidad de corriente", current_a:"Corriente (A)", voltage_original:"Voltaje", voltage_unit:"Unidad de voltaje", voltage_v:"Voltaje (V)", phases:"Fases", power_factor:"Factor de potencia", hours_day:"Horas/día", days_week:"Días/semana", weeks_year:"Semanas/año", downtime_days_year:"Días fuera de operación/año",
+      uses_component_systems:"Usa sistemas por componentes", uses_refrigerators_freezers:"Usa refrigeradores/congeladores", component_type:"Componente", appliance_type:"Tipo de equipo", unit_count:"Número de unidades", inverter_count:"Equipos inverter", has_energy_label:"Tiene etiqueta energética", label_annual_kwh_per_unit:"Consumo de etiqueta (kWh/año por unidad)", capacity_size_original:"Capacidad original", capacity_unit:"Unidad de capacidad", capacity_m3:"Capacidad estandarizada (m³)",
+      uses_electric_motors:"Utiliza motores eléctricos", has_technical_list:"Cuenta con lista técnica", application_code:"Aplicación", application_other:"Otra aplicación", motor_count:"Número de motores", uses_stationary_fuel_motors:"Utiliza motores estacionarios a combustible", monthly_consumption_l:"Consumo mensual (L)", uses_forklifts:"Utiliza montacargas", energy_type:"Energético", energy_other:"Otro energético", forklift_count:"Número de montacargas", load_capacity_t:"Capacidad de carga (t)", charges_per_day:"Recargas por día", battery_capacity_original:"Capacidad de batería", battery_capacity_unit:"Unidad de batería",
+      has_emergency_generators:"Tiene plantas de emergencia", consumption_original:"Consumo original", consumption_unit:"Unidad original", consumption_unit_other:"Otra unidad", monthly_consumption_m3:"Consumo estandarizado (m³/mes)", can_standardize_to_m3:"Se puede estandarizar a m³", uses_nonconventional_equipment:"Usa equipo no convencional", equipment_types:"Tipos de equipo",
+      industrial_lighting_present:"Iluminación en planta industrial", admin_common_lighting_present:"Iluminación administrativa/común", exterior_lighting_present:"Iluminación exterior", space_type:"Área / espacio", technology_code:"Tecnología", technology_other:"Otra tecnología", lamp_count:"Número de luminarias", power_w_per_lamp:"Potencia por luminaria (W)",
+      has_air_conditioning:"Tiene aire acondicionado", used_in_production:"Se usa en producción", admin_share_pct:"Participación administrativa (%)", production_share_pct:"Participación en producción (%)", production_has_temperature_control:"Producción con control de temperatura", admin_has_temperature_control:"Área administrativa con control de temperatura", electrical_power_kw_per_unit:"Potencia eléctrica por unidad (kW)", age_years:"Antigüedad (años)", uses_cooling_fans:"Utiliza ventiladores", fan_type:"Tipo de ventilador", fan_type_other:"Otro ventilador", fan_count:"Número de ventiladores", uses_space_heaters:"Utiliza calefacción", monthly_fuel_consumption_original:"Consumo mensual de combustible", monthly_fuel_consumption_unit:"Unidad del combustible", monthly_fuel_consumption_unit_other:"Otra unidad",
+      clarity:"Claridad", completion_time_minutes:"Tiempo de llenado (min)", filling_intuitiveness:"Intuitividad del llenado", instructions_sufficient:"Instrucciones suficientes", information_identification_ease:"Facilidad para identificar información", technical_level:"Nivel técnico", has_difficult_terms:"Hubo términos difíciles", difficult_terms_detail:"Términos difíciles", has_difficult_sections:"Hubo secciones difíciles", difficult_sections:"Secciones difíciles", difficult_sections_other:"Otra sección difícil", support_tools_usefulness:"Utilidad de apoyos", units_adequate:"Unidades adecuadas", additional_comments:"Comentarios adicionales",
+      survey_version:"Versión del instrumento", status:"Estatus", progress:"Progreso", created_at:"Creado", updated_at:"Actualizado", submitted_at:"Enviado", client_submission_id:"ID de envío del navegador"
+    };
+
+    const DETAIL_BLOCKS = {
+      section1:[
+        ["general_info","1.1 Datos generales"],["informants","1.3 Informantes"],["operation_info","1.4 Operación"],["work_shifts","1.5 Turnos"],["production_info","1.6 Producción"],["raw_materials","Materias primas"],["products","Productos"],["byproducts","Subproductos"]
+      ],
+      section2:[
+        ["energy_groups","Consumo de energéticos (12 meses)"],["electricity_info","Electricidad"],["tariff_groups","Tarifas eléctricas"],["autogeneration_info","Autogeneración"],["renewable_autogen_system","Sistema renovable"],["autogen_plants","Plantas de autogeneración"],["cogeneration_info","Cogeneración"],["cogeneration_processes","Procesos que aprovechan calor"]
+      ],
+      section3:[
+        ["steam_info","Vapor"],["steam_fuel_boiler_groups","Calderas a combustible"],["steam_electric_boiler_groups","Calderas eléctricas"],["direct_heat_info","Calor directo"],["direct_heat_fuel_groups","Calor directo a combustible"],["direct_heat_electric_groups","Calor directo eléctrico"],["water_heating_info","Calentamiento de agua"],["water_heating_groups","Equipos de calentamiento de agua"]
+      ],
+      section4:[
+        ["refrigeration_info","Refrigeración"],["component_groups","Sistemas por componentes"],["appliance_groups","Refrigeradores y congeladores"]
+      ],
+      section5:[
+        ["motor_info","Motores eléctricos"],["electric_motor_groups","Grupos de motores eléctricos"],["fuel_motor_info","Motores estacionarios a combustible"],["stationary_fuel_motor_groups","Grupos de motores a combustible"],["forklift_info","Montacargas"],["forklift_groups","Grupos de montacargas"],["emergency_generation_info","Plantas de emergencia"],["emergency_generator_plants","Grupos de plantas de emergencia"],["nonconventional_force_info","Fuerza motriz no convencional"]
+      ],
+      section6:[["lighting_info","Iluminación"],["lighting_groups","Grupos de iluminación"]],
+      section7:[["hvac_ac_info","Aire acondicionado"],["hvac_ac_groups","Equipos de aire acondicionado"],["hvac_fan_info","Ventilación"],["hvac_fan_groups","Grupos de ventiladores"],["hvac_heating_info","Calefacción"],["hvac_heating_groups","Equipos de calefacción"]],
+      section8:[["feedback","Evaluación del instrumento"]]
+    };
+
+    const DETAIL_SECTION_TITLES = {
+      section1:"1. Información general",
+      section2:"2. Consumo de energía",
+      section3:"3. Usos térmicos",
+      section4:"4. Refrigeración",
+      section5:"5. Fuerza motriz",
+      section6:"6. Iluminación",
+      section7:"7. Climatización",
+      section8:"8. Evaluación del instrumento"
+    };
+
+    function labelFor(key){
+      if (DETAIL_LABELS[key]) return DETAIL_LABELS[key];
+      return String(key).replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function displayValue(value, key = ""){
+      if (value === null || value === undefined || value === "") return "—";
+      if (typeof value === "boolean") return value ? "Sí" : "No";
+      if (Array.isArray(value)) return value.length ? value.map(v => displayValue(v)).join(", ") : "—";
+      if (key === "status") return value === "submitted" ? "Enviada" : value === "draft" ? "Borrador" : String(value);
+      if (/_at$/.test(key)) return formatDate(value);
+      if (key === "capacity_unit") return ({m3:"m³",ft3:"ft³",l:"L"})[String(value)] || value;
+      if (["consumption_unit","monthly_consumption_unit","monthly_energy_consumption_unit","monthly_fuel_consumption_unit"].includes(key)) return ({m3:"m³",l:"L"})[String(value)] || value;
+      return String(value);
+    }
+
+    function renderMonthGrid(values, title){
+      if (!Array.isArray(values) || !values.length) return "";
+      return `<div class="detail-field" style="grid-column:1/-1"><span class="detail-field-label">${escapeHtml(title)}</span><div class="month-grid">${values.map((v,i) => `<div class="month-cell"><strong>Mes ${i+1}</strong><span>${escapeHtml(displayValue(v))}</span></div>`).join("")}</div></div>`;
+    }
+
+    function renderObjectGrid(obj){
+      if (!obj || typeof obj !== "object") return '<div class="detail-empty">Sin información capturada.</div>';
+      const keys = Object.keys(obj).filter(k => !["id","sort_order","monthly","monthly_kwh"].includes(k));
+      const fields = keys.map(key => `<div class="detail-field"><span class="detail-field-label">${escapeHtml(labelFor(key))}</span><span class="detail-field-value">${escapeHtml(displayValue(obj[key], key))}</span></div>`).join("");
+      return `<div class="detail-grid">${fields}${renderMonthGrid(obj.monthly,"Consumo por mes")}${renderMonthGrid(obj.monthly_kwh,"Consumo eléctrico por mes (kWh)")}</div>`;
+    }
+
+    function renderBlock(title, value){
+      let body = "";
+      if (Array.isArray(value)){
+        body = value.length
+          ? value.map((item,index) => `<div class="detail-record"><div class="detail-record-number">Registro ${index+1}</div>${renderObjectGrid(item)}</div>`).join("")
+          : '<div class="detail-empty">Sin registros para este apartado.</div>';
+      }else{
+        body = renderObjectGrid(value);
+      }
+      return `<article class="detail-block"><h4 class="detail-block-title">${escapeHtml(title)}</h4><div class="detail-block-body">${body}</div></article>`;
+    }
+
+    function renderResponseDetail(data){
+      const response = data?.response || {};
+      const general = data?.section1?.general_info || {};
+      detailModalTitle.textContent = general.company_name ? `Detalle · ${general.company_name}` : "Detalle de respuesta";
+      detailModalSubtitle.textContent = `ID: ${response.id || "—"} · ${response.status === "submitted" ? "Enviada" : response.status || "—"}`;
+
+      const summary = `<div class="detail-summary">${renderObjectGrid({
+        company_name:general.company_name,
+        industry_subsector_code:general.industry_subsector_code,
+        state_code:general.state_code,
+        municipality_borough:general.municipality_borough,
+        status:response.status,
+        progress:response.progress,
+        submitted_at:response.submitted_at,
+        survey_version:response.survey_version
+      })}</div>`;
+
+      const sections = Object.keys(DETAIL_SECTION_TITLES).map(sectionKey => {
+        const sectionData = data?.[sectionKey] || {};
+        const blocks = (DETAIL_BLOCKS[sectionKey] || []).map(([key,title]) => renderBlock(title, sectionData[key])).join("");
+        return `<section class="detail-section"><h3 class="detail-section-title">${escapeHtml(DETAIL_SECTION_TITLES[sectionKey])}</h3><div class="detail-section-body">${blocks}</div></section>`;
+      }).join("");
+
+      detailContent.innerHTML = summary + sections;
+    }
+
+    function closeDetail(){
+      detailModal.hidden = true;
+      detailModal.setAttribute("aria-hidden","true");
+      document.body.classList.remove("detail-open");
+    }
+
+    async function openDetail(responseId, companyName = ""){
+      detailModal.hidden = false;
+      detailModal.setAttribute("aria-hidden","false");
+      document.body.classList.add("detail-open");
+      detailModalTitle.textContent = companyName ? `Detalle · ${companyName}` : "Detalle de respuesta";
+      detailModalSubtitle.textContent = "Cargando las ocho secciones…";
+      detailContent.innerHTML = '<div class="detail-loading">Consultando la respuesta completa en Supabase…</div>';
+      try{
+        const data = await apiRpc("admin_get_response_detail", {p_response_id:responseId});
+        renderResponseDetail(data);
+      }catch(error){
+        detailContent.innerHTML = `<div class="detail-error">${escapeHtml(error.message || "No fue posible cargar el detalle.")}</div>`;
+      }
+    }
+
     function updateMetrics(){
       const total = records.length;
       const submitted = records.filter(r => r.status === "submitted").length;
@@ -608,13 +1011,19 @@
         return searchable.includes(query);
       });
 
-      emptyState.hidden = filtered.length > 0;
-      if (!filtered.length){
+      const ordered = [...filtered].sort((a,b) => {
+        const dateA = new Date(a.submitted_at || a.created_at || 0).getTime();
+        const dateB = new Date(b.submitted_at || b.created_at || 0).getTime();
+        return recordsSortDirection === "asc" ? dateA - dateB : dateB - dateA;
+      });
+
+      emptyState.hidden = ordered.length > 0;
+      if (!ordered.length){
         recordsBody.innerHTML = "";
         return;
       }
 
-      recordsBody.innerHTML = filtered.map(r => `
+      recordsBody.innerHTML = ordered.map(r => `
         <tr>
           <td class="company-name">${escapeHtml(r.company_name || "Sin nombre")}</td>
           <td>${escapeHtml(r.industry_subsector_code || "—")}</td>
@@ -624,6 +1033,7 @@
           <td><span class="status-pill ${r.status === "draft" ? "draft" : ""}">${escapeHtml(r.status || "—")}</span></td>
           <td>${escapeHtml(r.progress ?? "—")}%</td>
           <td class="mono">${escapeHtml(r.id)}</td>
+          <td><button class="detail-button" type="button" data-detail-id="${escapeHtml(r.id)}" data-company="${escapeHtml(r.company_name || "")}">Ver detalle</button></td>
         </tr>
       `).join("");
     }
@@ -631,7 +1041,7 @@
     async function loadRecords(){
       refreshButton.disabled = true;
       refreshButton.textContent = "Actualizando…";
-      recordsBody.innerHTML = '<tr><td colspan="8" class="loading-row">Cargando registros…</td></tr>';
+      recordsBody.innerHTML = '<tr><td colspan="9" class="loading-row">Cargando registros…</td></tr>';
       emptyState.hidden = true;
 
       try{
@@ -650,7 +1060,7 @@
           showLogin("La sesión expiró. Ingrese nuevamente.");
           return;
         }
-        recordsBody.innerHTML = `<tr><td colspan="8" class="loading-row">${escapeHtml(error.message || "No fue posible cargar los registros.")}</td></tr>`;
+        recordsBody.innerHTML = `<tr><td colspan="9" class="loading-row">${escapeHtml(error.message || "No fue posible cargar los registros.")}</td></tr>`;
       }finally{
         refreshButton.disabled = false;
         refreshButton.textContent = "Actualizar registros";
@@ -698,6 +1108,31 @@
 
     refreshButton.addEventListener("click", loadRecords);
     recordsSearch.addEventListener("input", renderRecords);
+
+    recordsBody.addEventListener("click", event => {
+      const button = event.target.closest("[data-detail-id]");
+      if (!button) return;
+      openDetail(button.dataset.detailId, button.dataset.company || "");
+    });
+
+    detailCloseButton.addEventListener("click", closeDetail);
+    detailModal.addEventListener("click", event => {
+      if (event.target === detailModal) closeDetail();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !detailModal.hidden) closeDetail();
+    });
+
+    sortRecordsButton.addEventListener("click", () => {
+      recordsSortDirection = recordsSortDirection === "desc" ? "asc" : "desc";
+      const newestFirst = recordsSortDirection === "desc";
+      sortRecordsLabel.textContent = newestFirst ? "Más recientes primero" : "Más antiguos primero";
+      sortRecordsButton.title = newestFirst
+        ? "Actualmente: más recientes primero"
+        : "Actualmente: más antiguos primero";
+      sortRecordsButton.setAttribute("aria-pressed", newestFirst ? "false" : "true");
+      renderRecords();
+    });
 
     logoutButton.addEventListener("click", async () => {
       const token = session?.access_token;
