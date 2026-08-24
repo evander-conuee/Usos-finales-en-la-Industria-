@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel administrativo | Usos finales de la energía</title>
+  <!-- admin v6 · dashboard energético individual -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -475,6 +476,289 @@
     .month-cell span{font-size:11px;color:#263238;overflow-wrap:anywhere}
     body.detail-open{overflow:hidden}
 
+
+    /* =========================================================
+       DASHBOARD ENERGÉTICO INDIVIDUAL
+    ========================================================= */
+    .detail-tabs{
+      display:flex;
+      gap:8px;
+      margin-bottom:16px;
+      padding:5px;
+      border:1px solid #d7dfdc;
+      border-radius:10px;
+      background:#edf2ef;
+      position:sticky;
+      top:0;
+      z-index:8;
+      box-shadow:0 2px 7px rgba(0,0,0,.05);
+    }
+    .detail-tab-button{
+      flex:0 0 auto;
+      min-height:38px;
+      padding:8px 14px;
+      border:1px solid transparent;
+      border-radius:7px;
+      background:transparent;
+      color:#405149;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .detail-tab-button:hover{background:#fff}
+    .detail-tab-button.active{
+      background:#fff;
+      border-color:#cbd6d1;
+      color:#24533e;
+      box-shadow:0 1px 5px rgba(0,0,0,.07);
+    }
+    .detail-tab-pane[hidden]{display:none!important}
+
+    .analysis-dashboard{display:grid;gap:16px}
+    .analysis-intro{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      padding:16px 18px;
+      border-radius:10px;
+      border:1px solid #cfdad5;
+      background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+    .analysis-intro h3{margin:0;font-size:18px;color:#173d31}
+    .analysis-intro p{margin:5px 0 0;color:#657078;font-size:12px;line-height:1.45}
+    .analysis-state{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      min-height:30px;
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid #cbdac8;
+      background:#edf6eb;
+      color:#356431;
+      font-size:11px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .analysis-state.partial{background:#fff7e5;border-color:#ead79b;color:#806300}
+    .analysis-state.none{background:#f1f3f4;border-color:#d8dde0;color:#5f696e}
+    .analysis-state.warning{background:#fff0ee;border-color:#e6b8b2;color:#8b2c24}
+
+    .analysis-kpis{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+    .analysis-kpi{
+      min-width:0;
+      padding:14px 15px;
+      border:1px solid #d9e1de;
+      border-radius:9px;
+      background:#fff;
+      box-shadow:0 2px 7px rgba(0,0,0,.04);
+    }
+    .analysis-kpi-label{
+      color:#69757a;
+      font-size:10px;
+      font-weight:700;
+      letter-spacing:.025em;
+      text-transform:uppercase;
+    }
+    .analysis-kpi-value{
+      margin-top:7px;
+      color:#204737;
+      font-size:21px;
+      line-height:1.15;
+      font-weight:700;
+      overflow-wrap:anywhere;
+    }
+    .analysis-kpi-sub{
+      margin-top:5px;
+      color:#768086;
+      font-size:10.5px;
+      line-height:1.35;
+    }
+
+    .analysis-two-col{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .analysis-card{
+      min-width:0;
+      border:1px solid #d7dfdc;
+      border-radius:10px;
+      background:#fff;
+      overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+    .analysis-card-head{
+      padding:12px 15px;
+      border-bottom:1px solid #e0e6e3;
+      background:#f6f9f7;
+    }
+    .analysis-card-head h4{margin:0;color:#244739;font-size:14px}
+    .analysis-card-head p{margin:4px 0 0;color:#758087;font-size:10.5px;line-height:1.4}
+    .analysis-card-body{padding:14px 15px}
+
+    .analysis-stack{
+      height:18px;
+      display:flex;
+      overflow:hidden;
+      border-radius:999px;
+      background:#e9eeec;
+      border:1px solid #d8e0dd;
+    }
+    .analysis-stack-segment{height:100%;min-width:0}
+    .analysis-stack-segment.primary{background:#5b7f3a}
+    .analysis-stack-segment.secondary{background:#9fb892}
+    .analysis-stack-segment.muted{background:#d8dfdc}
+    .analysis-stack-segment.warning{background:#c99a3e}
+    .analysis-legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 14px;
+      margin-top:10px;
+      font-size:10.5px;
+      color:#5d686d;
+    }
+    .analysis-legend-item{display:inline-flex;align-items:center;gap:5px}
+    .analysis-dot{width:8px;height:8px;border-radius:50%;background:#5b7f3a}
+    .analysis-dot.secondary{background:#9fb892}
+    .analysis-dot.muted{background:#c8d0cd}
+    .analysis-dot.warning{background:#c99a3e}
+    .analysis-big-number{font-size:23px;font-weight:700;color:#244739}
+    .analysis-small-note{margin-top:7px;font-size:10.5px;color:#717c81;line-height:1.45}
+
+    .analysis-bars{display:grid;gap:10px}
+    .analysis-bar-row{display:grid;gap:5px}
+    .analysis-bar-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      font-size:11.5px;
+    }
+    .analysis-bar-label{font-weight:700;color:#33463e}
+    .analysis-bar-value{color:#59666b;white-space:nowrap}
+    .analysis-bar-track{
+      height:9px;
+      border-radius:999px;
+      background:#edf1ef;
+      overflow:hidden;
+    }
+    .analysis-bar-fill{
+      height:100%;
+      border-radius:999px;
+      background:#5b7f3a;
+    }
+    .analysis-source-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:5px;
+      margin-top:2px;
+    }
+    .analysis-source-tag{
+      display:inline-flex;
+      align-items:center;
+      padding:3px 7px;
+      border-radius:999px;
+      background:#f1f5f2;
+      border:1px solid #dce4e0;
+      color:#596760;
+      font-size:9.5px;
+    }
+
+    .analysis-ranking{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+    .analysis-rank{
+      border:1px solid #dae2de;
+      border-radius:8px;
+      padding:11px 12px;
+      background:#fbfcfb;
+    }
+    .analysis-rank small{
+      display:block;
+      color:#7a8488;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:9px;
+      letter-spacing:.03em;
+    }
+    .analysis-rank strong{
+      display:block;
+      margin-top:4px;
+      color:#315025;
+      font-size:13px;
+    }
+    .analysis-rank span{
+      display:block;
+      margin-top:3px;
+      color:#68747a;
+      font-size:10.5px;
+    }
+
+    .analysis-table-wrap{overflow:auto}
+    .analysis-table{
+      min-width:650px;
+      width:100%;
+      border-collapse:collapse;
+    }
+    .analysis-table th{
+      position:static;
+      padding:8px 9px;
+      background:#f2f6f4;
+      font-size:10px;
+      color:#4d5e55;
+    }
+    .analysis-table td{
+      padding:9px;
+      font-size:10.5px;
+    }
+    .analysis-table tr:last-child td{border-bottom:0}
+    .analysis-status-text{font-weight:700}
+    .analysis-status-text.good{color:#356431}
+    .analysis-status-text.warn{color:#846600}
+    .analysis-status-text.bad{color:#8d2a25}
+    .analysis-status-text.muted{color:#6c777c}
+
+    .analysis-alert{
+      padding:11px 13px;
+      border:1px solid #ecd69c;
+      border-left:4px solid #b18425;
+      border-radius:8px;
+      background:#fff9e9;
+      color:#665416;
+      font-size:10.5px;
+      line-height:1.5;
+    }
+    .analysis-alert strong{display:block;margin-bottom:3px}
+    .analysis-alert.danger{
+      border-color:#e4b8b4;
+      border-left-color:#b3261e;
+      background:#fff5f5;
+      color:#7c2c26;
+    }
+    .analysis-alert.neutral{
+      border-color:#d6ddda;
+      border-left-color:#7e8a84;
+      background:#f7f9f8;
+      color:#5e6a65;
+    }
+
+    .analysis-empty{
+      padding:18px;
+      text-align:center;
+      color:#788286;
+      font-size:11px;
+      font-style:italic;
+    }
+
     @media (max-width:1400px){
       .header-inner{padding-left:24px;padding-right:24px}
     }
@@ -511,6 +795,12 @@
       .records-title,.records-sort-slot,.records-search-slot{grid-column:1}
       .records-sort-slot,.records-search-slot{justify-content:stretch}
       .sort-button,.search-box{width:100%}
+      .analysis-kpis{grid-template-columns:1fr}
+      .analysis-two-col{grid-template-columns:1fr}
+      .analysis-ranking{grid-template-columns:1fr}
+      .analysis-intro{flex-direction:column}
+      .analysis-state{align-self:flex-start}
+      .detail-tabs{position:static;overflow:auto}
     }
   </style>
 </head>
@@ -635,7 +925,7 @@
         <header class="detail-modal-header">
           <div>
             <h2 id="detailModalTitle">Detalle de respuesta</h2>
-            <p id="detailModalSubtitle">Consulta administrativa de las ocho secciones.</p>
+            <p id="detailModalSubtitle">Análisis energético individual y consulta administrativa de las ocho secciones.</p>
           </div>
           <button id="detailCloseButton" class="detail-close" type="button" aria-label="Cerrar detalle" title="Cerrar">×</button>
         </header>
@@ -927,6 +1217,418 @@
       return String(value);
     }
 
+
+    function asNumber(value){
+      if (value === null || value === undefined || value === "") return null;
+      const n = Number(value);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function formatNumber(value, decimals = 1){
+      const n = asNumber(value);
+      if (n === null) return "—";
+      return new Intl.NumberFormat("es-MX", {
+        minimumFractionDigits:0,
+        maximumFractionDigits:decimals
+      }).format(n);
+    }
+
+    function formatPercent(value, decimals = 2){
+      const n = asNumber(value);
+      return n === null ? "—" : `${formatNumber(n,decimals)} %`;
+    }
+
+    function formatKwh(value){
+      const n = asNumber(value);
+      if (n === null) return "—";
+      const abs = Math.abs(n);
+      if (abs >= 1_000_000) return `${formatNumber(n/1_000_000,2)} GWh/año`;
+      if (abs >= 1_000) return `${formatNumber(n/1_000,2)} MWh/año`;
+      return `${formatNumber(n,1)} kWh/año`;
+    }
+
+    function formatGj(value){
+      const n = asNumber(value);
+      if (n === null) return "—";
+      if (Math.abs(n) >= 1_000) return `${formatNumber(n/1_000,2)} TJ/año`;
+      return `${formatNumber(n,2)} GJ/año`;
+    }
+
+    function clampVisualPct(value){
+      const n = asNumber(value);
+      if (n === null) return 0;
+      return Math.max(0,Math.min(100,n));
+    }
+
+    function analysisQuantificationState(dashboard){
+      const characterized = asNumber(dashboard?.characterized_energy_gj_calculable);
+      const incomplete = Number(dashboard?.unquantified_component_rows || 0) > 0
+        || Number(dashboard?.electric_forklift_groups_not_quantified || 0) > 0
+        || dashboard?.end_use_energy_quantification_complete === false;
+      if (characterized === 0) return {label:"Sin usos finales cuantificados",className:"none"};
+      if (incomplete) return {label:"Cuantificación parcial",className:"partial"};
+      if (characterized !== null) return {label:"Cuantificación completa",className:""};
+      return {label:"Cuantificación no disponible",className:"none"};
+    }
+
+
+    function energySourceLabel(code){
+      const labels = {
+        electricity:"Electricidad",
+        coal:"Carbón",
+        coal_coke:"Coque de carbón",
+        lpg:"GLP",
+        dry_gas:"Gas seco",
+        diesel:"Diésel",
+        gasoline:"Gasolina",
+        gasoline_naphtha:"Gasolinas y naftas",
+        bagasse:"Bagazo de caña",
+        kerosene:"Keroseno",
+        biomass:"Biomasa",
+        other:"Otro"
+      };
+      return labels[code] || code || "—";
+    }
+
+    function standardUnitLabel(unit){
+      const labels = {
+        m3:"m³",
+        kg:"kg",
+        l:"L",
+        kwh:"kWh",
+        mwh:"MWh",
+        gj:"GJ"
+      };
+      return labels[unit] || unit || "—";
+    }
+
+    function calculationStatusLabel(status){
+      const labels = {
+        calculated:"Calculado",
+        physical_only:"Solo normalización física",
+        energy_factor_unavailable:"Factor energético no disponible",
+        physical_unit_not_standardizable:"Unidad física no estandarizable",
+        excluded_from_main_total:"Separado del total principal"
+      };
+      return labels[status] || status || "—";
+    }
+
+    function coverageStatusLabel(status){
+      const labels = {
+        within_reference:"Dentro de la referencia",
+        within_reference_incomplete:"Dentro de la referencia · cuantificación parcial",
+        no_characterized_components:"Sin usos finales eléctricos cuantificados",
+        characterized_incomplete:"Cuantificación eléctrica incompleta",
+        characterized_unavailable:"Cuantificación eléctrica no disponible",
+        reference_unavailable:"Referencia eléctrica no disponible",
+        zero_reference:"Referencia eléctrica igual a cero",
+        overcharacterized:"Sobrecaracterización",
+        overcharacterized_no_reference:"Caracterización sin referencia eléctrica"
+      };
+      return labels[status] || status || "—";
+    }
+
+    function coverageStatusClass(status){
+      if (["within_reference"].includes(status)) return "good";
+      if (["within_reference_incomplete","no_characterized_components","characterized_incomplete","characterized_unavailable","reference_unavailable","zero_reference"].includes(status)) return "muted";
+      if (["overcharacterized","overcharacterized_no_reference"].includes(status)) return "bad";
+      return "muted";
+    }
+
+    async function loadIndividualAnalysis(responseId){
+      const id = encodeURIComponent(responseId);
+      const [
+        dashboardRows,
+        electricUses,
+        endUseTotals,
+        endUseSources,
+        sourceCoverage,
+        backupGeneration,
+        methodologyFlags
+      ] = await Promise.all([
+        apiGet(`v_analysis_response_dashboard?select=*&response_id=eq.${id}&limit=1`),
+        apiGet(`v_analysis_electricity_by_end_use?select=response_id,family_code,family_label,end_use_code,end_use_label,annual_kwh,annual_gj,component_rows,calculated_component_rows,unavailable_component_rows,has_double_count_risk&response_id=eq.${id}&order=annual_kwh.desc.nullslast`),
+        apiGet(`v_analysis_end_use_totals?select=response_id,family_code,family_label,end_use_code,end_use_label,annual_gj_calculable,component_rows,quantified_component_rows,unquantified_component_rows,is_complete_quantification,include_in_main_end_use_total&response_id=eq.${id}&include_in_main_end_use_total=eq.true&order=annual_gj_calculable.desc.nullslast`),
+        apiGet(`v_analysis_end_use_by_source?select=response_id,family_code,family_label,end_use_code,end_use_label,energy_source_code,energy_source_label,annual_gj_calculable,component_rows,quantified_component_rows,unquantified_component_rows,is_complete_quantification&response_id=eq.${id}&order=end_use_code,annual_gj_calculable.desc.nullslast`),
+        apiGet(`v_analysis_energy_source_coverage?select=*&response_id=eq.${id}&order=energy_type_code`),
+        apiGet(`v_analysis_backup_generation?select=*&response_id=eq.${id}&order=end_use_code,energy_source_code`),
+        apiGet(`v_analysis_methodology_flags?select=*&response_id=eq.${id}&order=flag_code`)
+      ]);
+
+      return {
+        dashboard:dashboardRows?.[0] || null,
+        electricUses:electricUses || [],
+        endUseTotals:endUseTotals || [],
+        endUseSources:endUseSources || [],
+        sourceCoverage:sourceCoverage || [],
+        backupGeneration:backupGeneration || [],
+        methodologyFlags:methodologyFlags || []
+      };
+    }
+
+    function renderAnalysisKpi(label, value, sub = ""){
+      return `<article class="analysis-kpi">
+        <div class="analysis-kpi-label">${escapeHtml(label)}</div>
+        <div class="analysis-kpi-value">${escapeHtml(value)}</div>
+        ${sub ? `<div class="analysis-kpi-sub">${escapeHtml(sub)}</div>` : ""}
+      </article>`;
+    }
+
+    function renderSupplyCard(d){
+      const total = asNumber(d?.electricity_reference_annual_kwh);
+      const grid = asNumber(d?.grid_annual_kwh);
+      const autogen = asNumber(d?.autogeneration_annual_kwh);
+      const gridPct = asNumber(d?.grid_share_pct) ?? (total > 0 && grid !== null ? grid/total*100 : null);
+      const autogenPct = asNumber(d?.autogeneration_share_pct) ?? (total > 0 && autogen !== null ? autogen/total*100 : null);
+
+      if (total === null){
+        return `<article class="analysis-card">
+          <div class="analysis-card-head"><h4>Suministro eléctrico</h4><p>Electricidad adquirida y autogenerada autoconsumida.</p></div>
+          <div class="analysis-empty">No existe una referencia eléctrica calculable.</div>
+        </article>`;
+      }
+
+      return `<article class="analysis-card">
+        <div class="analysis-card-head">
+          <h4>Suministro eléctrico</h4>
+          <p>Para el análisis individual, la autogeneración se considera autoconsumida.</p>
+        </div>
+        <div class="analysis-card-body">
+          <div class="analysis-big-number">${escapeHtml(formatKwh(total))}</div>
+          <div class="analysis-small-note">Electricidad total de referencia del establecimiento.</div>
+          <div class="analysis-stack" style="margin-top:13px">
+            <div class="analysis-stack-segment primary" style="width:${clampVisualPct(gridPct)}%"></div>
+            <div class="analysis-stack-segment secondary" style="width:${clampVisualPct(autogenPct)}%"></div>
+          </div>
+          <div class="analysis-legend">
+            <span class="analysis-legend-item"><i class="analysis-dot"></i>Adquirida: ${escapeHtml(formatKwh(grid))} · ${escapeHtml(formatPercent(gridPct))}</span>
+            <span class="analysis-legend-item"><i class="analysis-dot secondary"></i>Autogenerada: ${escapeHtml(formatKwh(autogen))} · ${escapeHtml(formatPercent(autogenPct))}</span>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function renderCoverageCard(d){
+      const coverage = asNumber(d?.electricity_coverage_pct);
+      const characterized = asNumber(d?.electricity_characterized_annual_kwh);
+      const residual = asNumber(d?.electricity_uncharacterized_kwh);
+      const over = asNumber(d?.overcharacterization_kwh);
+      const charVisual = coverage === null ? 0 : Math.max(0,Math.min(100,coverage));
+      const residualVisual = coverage === null ? 0 : Math.max(0,Math.min(100,100-coverage));
+      const status = d?.electricity_coverage_status;
+
+      return `<article class="analysis-card">
+        <div class="analysis-card-head">
+          <h4>Cobertura eléctrica</h4>
+          <p>Usos finales eléctricos caracterizados respecto de la electricidad total de referencia.</p>
+        </div>
+        <div class="analysis-card-body">
+          <div class="analysis-big-number">${escapeHtml(formatPercent(coverage))}</div>
+          <div class="analysis-small-note"><span class="analysis-status-text ${coverageStatusClass(status)}">${escapeHtml(coverageStatusLabel(status))}</span></div>
+          <div class="analysis-stack" style="margin-top:13px">
+            <div class="analysis-stack-segment primary" style="width:${charVisual}%"></div>
+            <div class="analysis-stack-segment muted" style="width:${residualVisual}%"></div>
+          </div>
+          <div class="analysis-legend">
+            <span class="analysis-legend-item"><i class="analysis-dot"></i>Caracterizada: ${escapeHtml(formatKwh(characterized))}</span>
+            <span class="analysis-legend-item"><i class="analysis-dot muted"></i>No caracterizada: ${escapeHtml(formatKwh(residual))}</span>
+          </div>
+          ${over > 0 ? `<div class="analysis-alert danger" style="margin-top:12px"><strong>Sobrecaracterización</strong>La energía caracterizada supera la referencia en ${escapeHtml(formatKwh(over))}. El valor no se trunca a 100 %.</div>` : ""}
+        </div>
+      </article>`;
+    }
+
+    function renderBarRows(rows, valueKey, formatter, sourceRows = []){
+      const calculated = rows.filter(row => asNumber(row?.[valueKey]) !== null && asNumber(row?.[valueKey]) >= 0);
+      if (!calculated.length) return '<div class="analysis-empty">No existen resultados cuantificados para este bloque.</div>';
+      const max = Math.max(...calculated.map(row => asNumber(row[valueKey]) || 0),0);
+      return `<div class="analysis-bars">${calculated.map(row => {
+        const value = asNumber(row[valueKey]) || 0;
+        const width = max > 0 ? value/max*100 : 0;
+        const sources = sourceRows
+          .filter(s => s.end_use_code === row.end_use_code && asNumber(s.annual_gj_calculable) !== null)
+          .map(s => {
+            const sourceValue = asNumber(s.annual_gj_calculable);
+            return `<span class="analysis-source-tag">${escapeHtml(s.energy_source_label || s.energy_source_code || "Fuente")} · ${escapeHtml(formatGj(sourceValue))}</span>`;
+          }).join("");
+        return `<div class="analysis-bar-row">
+          <div class="analysis-bar-top">
+            <span class="analysis-bar-label">${escapeHtml(row.end_use_label || row.end_use_code || "Uso final")}</span>
+            <span class="analysis-bar-value">${escapeHtml(formatter(value))}</span>
+          </div>
+          <div class="analysis-bar-track"><div class="analysis-bar-fill" style="width:${Math.max(0,Math.min(100,width))}%"></div></div>
+          ${sources ? `<div class="analysis-source-tags">${sources}</div>` : ""}
+        </div>`;
+      }).join("")}</div>`;
+    }
+
+    function renderEnergySourceCoverage(rows){
+      if (!rows.length) return '<div class="analysis-empty">No hay energéticos compatibles para conciliación física.</div>';
+      const statusLabel = {
+        within_reference:"Dentro de referencia",
+        no_characterized_consumption:"Sin consumo caracterizado",
+        reported_unavailable_or_incompatible_unit:"Referencia no disponible / unidad incompatible",
+        overcharacterized:"Sobrecaracterización",
+        overcharacterized_no_reference:"Caracterización sin referencia"
+      };
+      return `<div class="analysis-table-wrap"><table class="analysis-table">
+        <thead><tr><th>Energético</th><th>Unidad</th><th>Reportado anual</th><th>Caracterizado anual</th><th>Cobertura</th><th>Estado</th></tr></thead>
+        <tbody>${rows.map(row => {
+          const cls = row.coverage_status === "within_reference" ? "good"
+            : String(row.coverage_status || "").startsWith("over") ? "bad" : "muted";
+          return `<tr>
+            <td>${escapeHtml(energySourceLabel(row.energy_type_code))}</td>
+            <td>${escapeHtml(standardUnitLabel(row.standard_unit))}</td>
+            <td>${escapeHtml(formatNumber(row.reported_annual_standardized,3))}</td>
+            <td>${escapeHtml(formatNumber(row.characterized_annual_standardized,3))}</td>
+            <td>${escapeHtml(formatPercent(row.coverage_pct))}</td>
+            <td><span class="analysis-status-text ${cls}">${escapeHtml(statusLabel[row.coverage_status] || row.coverage_status || "—")}</span></td>
+          </tr>`;
+        }).join("")}</tbody>
+      </table></div>`;
+    }
+
+    function renderBackupGeneration(rows){
+      if (!rows.length) return "";
+      const content = rows.map(row => `<div class="detail-record">
+        <div class="detail-grid">
+          <div class="detail-field"><span class="detail-field-label">Fuente energética</span><span class="detail-field-value">${escapeHtml(row.energy_source_label || row.energy_source_code || "—")}</span></div>
+          <div class="detail-field"><span class="detail-field-label">Consumo anual físico</span><span class="detail-field-value">${escapeHtml(formatNumber(row.annual_consumption_standardized,3))} ${escapeHtml(standardUnitLabel(row.standard_unit))}</span></div>
+          <div class="detail-field"><span class="detail-field-label">Energía calculable</span><span class="detail-field-value">${escapeHtml(formatGj(row.annual_gj))}</span></div>
+          <div class="detail-field"><span class="detail-field-label">Estado de cálculo</span><span class="detail-field-value">${escapeHtml(calculationStatusLabel(row.calculation_status))}</span></div>
+        </div>
+      </div>`).join("");
+      return `<article class="analysis-card">
+        <div class="analysis-card-head">
+          <h4>Generación eléctrica para respaldo</h4>
+          <p>Se muestra por separado y no forma parte del total principal de usos finales, para evitar doble conteo.</p>
+        </div>
+        <div class="analysis-card-body">${content}</div>
+      </article>`;
+    }
+
+    function renderMethodologyFlags(flags){
+      if (!flags.length) return "";
+      return `<article class="analysis-card">
+        <div class="analysis-card-head">
+          <h4>Banderas metodológicas</h4>
+          <p>Advertencias de cálculo o elementos que requieren interpretación administrativa.</p>
+        </div>
+        <div class="analysis-card-body" style="display:grid;gap:8px">
+          ${flags.map(flag => `<div class="analysis-alert">
+            <strong>${escapeHtml(flag.end_use_label || "Revisión metodológica")}</strong>
+            ${escapeHtml(flag.flag_detail || flag.flag_code || "Elemento que requiere revisión.")}
+          </div>`).join("")}
+        </div>
+      </article>`;
+    }
+
+    function renderIndividualAnalysis(analytics){
+      if (analytics?.error){
+        return `<div class="detail-error">La respuesta fue cargada, pero el análisis energético no pudo consultarse: ${escapeHtml(analytics.error)}</div>`;
+      }
+      const d = analytics?.dashboard;
+      if (!d){
+        return '<div class="analysis-empty">No se encontró un resumen analítico para esta respuesta.</div>';
+      }
+
+      const state = analysisQuantificationState(d);
+      const mainEndUse = d.dominant_end_use || "—";
+      const secondEndUse = d.second_end_use || "—";
+
+      const kpis = [
+        renderAnalysisKpi("Electricidad total",formatKwh(d.electricity_reference_annual_kwh),"Adquirida + autogenerada autoconsumida"),
+        renderAnalysisKpi("Cobertura eléctrica",formatPercent(d.electricity_coverage_pct),coverageStatusLabel(d.electricity_coverage_status)),
+        renderAnalysisKpi("Energía caracterizada",formatGj(d.characterized_energy_gj_calculable),"Usos finales principales cuantificables"),
+        renderAnalysisKpi("Electricidad no caracterizada",formatKwh(d.electricity_uncharacterized_kwh),"Residual respecto a la referencia"),
+        renderAnalysisKpi("Intensidad eléctrica",d.electricity_intensity_kwh_per_employee == null ? "—" : `${formatNumber(d.electricity_intensity_kwh_per_employee,1)} kWh/empleado·año`,"Referencia eléctrica por empleado"),
+        renderAnalysisKpi("Intensidad energética",d.characterized_energy_intensity_gj_per_employee == null ? "—" : `${formatNumber(d.characterized_energy_intensity_gj_per_employee,2)} GJ/empleado·año`,"Interpretar junto con la cobertura")
+      ].join("");
+
+      const electricRows = (analytics.electricUses || []).filter(row => asNumber(row.annual_kwh) !== null);
+      const endUseRows = (analytics.endUseTotals || []).filter(row => row.include_in_main_end_use_total !== false);
+      const sourceRows = analytics.endUseSources || [];
+      const electricForklifts = Number(d.electric_forklift_groups_not_quantified || 0);
+
+      return `<div class="analysis-dashboard">
+        <div class="analysis-intro">
+          <div>
+            <h3>Análisis energético del establecimiento</h3>
+            <p>Resultados derivados de la misma capa analítica utilizada para conciliación, exportación y futuros dashboards.</p>
+          </div>
+          <span class="analysis-state ${escapeHtml(state.className)}">${escapeHtml(state.label)}</span>
+        </div>
+
+        <div class="analysis-kpis">${kpis}</div>
+
+        <div class="analysis-ranking">
+          <div class="analysis-rank">
+            <small>Uso final principal</small>
+            <strong>${escapeHtml(mainEndUse)}</strong>
+            <span>${d.dominant_end_use_gj == null ? "Sin resultado cuantificado" : escapeHtml(formatGj(d.dominant_end_use_gj))}</span>
+          </div>
+          <div class="analysis-rank">
+            <small>Segundo uso final</small>
+            <strong>${escapeHtml(secondEndUse)}</strong>
+            <span>${d.second_end_use_gj == null ? "Sin segundo resultado cuantificado" : escapeHtml(formatGj(d.second_end_use_gj))}</span>
+          </div>
+        </div>
+
+        ${electricForklifts > 0 ? `<div class="analysis-alert neutral"><strong>Transporte interno eléctrico no cuantificado</strong>Esta respuesta contiene ${escapeHtml(String(electricForklifts))} grupo(s) de montacargas eléctricos. Se conserva el uso final Transporte interno, pero no se inventa un consumo eléctrico anual.</div>` : ""}
+
+        <div class="analysis-two-col">
+          ${renderSupplyCard(d)}
+          ${renderCoverageCard(d)}
+        </div>
+
+        <article class="analysis-card">
+          <div class="analysis-card-head">
+            <h4>Usos finales eléctricos</h4>
+            <p>Electricidad caracterizada por uso final. Un uso térmico puede aparecer aquí cuando utiliza electricidad.</p>
+          </div>
+          <div class="analysis-card-body">
+            ${renderBarRows(electricRows,"annual_kwh",formatKwh)}
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <div class="analysis-card-head">
+            <h4>Composición energética por uso final</h4>
+            <p>Resultados cuantificables expresados en una unidad energética común. La fuente energética se mantiene como dimensión independiente.</p>
+          </div>
+          <div class="analysis-card-body">
+            ${renderBarRows(endUseRows,"annual_gj_calculable",formatGj,sourceRows)}
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <div class="analysis-card-head">
+            <h4>Conciliación por energético</h4>
+            <p>Comparación física únicamente cuando el consumo reportado y caracterizado son compatibles en la misma dimensión y unidad.</p>
+          </div>
+          <div class="analysis-card-body">
+            ${renderEnergySourceCoverage(analytics.sourceCoverage || [])}
+          </div>
+        </article>
+
+        ${renderBackupGeneration(analytics.backupGeneration || [])}
+        ${renderMethodologyFlags(analytics.methodologyFlags || [])}
+      </div>`;
+    }
+
+    function activateDetailTab(tabName){
+      const buttons = detailContent.querySelectorAll("[data-detail-tab]");
+      const panes = detailContent.querySelectorAll("[data-detail-pane]");
+      buttons.forEach(button => {
+        const active = button.dataset.detailTab === tabName;
+        button.classList.toggle("active",active);
+        button.setAttribute("aria-selected",active ? "true" : "false");
+      });
+      panes.forEach(pane => {
+        pane.hidden = pane.dataset.detailPane !== tabName;
+      });
+    }
+
     function renderMonthGrid(values, title){
       if (!Array.isArray(values) || !values.length) return "";
       return `<div class="detail-field" style="grid-column:1/-1"><span class="detail-field-label">${escapeHtml(title)}</span><div class="month-grid">${values.map((v,i) => `<div class="month-cell"><strong>Mes ${i+1}</strong><span>${escapeHtml(displayValue(v))}</span></div>`).join("")}</div></div>`;
@@ -951,7 +1653,7 @@
       return `<article class="detail-block"><h4 class="detail-block-title">${escapeHtml(title)}</h4><div class="detail-block-body">${body}</div></article>`;
     }
 
-    function renderResponseDetail(data){
+    function renderResponseDetail(data, analytics = null){
       const response = data?.response || {};
       const general = data?.section1?.general_info || {};
       detailModalTitle.textContent = general.company_name ? `Detalle · ${general.company_name}` : "Detalle de respuesta";
@@ -974,7 +1676,16 @@
         return `<section class="detail-section"><h3 class="detail-section-title">${escapeHtml(DETAIL_SECTION_TITLES[sectionKey])}</h3><div class="detail-section-body">${blocks}</div></section>`;
       }).join("");
 
-      detailContent.innerHTML = summary + sections;
+      const analysisHtml = renderIndividualAnalysis(analytics || {error:"El análisis energético no fue cargado."});
+
+      detailContent.innerHTML = `
+        <div class="detail-tabs" role="tablist" aria-label="Vista del registro">
+          <button type="button" class="detail-tab-button active" data-detail-tab="analysis" role="tab" aria-selected="true">Análisis energético</button>
+          <button type="button" class="detail-tab-button" data-detail-tab="capture" role="tab" aria-selected="false">Datos capturados</button>
+        </div>
+        <div class="detail-tab-pane" data-detail-pane="analysis">${analysisHtml}</div>
+        <div class="detail-tab-pane" data-detail-pane="capture" hidden>${summary + sections}</div>
+      `;
     }
 
     function closeDetail(){
@@ -988,14 +1699,25 @@
       detailModal.setAttribute("aria-hidden","false");
       document.body.classList.add("detail-open");
       detailModalTitle.textContent = companyName ? `Detalle · ${companyName}` : "Detalle de respuesta";
-      detailModalSubtitle.textContent = "Cargando las ocho secciones…";
-      detailContent.innerHTML = '<div class="detail-loading">Consultando la respuesta completa en Supabase…</div>';
-      try{
-        const data = await apiRpc("admin_get_response_detail", {p_response_id:responseId});
-        renderResponseDetail(data);
-      }catch(error){
-        detailContent.innerHTML = `<div class="detail-error">${escapeHtml(error.message || "No fue posible cargar el detalle.")}</div>`;
+      detailModalSubtitle.textContent = "Cargando análisis energético y datos capturados…";
+      detailContent.innerHTML = '<div class="detail-loading">Consultando la respuesta y la capa analítica en Supabase…</div>';
+
+      const [detailResult, analysisResult] = await Promise.allSettled([
+        apiRpc("admin_get_response_detail", {p_response_id:responseId}),
+        loadIndividualAnalysis(responseId)
+      ]);
+
+      if (detailResult.status !== "fulfilled"){
+        const message = detailResult.reason?.message || "No fue posible cargar el detalle de la respuesta.";
+        detailContent.innerHTML = `<div class="detail-error">${escapeHtml(message)}</div>`;
+        return;
       }
+
+      const analytics = analysisResult.status === "fulfilled"
+        ? analysisResult.value
+        : {error:analysisResult.reason?.message || "No fue posible consultar las vistas analíticas."};
+
+      renderResponseDetail(detailResult.value, analytics);
     }
 
     function updateMetrics(){
@@ -1130,6 +1852,12 @@
       const button = event.target.closest("[data-detail-id]");
       if (!button) return;
       openDetail(button.dataset.detailId, button.dataset.company || "");
+    });
+
+    detailContent.addEventListener("click", event => {
+      const tabButton = event.target.closest("[data-detail-tab]");
+      if (!tabButton) return;
+      activateDetailTab(tabButton.dataset.detailTab);
     });
 
     detailCloseButton.addEventListener("click", closeDetail);
