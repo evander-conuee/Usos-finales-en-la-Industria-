@@ -2747,7 +2747,7 @@
       [12,26,60,16,32,42,34,46].forEach((w,i)=>ws.getColumn(i+1).width=w); return ws;
     }
 
-    function exportBarText(pct,blocks=24){ const n=Math.max(0,Math.min(blocks,Math.round(Number(pct||0)/100*blocks))); return "█".repeat(n)+"░".repeat(blocks-n); }
+    function exportBarText(pct,blocks=20){ const n=Math.max(0,Math.min(blocks,Math.round(Number(pct||0)/100*blocks))); return "█".repeat(n)+"░".repeat(blocks-n); }
 
     function exportMakeGeneralDashboard(wb,payload){
       const ws=wb.addWorksheet("Dashboard general"); exportTitle(ws,"Dashboard general · muestra exportada","Resumen ejecutivo de las respuestas enviadas incluidas en este archivo.","L"); exportSetView(ws,2,0);
@@ -2770,7 +2770,7 @@
     function exportMakeIndividualDashboard(wb,payload){
       const ws=wb.addWorksheet("Dashboard establecimiento"); exportTitle(ws,"Dashboard establecimiento","Un único dashboard individual. Seleccione Empresa — Planta/Sucursal — ID corto para actualizar sus indicadores.","N"); exportSetView(ws,2,0);
       const lastEst=Math.max(5,4+(payload.establishments||[]).length);
-      ws.getCell("D3").value="Establecimiento seleccionado:";ws.getCell("D3").font={bold:true,color:{argb:EXPORT_COLORS.greenDark}};ws.mergeCells("E3:G3");const sel=ws.getCell("E3");sel.value=(payload.establishments||[])[0]?.dashboard_selector_label||"";sel.dataValidation={type:"list",allowBlank:false,formulae:[`'Establecimientos'!$AA$5:$AA$${lastEst}`]};sel.fill={type:"pattern",pattern:"solid",fgColor:{argb:EXPORT_COLORS.white}};sel.border={top:{style:"thin",color:{argb:EXPORT_COLORS.border}},bottom:{style:"thin",color:{argb:EXPORT_COLORS.border}},left:{style:"thin",color:{argb:EXPORT_COLORS.border}},right:{style:"thin",color:{argb:EXPORT_COLORS.border}}};sel.font={bold:true,color:{argb:EXPORT_COLORS.greenDark}};
+      ws.getCell("D3").value="Establecimiento seleccionado:";ws.getCell("D3").font={bold:true,color:{argb:EXPORT_COLORS.greenDark}};ws.mergeCells("E3:M3");const sel=ws.getCell("E3");sel.value=(payload.establishments||[])[0]?.dashboard_selector_label||"";sel.dataValidation={type:"list",allowBlank:false,formulae:[`'Establecimientos'!$AA$5:$AA$${lastEst}`]};sel.fill={type:"pattern",pattern:"solid",fgColor:{argb:EXPORT_COLORS.white}};sel.border={top:{style:"thin",color:{argb:EXPORT_COLORS.border}},bottom:{style:"thin",color:{argb:EXPORT_COLORS.border}},left:{style:"thin",color:{argb:EXPORT_COLORS.border}},right:{style:"thin",color:{argb:EXPORT_COLORS.border}}};sel.font={bold:true,color:{argb:EXPORT_COLORS.greenDark}};
       ws.getCell("N3").value=""; exportSetFormula(ws.getCell("N3"),`IFERROR(INDEX(Establecimientos!$A$5:$A$${lastEst},MATCH($E$3,Establecimientos!$AA$5:$AA$${lastEst},0)),\"\")`); ws.getColumn(14).hidden=true;
       const lookup=(col)=>`IFERROR(INDEX(Establecimientos!$${col}$5:$${col}$${lastEst},MATCH($E$3,Establecimientos!$AA$5:$AA$${lastEst},0)),\"\")`;
       const cards=[
@@ -2783,7 +2783,7 @@
         ["G8","I10","Intensidad energética",`IFERROR(TEXT((${lookup("Y")}),\"#,##0.00\")&\" GJ/empleado·año\",\"—\")`],
         ["J8","M10","Ranking",`IFERROR((${lookup("Q")})&CHAR(10)&\"Segundo: \"&(${lookup("S")}),\"—\")`]
       ];
-      cards.forEach(([a,b,label,formula])=>{ws.mergeCells(`${a}:${b}`);const c=ws.getCell(a);c.value={formula:`\"${label}\\n\"&(${formula})`};c.font={bold:true,size:12,color:{argb:EXPORT_COLORS.greenDark}};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:EXPORT_COLORS.paleGreen}};c.alignment={horizontal:"center",vertical:"middle",wrapText:true};c.border={top:{style:"thin",color:{argb:EXPORT_COLORS.border}},bottom:{style:"thin",color:{argb:EXPORT_COLORS.border}},left:{style:"thin",color:{argb:EXPORT_COLORS.border}},right:{style:"thin",color:{argb:EXPORT_COLORS.border}}};});
+      cards.forEach(([a,b,label,formula])=>{ws.mergeCells(`${a}:${b}`);const c=ws.getCell(a);c.value={formula:`\"${label}\"&CHAR(10)&(${formula})`};c.font={bold:true,size:12,color:{argb:EXPORT_COLORS.greenDark}};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:EXPORT_COLORS.paleGreen}};c.alignment={horizontal:"center",vertical:"middle",wrapText:true};c.border={top:{style:"thin",color:{argb:EXPORT_COLORS.border}},bottom:{style:"thin",color:{argb:EXPORT_COLORS.border}},left:{style:"thin",color:{argb:EXPORT_COLORS.border}},right:{style:"thin",color:{argb:EXPORT_COLORS.border}}};});
       ws.getRow(4).height=30;ws.getRow(5).height=30;ws.getRow(6).height=30;ws.getRow(8).height=30;ws.getRow(9).height=30;ws.getRow(10).height=30;
 
       ws.getRow(13).values=["Suministro eléctrico","kWh/año","Participación","Visual"];exportStyleHeader(ws.getRow(13),EXPORT_COLORS.greenMid);
