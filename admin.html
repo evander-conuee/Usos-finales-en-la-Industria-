@@ -616,6 +616,12 @@
     .analysis-stack-segment.secondary{background:#9fb892}
     .analysis-stack-segment.muted{background:#d8dfdc}
     .analysis-stack-segment.warning{background:#c99a3e}
+
+    /* Paleta analítica v7 · tonos diferenciados y suaves */
+    .analysis-stack-segment.supply-grid{background:#4f8b83}
+    .analysis-stack-segment.supply-autogen{background:#a8c9b8}
+    .analysis-stack-segment.coverage-characterized{background:#547fb4}
+    .analysis-stack-segment.coverage-residual{background:#d3dee8}
     .analysis-legend{
       display:flex;
       flex-wrap:wrap;
@@ -629,6 +635,10 @@
     .analysis-dot.secondary{background:#9fb892}
     .analysis-dot.muted{background:#c8d0cd}
     .analysis-dot.warning{background:#c99a3e}
+    .analysis-dot.supply-grid{background:#4f8b83}
+    .analysis-dot.supply-autogen{background:#a8c9b8}
+    .analysis-dot.coverage-characterized{background:#547fb4}
+    .analysis-dot.coverage-residual{background:#b9c8d6}
     .analysis-big-number{font-size:23px;font-weight:700;color:#244739}
     .analysis-small-note{margin-top:7px;font-size:10.5px;color:#717c81;line-height:1.45}
 
@@ -646,7 +656,7 @@
     .analysis-bar-track{
       height:9px;
       border-radius:999px;
-      background:#edf1ef;
+      background:#edf1f3;
       overflow:hidden;
     }
     .analysis-bar-fill{
@@ -1397,12 +1407,12 @@
           <div class="analysis-big-number">${escapeHtml(formatKwh(total))}</div>
           <div class="analysis-small-note">Electricidad total de referencia del establecimiento.</div>
           <div class="analysis-stack" style="margin-top:13px">
-            <div class="analysis-stack-segment primary" style="width:${clampVisualPct(gridPct)}%"></div>
-            <div class="analysis-stack-segment secondary" style="width:${clampVisualPct(autogenPct)}%"></div>
+            <div class="analysis-stack-segment supply-grid" style="width:${clampVisualPct(gridPct)}%"></div>
+            <div class="analysis-stack-segment supply-autogen" style="width:${clampVisualPct(autogenPct)}%"></div>
           </div>
           <div class="analysis-legend">
-            <span class="analysis-legend-item"><i class="analysis-dot"></i>Adquirida: ${escapeHtml(formatKwh(grid))} · ${escapeHtml(formatPercent(gridPct))}</span>
-            <span class="analysis-legend-item"><i class="analysis-dot secondary"></i>Autogenerada: ${escapeHtml(formatKwh(autogen))} · ${escapeHtml(formatPercent(autogenPct))}</span>
+            <span class="analysis-legend-item"><i class="analysis-dot supply-grid"></i>Adquirida: ${escapeHtml(formatKwh(grid))} · ${escapeHtml(formatPercent(gridPct))}</span>
+            <span class="analysis-legend-item"><i class="analysis-dot supply-autogen"></i>Autogenerada: ${escapeHtml(formatKwh(autogen))} · ${escapeHtml(formatPercent(autogenPct))}</span>
           </div>
         </div>
       </article>`;
@@ -1426,19 +1436,49 @@
           <div class="analysis-big-number">${escapeHtml(formatPercent(coverage))}</div>
           <div class="analysis-small-note"><span class="analysis-status-text ${coverageStatusClass(status)}">${escapeHtml(coverageStatusLabel(status))}</span></div>
           <div class="analysis-stack" style="margin-top:13px">
-            <div class="analysis-stack-segment primary" style="width:${charVisual}%"></div>
-            <div class="analysis-stack-segment muted" style="width:${residualVisual}%"></div>
+            <div class="analysis-stack-segment coverage-characterized" style="width:${charVisual}%"></div>
+            <div class="analysis-stack-segment coverage-residual" style="width:${residualVisual}%"></div>
           </div>
           <div class="analysis-legend">
-            <span class="analysis-legend-item"><i class="analysis-dot"></i>Caracterizada: ${escapeHtml(formatKwh(characterized))}</span>
-            <span class="analysis-legend-item"><i class="analysis-dot muted"></i>No caracterizada: ${escapeHtml(formatKwh(residual))}</span>
+            <span class="analysis-legend-item"><i class="analysis-dot coverage-characterized"></i>Caracterizada: ${escapeHtml(formatKwh(characterized))}</span>
+            <span class="analysis-legend-item"><i class="analysis-dot coverage-residual"></i>No caracterizada: ${escapeHtml(formatKwh(residual))}</span>
           </div>
           ${over > 0 ? `<div class="analysis-alert danger" style="margin-top:12px"><strong>Sobrecaracterización</strong>La energía caracterizada supera la referencia en ${escapeHtml(formatKwh(over))}. El valor no se trunca a 100 %.</div>` : ""}
         </div>
       </article>`;
     }
 
-    function renderBarRows(rows, valueKey, formatter, sourceRows = []){
+    function analysisBarColor(row, paletteMode = "default"){
+      const code = String(row?.end_use_code || "");
+
+      const electricBlues = {
+        direct_heat:"#3f6fae",
+        lighting:"#5f8fc5",
+        fixed_motive_power:"#79a8d0",
+        hvac:"#9fc2dc",
+        steam:"#315f98",
+        water_heating:"#6d9fcd",
+        refrigeration:"#4e82b5",
+        internal_transport:"#88b4d3"
+      };
+
+      const endUsePalette = {
+        direct_heat:"#c96f68",       // rojo suave
+        lighting:"#8b6db1",          // violeta
+        fixed_motive_power:"#70985f", // verde
+        hvac:"#9a7a63",               // café
+        steam:"#cf9368",
+        water_heating:"#d2a35e",
+        refrigeration:"#548c9b",
+        internal_transport:"#b38c62"
+      };
+
+      if (paletteMode === "electric") return electricBlues[code] || "#6f9fc9";
+      if (paletteMode === "end-use") return endUsePalette[code] || "#758f84";
+      return "#5b7f3a";
+    }
+
+    function renderBarRows(rows, valueKey, formatter, sourceRows = [], paletteMode = "default"){
       const calculated = rows.filter(row => asNumber(row?.[valueKey]) !== null && asNumber(row?.[valueKey]) >= 0);
       if (!calculated.length) return '<div class="analysis-empty">No existen resultados cuantificados para este bloque.</div>';
       const max = Math.max(...calculated.map(row => asNumber(row[valueKey]) || 0),0);
@@ -1456,7 +1496,7 @@
             <span class="analysis-bar-label">${escapeHtml(row.end_use_label || row.end_use_code || "Uso final")}</span>
             <span class="analysis-bar-value">${escapeHtml(formatter(value))}</span>
           </div>
-          <div class="analysis-bar-track"><div class="analysis-bar-fill" style="width:${Math.max(0,Math.min(100,width))}%"></div></div>
+          <div class="analysis-bar-track"><div class="analysis-bar-fill" style="width:${Math.max(0,Math.min(100,width))}%;background:${analysisBarColor(row,paletteMode)}"></div></div>
           ${sources ? `<div class="analysis-source-tags">${sources}</div>` : ""}
         </div>`;
       }).join("")}</div>`;
@@ -1507,17 +1547,28 @@
       </article>`;
     }
 
+    function methodologyFlagDetail(flag){
+      const code = String(flag?.flag_code || "");
+      if (code === "energy_factor_unavailable"){
+        return "El consumo físico se conserva, pero no existe un poder calorífico inferior (PCI) o factor energético inequívoco para convertirlo a GJ.";
+      }
+      if (code === "physical_unit_not_standardizable"){
+        return "El consumo físico se conserva, pero la unidad reportada no puede estandarizarse con una regla metodológica válida; por ello no se fuerza una conversión energética.";
+      }
+      return flag?.flag_detail || flag?.flag_code || "Elemento que requiere revisión.";
+    }
+
     function renderMethodologyFlags(flags){
       if (!flags.length) return "";
       return `<article class="analysis-card">
         <div class="analysis-card-head">
           <h4>Banderas metodológicas</h4>
-          <p>Advertencias de cálculo o elementos que requieren interpretación administrativa.</p>
+          <p>Advertencias de cálculo o elementos que requieren interpretación administrativa. PCI significa poder calorífico inferior; no es una unidad, sino un factor para convertir una cantidad de combustible en energía.</p>
         </div>
         <div class="analysis-card-body" style="display:grid;gap:8px">
           ${flags.map(flag => `<div class="analysis-alert">
             <strong>${escapeHtml(flag.end_use_label || "Revisión metodológica")}</strong>
-            ${escapeHtml(flag.flag_detail || flag.flag_code || "Elemento que requiere revisión.")}
+            ${escapeHtml(methodologyFlagDetail(flag))}
           </div>`).join("")}
         </div>
       </article>`;
@@ -1587,7 +1638,7 @@
             <p>Electricidad caracterizada por uso final. Un uso térmico puede aparecer aquí cuando utiliza electricidad.</p>
           </div>
           <div class="analysis-card-body">
-            ${renderBarRows(electricRows,"annual_kwh",formatKwh)}
+            ${renderBarRows(electricRows,"annual_kwh",formatKwh,[],"electric")}
           </div>
         </article>
 
@@ -1597,7 +1648,7 @@
             <p>Resultados cuantificables expresados en una unidad energética común. La fuente energética se mantiene como dimensión independiente.</p>
           </div>
           <div class="analysis-card-body">
-            ${renderBarRows(endUseRows,"annual_gj_calculable",formatGj,sourceRows)}
+            ${renderBarRows(endUseRows,"annual_gj_calculable",formatGj,sourceRows,"end-use")}
           </div>
         </article>
 
