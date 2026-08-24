@@ -769,6 +769,177 @@
       font-style:italic;
     }
 
+
+    /* =========================================================
+       DASHBOARD GENERAL v8
+    ========================================================= */
+    .admin-view-switch{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:5px;
+      padding:5px;
+      width:max-content;
+      max-width:100%;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.9);
+      border-radius:9px;
+      box-shadow:var(--shadow);
+    }
+    .admin-view-button{
+      min-height:37px;
+      padding:8px 14px;
+      border:1px solid transparent;
+      border-radius:7px;
+      background:transparent;
+      color:#52615b;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      white-space:nowrap;
+      transition:background .15s ease,color .15s ease,border-color .15s ease;
+    }
+    .admin-view-button:hover{background:#f2f6f3;color:#28473b}
+    .admin-view-button.active{
+      color:#264b3b;
+      background:#eef4e9;
+      border-color:#cad9c2;
+      box-shadow:0 1px 3px rgba(0,0,0,.05);
+    }
+    .admin-main-pane{display:grid;gap:18px}
+
+    .general-dashboard-shell{display:grid;gap:16px}
+    .general-dashboard-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      padding:17px 19px;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .general-dashboard-head h2{margin:0;color:#254739;font-size:19px}
+    .general-dashboard-head p{margin:5px 0 0;color:var(--muted);font-size:11.5px;line-height:1.45}
+    .general-sample-badge{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      min-height:34px;
+      padding:7px 11px;
+      border:1px solid #cddbd2;
+      border-radius:999px;
+      background:#f1f6f3;
+      color:#34594a;
+      font-size:11px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .general-filters{
+      display:grid;
+      grid-template-columns:minmax(180px,1fr) minmax(160px,.8fr) minmax(160px,.8fr) auto;
+      gap:12px;
+      align-items:end;
+      padding:14px 16px;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .general-filter label{margin-bottom:5px;color:#51605a;font-size:10.5px}
+    .general-filter select{
+      width:100%;
+      min-height:38px;
+      padding:8px 10px;
+      border:1px solid #c4cdca;
+      border-radius:7px;
+      background:#fff;
+      color:#2d3b36;
+      font:inherit;
+      font-size:12px;
+      outline:none;
+    }
+    .general-filter select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(91,127,58,.12)}
+    .general-filter-reset{min-height:38px;padding:8px 13px}
+
+    .general-kpis{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:13px;
+    }
+    .general-kpi{
+      min-width:0;
+      padding:15px 16px;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.82);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .general-kpi-label{font-size:10.5px;font-weight:700;color:#68756f;text-transform:uppercase;letter-spacing:.025em}
+    .general-kpi-value{margin-top:7px;color:#274b3d;font-size:24px;font-weight:700;line-height:1.1}
+    .general-kpi-sub{margin-top:5px;color:#79837f;font-size:10px;line-height:1.35}
+
+    .general-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+    .general-card{
+      min-width:0;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.85);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .general-card.full{grid-column:1/-1}
+    .general-card-head{padding:13px 15px;border-bottom:1px solid #dde4e1;background:#f7f9f8}
+    .general-card-head h3{margin:0;color:#284b3e;font-size:14px}
+    .general-card-head p{margin:4px 0 0;color:#748079;font-size:10.5px;line-height:1.4}
+    .general-card-body{padding:14px 15px}
+    .general-empty{padding:24px;text-align:center;color:#78837e;font-size:11.5px}
+
+    .general-bar-list{display:grid;gap:10px}
+    .general-bar-row{display:grid;gap:5px}
+    .general-bar-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;font-size:11.5px}
+    .general-bar-label{font-weight:700;color:#354942}
+    .general-bar-value{color:#5f6d67;white-space:nowrap;text-align:right}
+    .general-bar-track{height:8px;border-radius:999px;background:#edf1ef;overflow:hidden}
+    .general-bar-fill{height:100%;border-radius:999px}
+    .general-bar-meta{color:#7b8681;font-size:9.8px;line-height:1.35}
+
+    .coverage-list{display:grid;gap:9px;max-height:350px;overflow:auto;padding-right:4px}
+    .coverage-est-row{display:grid;grid-template-columns:minmax(130px,220px) 1fr 82px;gap:10px;align-items:center}
+    .coverage-est-name{font-size:10.5px;font-weight:700;color:#394a44;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .coverage-est-track{height:8px;background:#edf1ef;border-radius:999px;overflow:hidden}
+    .coverage-est-fill{height:100%;background:#5c86b4;border-radius:999px}
+    .coverage-est-fill.over{background:#c87870}
+    .coverage-est-value{text-align:right;font-size:10.5px;font-weight:700;color:#56645f;white-space:nowrap}
+
+    .general-table-wrap{overflow:auto;max-height:390px}
+    .general-table{min-width:880px;width:100%;border-collapse:collapse}
+    .general-table th{position:sticky;top:0;z-index:1;background:#f2f6f4;color:#40514a;font-size:10.5px;padding:9px 10px}
+    .general-table td{font-size:10.8px;padding:9px 10px;border-bottom:1px solid #edf0ef}
+    .general-table tr:last-child td{border-bottom:0}
+    .general-table .num{text-align:right;white-space:nowrap}
+    .general-method-note{
+      padding:11px 13px;
+      border:1px solid #dde5e1;
+      border-radius:8px;
+      background:#f7f9f8;
+      color:#69756f;
+      font-size:10.2px;
+      line-height:1.45;
+    }
+    .general-loading{
+      padding:38px 20px;
+      text-align:center;
+      color:#6f7b76;
+      background:#fff;
+      border:1px solid rgba(207,214,217,.8);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      font-size:12px;
+    }
+
     @media (max-width:1400px){
       .header-inner{padding-left:24px;padding-right:24px}
     }
@@ -780,6 +951,8 @@
       .instrument-title p{display:none}
       .header-logout-button{padding:8px 12px}
       .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .general-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .general-filters{grid-template-columns:repeat(2,minmax(0,1fr))}
       .records-header{grid-template-columns:1fr auto minmax(250px,300px);gap:12px}
     }
     @media (max-width:760px){
@@ -799,6 +972,15 @@
       main{width:min(100% - 24px,var(--content-max));margin-top:16px}
       .panel-body{padding:18px}
       .metrics{grid-template-columns:1fr}
+      .general-kpis{grid-template-columns:1fr}
+      .general-grid{grid-template-columns:1fr}
+      .general-card.full{grid-column:1}
+      .general-filters{grid-template-columns:1fr}
+      .general-dashboard-head{flex-direction:column}
+      .general-sample-badge{align-self:flex-start}
+      .admin-view-switch{width:100%}
+      .admin-view-button{flex:1}
+      .coverage-est-row{grid-template-columns:minmax(100px,1fr) 1fr 68px}
       .toolbar-actions{width:100%}
       .toolbar-actions button{flex:1}
       .records-header{grid-template-columns:1fr}
@@ -866,6 +1048,50 @@
         </div>
       </div>
 
+      <div class="admin-view-switch" role="tablist" aria-label="Vistas administrativas">
+        <button id="generalViewButton" class="admin-view-button active" type="button" role="tab" aria-selected="true" data-admin-view="general">Resumen general</button>
+        <button id="recordsViewButton" class="admin-view-button" type="button" role="tab" aria-selected="false" data-admin-view="records">Registros recibidos</button>
+      </div>
+
+      <div id="generalDashboardPane" class="admin-main-pane" role="tabpanel">
+        <section class="general-dashboard-shell">
+          <div class="general-dashboard-head">
+            <div>
+              <h2>Resumen general de la muestra</h2>
+              <p>Lectura agregada de las respuestas enviadas. Los porcentajes corresponden a la muestra disponible y a los filtros seleccionados.</p>
+            </div>
+            <span id="generalSampleBadge" class="general-sample-badge">Cargando muestra…</span>
+          </div>
+
+          <div class="general-filters" aria-label="Filtros del resumen general">
+            <div class="general-filter">
+              <label for="generalSubsectorFilter">Subsector</label>
+              <select id="generalSubsectorFilter"><option value="">Todos los subsectores</option></select>
+            </div>
+            <div class="general-filter">
+              <label for="generalStateFilter">Estado</label>
+              <select id="generalStateFilter"><option value="">Todos los estados</option></select>
+            </div>
+            <div class="general-filter">
+              <label for="generalSizeFilter">Tamaño del establecimiento</label>
+              <select id="generalSizeFilter">
+                <option value="">Todos los tamaños</option>
+                <option value="Micro">Micro</option>
+                <option value="Pequeña">Pequeña</option>
+                <option value="Mediana">Mediana</option>
+                <option value="Grande">Grande</option>
+              </select>
+            </div>
+            <button id="generalResetFilters" class="secondary-button general-filter-reset" type="button">Limpiar filtros</button>
+          </div>
+
+          <div id="generalDashboardContent" class="general-dashboard-shell">
+            <div class="general-loading">Consultando la capa analítica de Supabase…</div>
+          </div>
+        </section>
+      </div>
+
+      <div id="recordsPanelView" class="admin-main-pane" role="tabpanel" hidden>
       <div class="metrics" aria-label="Resumen de registros">
         <article class="metric">
           <div class="metric-label">Respuestas totales</div>
@@ -927,6 +1153,7 @@
         </div>
         <div id="emptyState" class="empty-state" hidden>No se encontraron registros con ese criterio.</div>
       </section>
+      </div>
     </section>
   </main>
 
@@ -972,10 +1199,28 @@
     const detailModalTitle = qs("#detailModalTitle");
     const detailModalSubtitle = qs("#detailModalSubtitle");
     const detailCloseButton = qs("#detailCloseButton");
+    const generalViewButton = qs("#generalViewButton");
+    const recordsViewButton = qs("#recordsViewButton");
+    const generalDashboardPane = qs("#generalDashboardPane");
+    const recordsPanelView = qs("#recordsPanelView");
+    const generalDashboardContent = qs("#generalDashboardContent");
+    const generalSampleBadge = qs("#generalSampleBadge");
+    const generalSubsectorFilter = qs("#generalSubsectorFilter");
+    const generalStateFilter = qs("#generalStateFilter");
+    const generalSizeFilter = qs("#generalSizeFilter");
+    const generalResetFilters = qs("#generalResetFilters");
 
     let session = null;
     let records = [];
     let recordsSortDirection = "desc";
+    let generalAnalytics = {
+      dashboard:[],
+      electricUses:[],
+      endUseTotals:[],
+      rankings:[],
+      benchmark:[]
+    };
+    let generalAnalyticsLoaded = false;
 
     const STATE_ABBREVIATIONS = Object.freeze({
       "01":"AGS", "02":"BC", "03":"BCS", "04":"CAMP",
@@ -1473,8 +1718,15 @@
         internal_transport:"#b38c62"
       };
 
+      const thermalPalette = {
+        steam:"#c77f5f",
+        direct_heat:"#d39b66",
+        water_heating:"#dfb777"
+      };
+
       if (paletteMode === "electric") return electricBlues[code] || "#6f9fc9";
       if (paletteMode === "end-use") return endUsePalette[code] || "#758f84";
+      if (paletteMode === "thermal") return thermalPalette[code] || "#c99972";
       return "#5b7f3a";
     }
 
@@ -1771,6 +2023,251 @@
       renderResponseDetail(detailResult.value, analytics);
     }
 
+
+    function activateAdminView(viewName){
+      const generalActive = viewName === "general";
+      generalDashboardPane.hidden = !generalActive;
+      recordsPanelView.hidden = generalActive;
+      generalViewButton.classList.toggle("active",generalActive);
+      recordsViewButton.classList.toggle("active",!generalActive);
+      generalViewButton.setAttribute("aria-selected",generalActive ? "true" : "false");
+      recordsViewButton.setAttribute("aria-selected",generalActive ? "false" : "true");
+    }
+
+    function establishmentSize(employeeCount){
+      const n = asNumber(employeeCount);
+      if (n === null) return "Sin dato";
+      if (n <= 10) return "Micro";
+      if (n <= 50) return "Pequeña";
+      if (n <= 250) return "Mediana";
+      return "Grande";
+    }
+
+    function populateGeneralFilters(){
+      const submitted = generalAnalytics.dashboard.filter(r => r.status === "submitted");
+      const subsectors = [...new Set(submitted.map(r => String(r.industry_subsector_code || "").trim()).filter(Boolean))]
+        .sort((a,b) => a.localeCompare(b,"es-MX",{numeric:true}));
+      const states = [...new Set(submitted.map(r => String(r.state_code || "").padStart(2,"0")).filter(s => s && s !== "00"))]
+        .sort((a,b) => a.localeCompare(b,"es-MX",{numeric:true}));
+
+      const currentSubsector = generalSubsectorFilter.value;
+      const currentState = generalStateFilter.value;
+
+      generalSubsectorFilter.innerHTML = '<option value="">Todos los subsectores</option>'
+        + subsectors.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+      generalStateFilter.innerHTML = '<option value="">Todos los estados</option>'
+        + states.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)} · ${escapeHtml(stateAbbreviation(v))}</option>`).join("");
+
+      if (subsectors.includes(currentSubsector)) generalSubsectorFilter.value = currentSubsector;
+      if (states.includes(currentState)) generalStateFilter.value = currentState;
+    }
+
+    function filteredGeneralResponses(){
+      const subsector = generalSubsectorFilter.value;
+      const state = generalStateFilter.value;
+      const size = generalSizeFilter.value;
+      return generalAnalytics.dashboard.filter(r => {
+        if (r.status !== "submitted") return false;
+        if (subsector && String(r.industry_subsector_code || "") !== subsector) return false;
+        if (state && String(r.state_code || "").padStart(2,"0") !== state) return false;
+        if (size && establishmentSize(r.employee_count) !== size) return false;
+        return true;
+      });
+    }
+
+    function groupEnergyRows(rows, ids, valueKey, extraFilter = null){
+      const idSet = new Set(ids);
+      const grouped = new Map();
+      rows.forEach(row => {
+        if (!idSet.has(row.response_id)) return;
+        if (extraFilter && !extraFilter(row)) return;
+        const value = asNumber(row[valueKey]);
+        if (value === null) return;
+        const key = row.end_use_code || row.end_use_label || "unknown";
+        const current = grouped.get(key) || {
+          end_use_code:key,
+          end_use_label:row.end_use_label || key,
+          family_code:row.family_code || "",
+          family_label:row.family_label || "",
+          value:0
+        };
+        current.value += value;
+        grouped.set(key,current);
+      });
+      return [...grouped.values()].sort((a,b) => b.value - a.value);
+    }
+
+    function renderGeneralBars(rows, formatter, paletteMode, metaFormatter = null){
+      if (!rows.length) return '<div class="general-empty">No hay resultados cuantificados con los filtros seleccionados.</div>';
+      const total = rows.reduce((sum,row) => sum + Math.max(0,row.value || 0),0);
+      const max = Math.max(...rows.map(row => Math.max(0,row.value || 0)),0);
+      return `<div class="general-bar-list">${rows.map(row => {
+        const share = total > 0 ? row.value / total * 100 : null;
+        const width = max > 0 ? row.value / max * 100 : 0;
+        const color = analysisBarColor(row,paletteMode);
+        const meta = metaFormatter ? metaFormatter(row,share) : `Participación: ${formatPercent(share)}`;
+        return `<div class="general-bar-row">
+          <div class="general-bar-top">
+            <span class="general-bar-label">${escapeHtml(row.end_use_label || row.end_use_code)}</span>
+            <span class="general-bar-value">${escapeHtml(formatter(row.value))} · ${escapeHtml(formatPercent(share))}</span>
+          </div>
+          <div class="general-bar-track"><div class="general-bar-fill" style="width:${Math.max(0,Math.min(100,width))}%;background:${color}"></div></div>
+          <div class="general-bar-meta">${escapeHtml(meta)}</div>
+        </div>`;
+      }).join("")}</div>`;
+    }
+
+    function renderDominance(ids){
+      const idSet = new Set(ids);
+      const dominantRows = generalAnalytics.rankings.filter(r => idSet.has(r.response_id) && Number(r.end_use_rank) === 1);
+      const calculableIds = new Set(dominantRows.map(r => r.response_id));
+      if (!calculableIds.size) return '<div class="general-empty">No hay establecimientos con un uso final predominante cuantificable.</div>';
+      const grouped = new Map();
+      dominantRows.forEach(row => {
+        const key = row.end_use_code || row.end_use_label || "unknown";
+        const current = grouped.get(key) || {end_use_code:key,end_use_label:row.end_use_label || key,count:0,value:0};
+        current.count += 1;
+        current.value = current.count;
+        grouped.set(key,current);
+      });
+      const rows = [...grouped.values()].sort((a,b) => b.count - a.count);
+      const denominator = calculableIds.size;
+      const maxCount = Math.max(...rows.map(r => r.count),1);
+      return `<div class="general-bar-list">${rows.map(row => {
+        const pct = row.count / denominator * 100;
+        return `<div class="general-bar-row">
+          <div class="general-bar-top">
+            <span class="general-bar-label">${escapeHtml(row.end_use_label)}</span>
+            <span class="general-bar-value">${escapeHtml(formatPercent(pct))}</span>
+          </div>
+          <div class="general-bar-track"><div class="general-bar-fill" style="width:${row.count/maxCount*100}%;background:${analysisBarColor(row,"end-use")}"></div></div>
+          <div class="general-bar-meta">${escapeHtml(String(row.count))} de ${escapeHtml(String(denominator))} establecimiento(s) calculables.</div>
+        </div>`;
+      }).join("")}</div>`;
+    }
+
+    function renderCoverageEstablishments(responses){
+      const rows = responses
+        .filter(r => asNumber(r.electricity_coverage_pct) !== null && asNumber(r.electricity_reference_annual_kwh) !== null)
+        .sort((a,b) => (asNumber(a.electricity_coverage_pct) || 0) - (asNumber(b.electricity_coverage_pct) || 0));
+      if (!rows.length) return '<div class="general-empty">No hay coberturas eléctricas calculables con los filtros seleccionados.</div>';
+      return `<div class="coverage-list">${rows.map(row => {
+        const coverage = asNumber(row.electricity_coverage_pct) || 0;
+        const over = coverage > 100;
+        const width = Math.max(0,Math.min(100,coverage));
+        return `<div class="coverage-est-row" title="${escapeHtml(row.company_name || row.response_id || "Establecimiento")}">
+          <div class="coverage-est-name">${escapeHtml(row.company_name || "Sin nombre")}</div>
+          <div class="coverage-est-track"><div class="coverage-est-fill ${over ? "over" : ""}" style="width:${width}%"></div></div>
+          <div class="coverage-est-value">${escapeHtml(formatPercent(coverage))}</div>
+        </div>`;
+      }).join("")}</div>`;
+    }
+
+    function renderGeneralBenchmark(ids){
+      const idSet = new Set(ids);
+      const rows = generalAnalytics.benchmark.filter(r => idSet.has(r.response_id))
+        .sort((a,b) => String(a.company_name || "").localeCompare(String(b.company_name || ""),"es-MX"));
+      if (!rows.length) return '<div class="general-empty">No hay indicadores de intensidad disponibles con los filtros seleccionados.</div>';
+      return `<div class="general-table-wrap"><table class="general-table">
+        <thead><tr><th>Establecimiento</th><th>Subsector</th><th>Tamaño</th><th>Estado</th><th class="num">Cobertura eléctrica</th><th class="num">Intensidad eléctrica</th><th class="num">Intensidad energética caracterizada</th></tr></thead>
+        <tbody>${rows.map(row => `<tr>
+          <td class="company-name">${escapeHtml(row.company_name || "Sin nombre")}</td>
+          <td>${escapeHtml(row.industry_subsector_code || "—")}</td>
+          <td>${escapeHtml(row.establishment_size || establishmentSize(row.employee_count))}</td>
+          <td>${escapeHtml(stateAbbreviation(row.state_code))}</td>
+          <td class="num">${escapeHtml(formatPercent(row.electricity_coverage_pct))}</td>
+          <td class="num">${asNumber(row.electricity_intensity_kwh_per_employee) === null ? "—" : escapeHtml(`${formatNumber(row.electricity_intensity_kwh_per_employee,1)} kWh/empleado·año`)}</td>
+          <td class="num">${asNumber(row.characterized_energy_intensity_gj_per_employee) === null ? "—" : escapeHtml(`${formatNumber(row.characterized_energy_intensity_gj_per_employee,2)} GJ/empleado·año`)}</td>
+        </tr>`).join("")}</tbody>
+      </table></div>`;
+    }
+
+    function renderGeneralDashboard(){
+      if (!generalAnalyticsLoaded){
+        generalDashboardContent.innerHTML = '<div class="general-loading">Consultando la capa analítica de Supabase…</div>';
+        generalSampleBadge.textContent = "Cargando muestra…";
+        return;
+      }
+
+      const responses = filteredGeneralResponses();
+      const ids = responses.map(r => r.response_id);
+      const n = responses.length;
+      const subsectors = new Set(responses.map(r => r.industry_subsector_code).filter(Boolean)).size;
+      const states = new Set(responses.map(r => r.state_code).filter(Boolean)).size;
+      const autogen = responses.filter(r => (asNumber(r.autogeneration_annual_kwh) || 0) > 0).length;
+      generalSampleBadge.textContent = `n = ${n} establecimiento${n === 1 ? "" : "s"}`;
+
+      const electric = groupEnergyRows(generalAnalytics.electricUses,ids,"annual_kwh");
+      const thermal = groupEnergyRows(generalAnalytics.endUseTotals,ids,"annual_gj_calculable",row => row.family_code === "thermal_uses");
+      const totalEndUses = groupEnergyRows(generalAnalytics.endUseTotals,ids,"annual_gj_calculable",row => row.include_in_main_end_use_total === true);
+
+      generalDashboardContent.innerHTML = `
+        <div class="general-kpis">
+          <article class="general-kpi"><div class="general-kpi-label">Establecimientos analizados</div><div class="general-kpi-value">${n}</div><div class="general-kpi-sub">Respuestas enviadas con filtros activos.</div></article>
+          <article class="general-kpi"><div class="general-kpi-label">Subsectores representados</div><div class="general-kpi-value">${subsectors}</div><div class="general-kpi-sub">Subsectores distintos en la muestra filtrada.</div></article>
+          <article class="general-kpi"><div class="general-kpi-label">Estados representados</div><div class="general-kpi-value">${states}</div><div class="general-kpi-sub">Entidades federativas con respuestas.</div></article>
+          <article class="general-kpi"><div class="general-kpi-label">Con autogeneración</div><div class="general-kpi-value">${autogen}</div><div class="general-kpi-sub">Establecimientos que reportan electricidad autogenerada.</div></article>
+        </div>
+
+        <div class="general-grid">
+          <article class="general-card">
+            <div class="general-card-head"><h3>Usos finales eléctricos</h3><p>Peso de cada uso final dentro de la electricidad caracterizada de la muestra filtrada.</p></div>
+            <div class="general-card-body">${renderGeneralBars(electric,formatKwh,"electric")}</div>
+          </article>
+
+          <article class="general-card">
+            <div class="general-card-head"><h3>Usos térmicos</h3><p>Participación energética de Producción de vapor, Calor directo y Calentamiento de agua, expresada en GJ.</p></div>
+            <div class="general-card-body">${renderGeneralBars(thermal,formatGj,"thermal")}</div>
+          </article>
+
+          <article class="general-card">
+            <div class="general-card-head"><h3>Composición energética por uso final</h3><p>Peso agregado de los usos finales cuantificables en una unidad común. Generación de respaldo queda fuera de este total principal.</p></div>
+            <div class="general-card-body">${renderGeneralBars(totalEndUses,formatGj,"end-use")}</div>
+          </article>
+
+          <article class="general-card">
+            <div class="general-card-head"><h3>Uso final predominante</h3><p>Porcentaje de establecimientos calculables donde cada uso final ocupa el primer lugar.</p></div>
+            <div class="general-card-body">${renderDominance(ids)}</div>
+          </article>
+
+          <article class="general-card full">
+            <div class="general-card-head"><h3>Cobertura eléctrica por establecimiento</h3><p>Se conserva el valor individual; una cobertura superior a 100 % se muestra sin truncarla y se identifica visualmente.</p></div>
+            <div class="general-card-body">${renderCoverageEstablishments(responses)}</div>
+          </article>
+
+          <article class="general-card full">
+            <div class="general-card-head"><h3>Benchmark de intensidades</h3><p>Indicadores individuales para comparación dentro de grupos metodológicamente comparables.</p></div>
+            <div class="general-card-body">${renderGeneralBenchmark(ids)}</div>
+          </article>
+        </div>
+
+        <div class="general-method-note">
+          Estos resultados describen la muestra de respuestas disponible. Los porcentajes agregados no deben interpretarse como estimaciones representativas del sector industrial mexicano sin un diseño muestral y ponderaciones que lo sustenten.
+        </div>`;
+    }
+
+    async function loadGeneralAnalytics(){
+      generalAnalyticsLoaded = false;
+      renderGeneralDashboard();
+      try{
+        const [dashboard,electricUses,endUseTotals,rankings,benchmark] = await Promise.all([
+          apiGet('v_analysis_response_dashboard?select=response_id,status,company_name,industry_subsector_code,state_code,municipality_borough,employee_count,autogeneration_annual_kwh,electricity_reference_annual_kwh,electricity_characterized_annual_kwh,electricity_coverage_pct,electricity_uncharacterized_kwh,characterized_energy_gj_calculable,dominant_end_use,end_use_energy_quantification_complete'),
+          apiGet('v_analysis_electricity_by_end_use?select=response_id,family_code,family_label,end_use_code,end_use_label,annual_kwh'),
+          apiGet('v_analysis_end_use_totals?select=response_id,family_code,family_label,end_use_code,end_use_label,annual_gj_calculable,unquantified_component_rows,include_in_main_end_use_total'),
+          apiGet('v_analysis_end_use_ranking?select=response_id,family_code,family_label,end_use_code,end_use_label,annual_gj_calculable,end_use_rank'),
+          apiGet('v_analysis_benchmark?select=response_id,company_name,industry_subsector_code,state_code,municipality_borough,employee_count,establishment_size,electricity_reference_annual_kwh,electricity_coverage_pct,electricity_intensity_kwh_per_employee,characterized_energy_gj_calculable,characterized_energy_intensity_gj_per_employee,end_use_energy_quantification_complete')
+        ]);
+        generalAnalytics = {dashboard,electricUses,endUseTotals,rankings,benchmark};
+        generalAnalyticsLoaded = true;
+        populateGeneralFilters();
+        renderGeneralDashboard();
+      }catch(error){
+        generalAnalyticsLoaded = false;
+        generalSampleBadge.textContent = "Análisis no disponible";
+        generalDashboardContent.innerHTML = `<div class="detail-error">${escapeHtml(error.message || "No fue posible cargar el resumen general.")}</div>`;
+      }
+    }
+
     function updateMetrics(){
       const total = records.length;
       const submitted = records.filter(r => r.status === "submitted").length;
@@ -1870,7 +2367,8 @@
         return;
       }
       showAdmin();
-      await loadRecords();
+      activateAdminView("general");
+      await Promise.all([loadRecords(), loadGeneralAnalytics()]);
     }
 
     loginForm.addEventListener("submit", async event => {
@@ -1889,15 +2387,30 @@
           throw new Error("La cuenta es válida, pero no tiene permisos de administrador para este instrumento.");
         }
         showAdmin();
-        await loadRecords();
+        activateAdminView("general");
+        await Promise.all([loadRecords(), loadGeneralAnalytics()]);
       }catch(error){
         clearSession();
         showLogin(error.message || "No fue posible iniciar sesión.");
       }
     });
 
-    refreshButton.addEventListener("click", loadRecords);
+    refreshButton.addEventListener("click", async () => {
+      await Promise.all([loadRecords(), loadGeneralAnalytics()]);
+    });
     recordsSearch.addEventListener("input", renderRecords);
+
+    generalViewButton.addEventListener("click", () => activateAdminView("general"));
+    recordsViewButton.addEventListener("click", () => activateAdminView("records"));
+    [generalSubsectorFilter,generalStateFilter,generalSizeFilter].forEach(control => {
+      control.addEventListener("change", renderGeneralDashboard);
+    });
+    generalResetFilters.addEventListener("click", () => {
+      generalSubsectorFilter.value = "";
+      generalStateFilter.value = "";
+      generalSizeFilter.value = "";
+      renderGeneralDashboard();
+    });
 
     recordsBody.addEventListener("click", event => {
       const button = event.target.closest("[data-detail-id]");
@@ -1934,6 +2447,7 @@
       const token = session?.access_token;
       clearSession();
       showLogin();
+      activateAdminView("general");
       qs("#adminEmail").value = "";
       qs("#adminPassword").value = "";
       if (token){
