@@ -107,38 +107,6 @@
       line-height:1.35;
     }
 
-    .admin-access-link{
-      position:absolute;
-      right:24px;
-      top:50%;
-      transform:translateY(-50%);
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      min-height:38px;
-      padding:8px 13px;
-      border:1px solid rgba(255,255,255,.32);
-      border-radius:999px;
-      color:#eef5f2;
-      background:rgba(255,255,255,.055);
-      text-decoration:none;
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.01em;
-      white-space:nowrap;
-      transition:background .18s ease,border-color .18s ease,transform .18s ease;
-    }
-    .admin-access-link:hover{
-      background:rgba(255,255,255,.11);
-      border-color:rgba(206,226,0,.68);
-      color:#ffffff;
-    }
-    .admin-access-link:focus-visible{
-      outline:3px solid rgba(206,226,0,.48);
-      outline-offset:3px;
-    }
-    .admin-access-link svg{width:15px;height:15px;flex:0 0 15px}
-
     /* =========================================================
        CONTENIDO
     ========================================================= */
@@ -1521,20 +1489,6 @@
       .nav-row{align-items:stretch}
       .nav-button{flex:1;padding:10px 12px}
     }
-
-    @media (max-width:1400px){
-      .header-inner{padding-right:170px}
-      .admin-access-link{right:18px}
-    }
-    @media (max-width:980px){
-      .header-inner{padding-right:90px}
-      .admin-access-link{right:12px;width:40px;height:40px;padding:0;justify-content:center}
-      .admin-access-link .admin-access-label{display:none}
-    }
-    @media (max-width:620px){
-      .header-inner{padding-right:62px}
-      .admin-access-link{right:8px;width:36px;height:36px}
-    }
   </style>
 </head>
 
@@ -1549,13 +1503,6 @@
         <p>Instrumento de recolección de información energética para establecimientos industriales</p>
       </div>
     </div>
-    <a class="admin-access-link" href="admin.html" aria-label="Acceso administrativo" title="Acceso administrativo">
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="10" width="16" height="10" rx="2"></rect>
-        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
-      </svg>
-      <span class="admin-access-label">Acceso administrativo</span>
-    </a>
   </header>
 
   <main>
@@ -9092,9 +9039,10 @@
           usesForklifts === true
             ? qsa(".forklift-card", qs("#forkliftGroups")).map(card => {
                 const energyType = fieldValue(card, "energy_type");
-                const electric = energyType === "electricity";
+                const electric = energyType === "electric";
+                const normalizedEnergyType = electric ? "electricity" : energyType;
                 return {
-                  energy_type: energyType,
+                  energy_type: normalizedEnergyType,
                   energy_other:
                     energyType === "other"
                       ? fieldValue(card, "energy_other")
