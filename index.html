@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- index vRobot1 · montacargas corregido + acceso admin + asistente de progreso -->
+  <!-- index vigente · montacargas eléctrico corregido + acceso administrativo restaurado -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Usos finales de la energía en el sector Industrial Mexicano</title>
@@ -153,7 +153,6 @@
     [data-anchor]{scroll-margin-top:calc(var(--header-h) + 22px)}
 
     .progress-card{
-      position:relative;
       background:#fff;
       border:1px solid rgba(207,214,217,.75);
       border-radius:var(--radius);
@@ -165,17 +164,11 @@
       display:flex;
       justify-content:space-between;
       gap:16px;
-      margin-bottom:4px;
+      margin-bottom:9px;
       font-size:13px;
       font-weight:700;
     }
-    .progress-robot-wrap{
-      position:relative;
-      padding-top:58px;
-    }
     .progress-track{
-      position:relative;
-      z-index:1;
       height:9px;
       overflow:hidden;
       background:#dfe4e6;
@@ -187,166 +180,6 @@
       background:var(--green);
       border-radius:inherit;
       transition:width .25s ease;
-    }
-
-    /* =========================================================
-       ASISTENTE DE PROGRESO · ROBOTSITO
-       Vector original integrado: no requiere archivo de imagen.
-    ========================================================= */
-    .progress-robot{
-      position:absolute;
-      left:3%;
-      bottom:2px;
-      z-index:4;
-      width:56px;
-      height:58px;
-      padding:0;
-      border:0;
-      background:transparent;
-      color:inherit;
-      cursor:pointer;
-      transform:translateX(-50%);
-      transition:left .68s cubic-bezier(.2,.75,.25,1);
-      -webkit-tap-highlight-color:transparent;
-    }
-    .progress-robot:focus-visible{
-      outline:3px solid rgba(91,127,58,.24);
-      outline-offset:5px;
-      border-radius:12px;
-    }
-    .robot-figure{
-      position:absolute;
-      left:50%;
-      bottom:0;
-      width:54px;
-      height:54px;
-      transform:translateX(-50%);
-      filter:drop-shadow(0 4px 4px rgba(0,47,42,.16));
-      animation:robotFloat 2.8s ease-in-out infinite;
-      transform-origin:center bottom;
-    }
-    .robot-figure svg{
-      display:block;
-      width:100%;
-      height:100%;
-      overflow:visible;
-    }
-    .robot-eye{
-      transform-box:fill-box;
-      transform-origin:center;
-      animation:robotBlink 4.8s infinite;
-    }
-    .robot-antenna-light{
-      animation:robotPulse 2s ease-in-out infinite;
-    }
-    .progress-robot.is-moving .robot-figure{
-      animation:robotHop .62s ease,robotFloat 2.8s .62s ease-in-out infinite;
-    }
-    .progress-robot.is-complete .robot-figure{
-      animation:robotCelebrate .72s ease,robotFloat 2.8s .72s ease-in-out infinite;
-    }
-    .robot-message{
-      position:absolute;
-      left:50%;
-      bottom:59px;
-      width:max-content;
-      max-width:220px;
-      padding:7px 10px;
-      border:1px solid #d6dfdb;
-      border-radius:9px;
-      background:#ffffff;
-      color:#33423c;
-      box-shadow:0 5px 14px rgba(29,50,43,.13);
-      font-size:11px;
-      font-weight:600;
-      line-height:1.35;
-      text-align:left;
-      white-space:normal;
-      pointer-events:none;
-      opacity:0;
-      transform:translate(-50%,6px) scale(.97);
-      transform-origin:50% 100%;
-      transition:opacity .18s ease,transform .18s ease;
-    }
-    .robot-message::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      bottom:-6px;
-      width:10px;
-      height:10px;
-      background:#fff;
-      border-right:1px solid #d6dfdb;
-      border-bottom:1px solid #d6dfdb;
-      transform:translateX(-50%) rotate(45deg);
-    }
-    .progress-robot.is-speaking .robot-message{
-      opacity:1;
-      transform:translate(-50%,0) scale(1);
-    }
-    .progress-robot.edge-left .robot-message{
-      left:1px;
-      transform:translate(0,6px) scale(.97);
-      transform-origin:20px 100%;
-    }
-    .progress-robot.edge-left.is-speaking .robot-message{
-      transform:translate(0,0) scale(1);
-    }
-    .progress-robot.edge-left .robot-message::after{
-      left:22px;
-      transform:rotate(45deg);
-    }
-    .progress-robot.edge-right .robot-message{
-      left:auto;
-      right:1px;
-      transform:translate(0,6px) scale(.97);
-      transform-origin:calc(100% - 20px) 100%;
-    }
-    .progress-robot.edge-right.is-speaking .robot-message{
-      transform:translate(0,0) scale(1);
-    }
-    .progress-robot.edge-right .robot-message::after{
-      left:auto;
-      right:17px;
-      transform:rotate(45deg);
-    }
-
-    @keyframes robotFloat{
-      0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}
-      50%{transform:translateX(-50%) translateY(-3px) rotate(1deg)}
-    }
-    @keyframes robotBlink{
-      0%,44%,48%,100%{transform:scaleY(1)}
-      46%{transform:scaleY(.12)}
-    }
-    @keyframes robotPulse{
-      0%,100%{opacity:.55}
-      50%{opacity:1}
-    }
-    @keyframes robotHop{
-      0%{transform:translateX(-50%) translateY(0) rotate(0)}
-      35%{transform:translateX(-50%) translateY(-8px) rotate(-4deg)}
-      70%{transform:translateX(-50%) translateY(-2px) rotate(3deg)}
-      100%{transform:translateX(-50%) translateY(0) rotate(0)}
-    }
-    @keyframes robotCelebrate{
-      0%{transform:translateX(-50%) translateY(0) scale(1)}
-      30%{transform:translateX(-50%) translateY(-8px) scale(1.06) rotate(-5deg)}
-      58%{transform:translateX(-50%) translateY(-5px) scale(1.06) rotate(5deg)}
-      100%{transform:translateX(-50%) translateY(0) scale(1) rotate(0)}
-    }
-
-    @media (max-width:620px){
-      .progress-robot-wrap{padding-top:53px}
-      .progress-robot{width:50px;height:53px}
-      .robot-figure{width:49px;height:49px}
-      .robot-message{bottom:54px;max-width:180px;font-size:10.5px}
-    }
-    @media (prefers-reduced-motion:reduce){
-      .progress-robot,.progress-fill,.robot-message{transition:none}
-      .robot-figure,.robot-eye,.robot-antenna-light,
-      .progress-robot.is-moving .robot-figure,
-      .progress-robot.is-complete .robot-figure{animation:none}
     }
 
     .section-view{display:none}
@@ -1735,42 +1568,8 @@
         <span id="progressLabel">Antes de comenzar</span>
         <span id="progressPercent">0%</span>
       </div>
-      <div class="progress-robot-wrap" id="progressRobotWrap">
-        <button
-          class="progress-robot edge-left"
-          id="progressRobot"
-          type="button"
-          aria-label="Asistente de progreso. Mostrar mensaje."
-          title="Asistente de progreso"
-        >
-          <span class="robot-message" id="robotMessage" role="status" aria-live="polite">
-            ¡Hola! Te acompaño durante el llenado.
-          </span>
-          <span class="robot-figure" aria-hidden="true">
-            <svg viewBox="0 0 64 64" role="img">
-              <ellipse cx="32" cy="59" rx="17" ry="3" fill="rgba(0,47,42,.14)"/>
-              <path d="M32 7V3" stroke="#24483f" stroke-width="2" stroke-linecap="round"/>
-              <circle class="robot-antenna-light" cx="32" cy="2.8" r="2.6" fill="#cee200" stroke="#24483f" stroke-width="1.2"/>
-              <rect x="15" y="8" width="34" height="25" rx="9" fill="#f8fbfa" stroke="#24483f" stroke-width="2"/>
-              <rect x="20" y="14" width="24" height="12" rx="6" fill="#123f37"/>
-              <ellipse class="robot-eye" cx="27" cy="20" rx="2.3" ry="2.7" fill="#dff46b"/>
-              <ellipse class="robot-eye" cx="37" cy="20" rx="2.3" ry="2.7" fill="#dff46b"/>
-              <path d="M27 29h10" stroke="#94a69f" stroke-width="1.5" stroke-linecap="round"/>
-              <rect x="19" y="33" width="26" height="20" rx="7" fill="#5b7f3a" stroke="#24483f" stroke-width="2"/>
-              <rect x="25" y="37" width="14" height="10" rx="3" fill="#eef4e9"/>
-              <path d="M33.5 38.5 29 43h3l-1.5 3.5 5-5h-3z" fill="#5b7f3a"/>
-              <path d="M18.5 38 12 42.5" stroke="#24483f" stroke-width="2.4" stroke-linecap="round"/>
-              <circle cx="10.5" cy="44" r="2.3" fill="#f8fbfa" stroke="#24483f" stroke-width="1.5"/>
-              <path d="M45.5 38 52 42.5" stroke="#24483f" stroke-width="2.4" stroke-linecap="round"/>
-              <circle cx="53.5" cy="44" r="2.3" fill="#f8fbfa" stroke="#24483f" stroke-width="1.5"/>
-              <path d="M25 53v4M39 53v4" stroke="#24483f" stroke-width="2.6" stroke-linecap="round"/>
-              <path d="M21.5 58h7M35.5 58h7" stroke="#24483f" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </span>
-        </button>
-        <div class="progress-track">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
       </div>
     </div>
 
@@ -5394,59 +5193,6 @@
   const progressLabel = qs("#progressLabel");
   const progressPercent = qs("#progressPercent");
   const progressFill = qs("#progressFill");
-  const progressRobot = qs("#progressRobot");
-  const robotMessage = qs("#robotMessage");
-
-  const ROBOT_MESSAGES = Object.freeze({
-    welcome:"¡Hola! Te acompaño durante el llenado.",
-    "1":"Comenzamos con los datos del establecimiento.",
-    "2":"Consumos de energía: revisa los 12 meses.",
-    "3":"Ahora vamos con los usos térmicos.",
-    "4":"Seguimos con refrigeración.",
-    "5":"Turno de la fuerza motriz.",
-    "6":"Iluminación. ¡Ya falta menos!",
-    "7":"Última sección técnica: climatización.",
-    "8":"Cuéntanos cómo fue tu experiencia.",
-    review:"¡Listo! Revisa tus datos antes de enviar."
-  });
-
-  let robotSpeakTimer = null;
-  let robotLastPct = 0;
-
-  function updateProgressRobot(view,pct){
-    if (!progressRobot || !robotMessage) return;
-
-    const safePct = Math.max(0,Math.min(100,Number(pct) || 0));
-    const positionPct = 3 + (safePct * .94);
-
-    progressRobot.style.left = `${positionPct}%`;
-    progressRobot.classList.toggle("edge-left", safePct <= 14);
-    progressRobot.classList.toggle("edge-right", safePct >= 86);
-    progressRobot.classList.toggle("is-complete", String(view) === "review");
-
-    if (Math.abs(safePct - robotLastPct) > .1){
-      progressRobot.classList.remove("is-moving");
-      void progressRobot.offsetWidth;
-      progressRobot.classList.add("is-moving");
-      window.setTimeout(() => progressRobot.classList.remove("is-moving"),700);
-    }
-    robotLastPct = safePct;
-
-    robotMessage.textContent = ROBOT_MESSAGES[String(view)] || "Seguimos avanzando.";
-    progressRobot.classList.add("is-speaking");
-    window.clearTimeout(robotSpeakTimer);
-    robotSpeakTimer = window.setTimeout(() => {
-      progressRobot.classList.remove("is-speaking");
-    }, 3600);
-  }
-
-  progressRobot?.addEventListener("click", () => {
-    progressRobot.classList.add("is-speaking");
-    window.clearTimeout(robotSpeakTimer);
-    robotSpeakTimer = window.setTimeout(() => {
-      progressRobot.classList.remove("is-speaking");
-    }, 3600);
-  });
 
   function showView(view){
     qsa(".section-view").forEach(el => el.classList.toggle("active", el.dataset.section === String(view)));
@@ -5456,12 +5202,10 @@
       progressLabel.textContent = "Antes de comenzar";
       progressPercent.textContent = "0%";
       progressFill.style.width = "0%";
-      updateProgressRobot(view,0);
     } else if (view === "review"){
       progressLabel.textContent = "Revisión y envío";
       progressPercent.textContent = "100%";
       progressFill.style.width = "100%";
-      updateProgressRobot(view,100);
       updateFinalReviewState();
     } else {
       const n = Number(view);
@@ -5469,12 +5213,9 @@
       progressLabel.textContent = `Sección ${n} de 8`;
       progressPercent.textContent = `${Number.isInteger(pct) ? pct : pct.toFixed(1)}%`;
       progressFill.style.width = `${pct}%`;
-      updateProgressRobot(view,pct);
     }
     window.scrollTo({top:0,behavior:"smooth"});
   }
-
-  updateProgressRobot("welcome",0);
 
   document.addEventListener("click", e => {
     const next = e.target.closest("[data-next]");
