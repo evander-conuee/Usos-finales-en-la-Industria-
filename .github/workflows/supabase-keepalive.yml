@@ -1,11 +1,8 @@
-name: Mantener Supabase activo
-
-on:
+"on":
   schedule:
-    # 14:17 UTC = 08:17 en Ciudad de México.
-    # Se ejecuta una sola vez al día para mantener actividad con consumo mínimo.
-    - cron: "17 14 * * *"
-  workflow_dispatch:
+    - cron: "17 8 * * *"
+      timezone: "America/Mexico_City"
+  workflow_dispatch: {}
 
 permissions:
   contents: read
